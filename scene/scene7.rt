@@ -1,0 +1,85 @@
+scene
+{
+	cam_pos(0 20 -100)
+	cam_dir(0 0 1)
+	ambient(15)
+}
+
+content
+{
+	object(light)
+	{
+		col(100 100 100)
+		pos(-20 10 30)
+		int(40)
+	}
+	object(light)
+	{
+		col(100 100 100)
+		pos(70 10 81)
+		int(40)
+	}
+	object(plane)
+	{
+		col(100 100 100)
+		pos(60 0 0)
+		rot(-1 0 0)
+		spc(200)
+	}
+	object(plane)
+	{
+		col(100 100 100)
+		pos(-50 0 0)
+		rot(1 0 0)
+		spc(200)
+	}
+	object(plane)
+	{
+		col(100 100 100)
+		pos(0 0 100)
+		rot(0 0 -1)
+		spc(200)
+	}
+	object(plane)
+	{
+		col(100 100 100)
+		pos(0 0 -101)
+		rot(0 0 1)
+		spc(200)
+	}
+	object(plane)
+	{
+		col(100 100 100)
+		pos(0 -11 0)
+		rot(0 1 0)
+		spc(200)
+	}
+	object(plane)
+	{
+		col(100 100 100)
+		pos(0 50 0)
+		rot(0 -1 0)
+		spc(200)
+	}
+	object(sphere)
+	{
+		col(240 100 170)
+		pos(0 0 50)
+		size(10)
+		spc(200)
+	}
+	object(sphere)
+	{
+		col(100 100 250)
+		pos(10 17 60)
+		size(10)
+		spc(200)
+	}
+	object(sphere)
+	{
+		col(100 250 100)
+		pos(20 0 50)
+		size(10)
+		spc(200)
+	}
+}
