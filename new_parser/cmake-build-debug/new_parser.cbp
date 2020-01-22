@@ -1,0 +1,378 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="new_parser"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/Users/daron/RT_command/new_parser/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/daron/RT_command/new_parser/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/daron/RT_command/new_parser/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/daron/RT_command/new_parser/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/daron/RT_command/new_parser/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/Users/daron/RT_command/new_parser/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/daron/RT_command/new_parser/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/daron/RT_command/new_parser/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/daron/RT_command/new_parser/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/daron/RT_command/new_parser/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/Users/daron/RT_command/new_parser/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/daron/RT_command/new_parser/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/daron/RT_command/new_parser/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/daron/RT_command/new_parser/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/daron/RT_command/new_parser/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="new_parser">
+				<Option output="/Users/daron/RT_command/new_parser/cmake-build-debug/new_parser" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/daron/RT_command/new_parser/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/Users/daron/RT_command/new_parser/ftvector/includes"/>
+					<Add directory="/Users/daron/RT_command/new_parser/includes"/>
+					<Add directory="/Users/daron/RT_command/new_parser/libft/includes"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/9.0.0/include"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/System/Library/Frameworks"/>
+					<Add directory="/Library/Frameworks"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/daron/RT_command/new_parser/cmake-build-debug/Makefile&quot;  VERBOSE=1 new_parser"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/daron/RT_command/new_parser/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/daron/RT_command/new_parser/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/daron/RT_command/new_parser/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="new_parser/fast">
+				<Option output="/Users/daron/RT_command/new_parser/cmake-build-debug/new_parser" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/daron/RT_command/new_parser/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/Users/daron/RT_command/new_parser/ftvector/includes"/>
+					<Add directory="/Users/daron/RT_command/new_parser/includes"/>
+					<Add directory="/Users/daron/RT_command/new_parser/libft/includes"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/9.0.0/include"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/System/Library/Frameworks"/>
+					<Add directory="/Library/Frameworks"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/daron/RT_command/new_parser/cmake-build-debug/Makefile&quot;  VERBOSE=1 new_parser/fast"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/daron/RT_command/new_parser/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/daron/RT_command/new_parser/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/daron/RT_command/new_parser/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/Users/daron/RT_command/new_parser/ftvector/includes/ftvector.h">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/ftvector/source/vec_cross.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/ftvector/source/vec_dot.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/ftvector/source/vec_len.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/ftvector/source/vec_norm.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/ftvector/source/vec_rot_x.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/ftvector/source/vec_rot_xyz.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/ftvector/source/vec_rot_y.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/ftvector/source/vec_rot_z.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/ftvector/source/vec_scale.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/ftvector/source/vec_sub.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/ftvector/source/vec_sum.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/includes/rt.h">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/libft/includes/libft.h">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/libft/source/ft_atof.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/libft/source/ft_atoi.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/libft/source/ft_atoi_base.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/libft/source/ft_bzero.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/libft/source/ft_detect_space.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/libft/source/ft_has_prefix.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/libft/source/ft_isalnum.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/libft/source/ft_isalpha.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/libft/source/ft_isascii.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/libft/source/ft_isdigit.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/libft/source/ft_isdigit_base.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/libft/source/ft_islowcase.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/libft/source/ft_isnumber.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/libft/source/ft_isprint.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/libft/source/ft_isupcase.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/libft/source/ft_itoa.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/libft/source/ft_linelen.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/libft/source/ft_lst_pushback.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/libft/source/ft_lstadd.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/libft/source/ft_lstdel.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/libft/source/ft_lstdelone.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/libft/source/ft_lstiter.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/libft/source/ft_lstmap.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/libft/source/ft_lstnew.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/libft/source/ft_memalloc.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/libft/source/ft_memccpy.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/libft/source/ft_memchr.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/libft/source/ft_memcmp.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/libft/source/ft_memcpy.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/libft/source/ft_memdel.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/libft/source/ft_memmove.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/libft/source/ft_memset.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/libft/source/ft_memset_int.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/libft/source/ft_percent.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/libft/source/ft_pow.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/libft/source/ft_putchar.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/libft/source/ft_putchar_fd.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/libft/source/ft_putendl.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/libft/source/ft_putendl_fd.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/libft/source/ft_putnbr.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/libft/source/ft_putnbr_fd.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/libft/source/ft_putstr.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/libft/source/ft_putstr_fd.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/libft/source/ft_space_swap.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/libft/source/ft_strcat.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/libft/source/ft_strchr.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/libft/source/ft_strclr.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/libft/source/ft_strcmp.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/libft/source/ft_strcpy.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/libft/source/ft_strdel.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/libft/source/ft_strdup.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/libft/source/ft_strequ.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/libft/source/ft_striter.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/libft/source/ft_striteri.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/libft/source/ft_strjoin.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/libft/source/ft_strjoin_del.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/libft/source/ft_strlcat.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/libft/source/ft_strlen.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/libft/source/ft_strmap.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/libft/source/ft_strmapi.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/libft/source/ft_strncat.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/libft/source/ft_strncmp.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/libft/source/ft_strncpy.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/libft/source/ft_strndup.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/libft/source/ft_strnequ.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/libft/source/ft_strnew.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/libft/source/ft_strnstr.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/libft/source/ft_strrchr.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/libft/source/ft_strsplit.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/libft/source/ft_strstr.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/libft/source/ft_strsub.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/libft/source/ft_strtrim.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/libft/source/ft_tolower.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/libft/source/ft_toupper.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/libft/source/get_next_line.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/libft/source/projection_point_to_line.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/source/main.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/source/scene_parser.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/source/take_funtion.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/source/work_with_list.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/source/xml_tag.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>
