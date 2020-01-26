@@ -1,0 +1,37 @@
+<scene>
+	<maxref> {0} </maxref>
+	<name> {Test scene for show ambiant} </name>
+	<res> {900 900} </res>
+	<antialias> {1} </antialias>
+	<ambiant> {0.5} </ambiant>
+</scene>
+
+<camera>
+	<pos> {x0.00 y00.00 z-250.00} </pos>
+	<dir> {x0.0 y0.00 z1.00} </dir>
+</camera>
+
+<light>
+	<pos> {x-60.00 y30.00 z-60.00} </pos>
+	<rgb> {r255 g255 b255} </rgb>
+</light>
+
+<object>
+	<type> {plane} </type>
+	<pos> {x0.00 y00.00 z20.00} </pos>
+	<dir> {x0.0 y0.0 z-1.0} </dir>
+	<reflect> {off} </reflect>
+	<rgb> {r255 g0 b0} </rgb>
+	<refract> {off} </refract>
+</object>
+
+<object>
+	<type> {sphere} </type>
+	<pos> {x40.00 y0.00 z-20.00} </pos>
+	<dir> {x0.0 y0.0 z0.0} </dir>
+	<radius> {25.00} </radius>
+	<rgb> {r0 g0 b255} </rgb>
+	<reflect> {off} </reflect>
+	<spec> {off} </spec>
+	<refract> {off} </refract>
+</object>

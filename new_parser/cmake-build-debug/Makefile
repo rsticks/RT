@@ -2499,113 +2499,248 @@ source/main.c.s:
 	$(MAKE) -f CMakeFiles/new_parser.dir/build.make CMakeFiles/new_parser.dir/source/main.c.s
 .PHONY : source/main.c.s
 
-source/scene_parser.o: source/scene_parser.c.o
+source/parser/camera_parser.o: source/parser/camera_parser.c.o
 
-.PHONY : source/scene_parser.o
-
-# target to build an object file
-source/scene_parser.c.o:
-	$(MAKE) -f CMakeFiles/new_parser.dir/build.make CMakeFiles/new_parser.dir/source/scene_parser.c.o
-.PHONY : source/scene_parser.c.o
-
-source/scene_parser.i: source/scene_parser.c.i
-
-.PHONY : source/scene_parser.i
-
-# target to preprocess a source file
-source/scene_parser.c.i:
-	$(MAKE) -f CMakeFiles/new_parser.dir/build.make CMakeFiles/new_parser.dir/source/scene_parser.c.i
-.PHONY : source/scene_parser.c.i
-
-source/scene_parser.s: source/scene_parser.c.s
-
-.PHONY : source/scene_parser.s
-
-# target to generate assembly for a file
-source/scene_parser.c.s:
-	$(MAKE) -f CMakeFiles/new_parser.dir/build.make CMakeFiles/new_parser.dir/source/scene_parser.c.s
-.PHONY : source/scene_parser.c.s
-
-source/take_funtion.o: source/take_funtion.c.o
-
-.PHONY : source/take_funtion.o
+.PHONY : source/parser/camera_parser.o
 
 # target to build an object file
-source/take_funtion.c.o:
-	$(MAKE) -f CMakeFiles/new_parser.dir/build.make CMakeFiles/new_parser.dir/source/take_funtion.c.o
-.PHONY : source/take_funtion.c.o
+source/parser/camera_parser.c.o:
+	$(MAKE) -f CMakeFiles/new_parser.dir/build.make CMakeFiles/new_parser.dir/source/parser/camera_parser.c.o
+.PHONY : source/parser/camera_parser.c.o
 
-source/take_funtion.i: source/take_funtion.c.i
+source/parser/camera_parser.i: source/parser/camera_parser.c.i
 
-.PHONY : source/take_funtion.i
+.PHONY : source/parser/camera_parser.i
 
 # target to preprocess a source file
-source/take_funtion.c.i:
-	$(MAKE) -f CMakeFiles/new_parser.dir/build.make CMakeFiles/new_parser.dir/source/take_funtion.c.i
-.PHONY : source/take_funtion.c.i
+source/parser/camera_parser.c.i:
+	$(MAKE) -f CMakeFiles/new_parser.dir/build.make CMakeFiles/new_parser.dir/source/parser/camera_parser.c.i
+.PHONY : source/parser/camera_parser.c.i
 
-source/take_funtion.s: source/take_funtion.c.s
+source/parser/camera_parser.s: source/parser/camera_parser.c.s
 
-.PHONY : source/take_funtion.s
+.PHONY : source/parser/camera_parser.s
 
 # target to generate assembly for a file
-source/take_funtion.c.s:
-	$(MAKE) -f CMakeFiles/new_parser.dir/build.make CMakeFiles/new_parser.dir/source/take_funtion.c.s
-.PHONY : source/take_funtion.c.s
+source/parser/camera_parser.c.s:
+	$(MAKE) -f CMakeFiles/new_parser.dir/build.make CMakeFiles/new_parser.dir/source/parser/camera_parser.c.s
+.PHONY : source/parser/camera_parser.c.s
 
-source/work_with_list.o: source/work_with_list.c.o
+source/parser/cheker.o: source/parser/cheker.c.o
 
-.PHONY : source/work_with_list.o
+.PHONY : source/parser/cheker.o
 
 # target to build an object file
-source/work_with_list.c.o:
-	$(MAKE) -f CMakeFiles/new_parser.dir/build.make CMakeFiles/new_parser.dir/source/work_with_list.c.o
-.PHONY : source/work_with_list.c.o
+source/parser/cheker.c.o:
+	$(MAKE) -f CMakeFiles/new_parser.dir/build.make CMakeFiles/new_parser.dir/source/parser/cheker.c.o
+.PHONY : source/parser/cheker.c.o
 
-source/work_with_list.i: source/work_with_list.c.i
+source/parser/cheker.i: source/parser/cheker.c.i
 
-.PHONY : source/work_with_list.i
+.PHONY : source/parser/cheker.i
 
 # target to preprocess a source file
-source/work_with_list.c.i:
-	$(MAKE) -f CMakeFiles/new_parser.dir/build.make CMakeFiles/new_parser.dir/source/work_with_list.c.i
-.PHONY : source/work_with_list.c.i
+source/parser/cheker.c.i:
+	$(MAKE) -f CMakeFiles/new_parser.dir/build.make CMakeFiles/new_parser.dir/source/parser/cheker.c.i
+.PHONY : source/parser/cheker.c.i
 
-source/work_with_list.s: source/work_with_list.c.s
+source/parser/cheker.s: source/parser/cheker.c.s
 
-.PHONY : source/work_with_list.s
+.PHONY : source/parser/cheker.s
 
 # target to generate assembly for a file
-source/work_with_list.c.s:
-	$(MAKE) -f CMakeFiles/new_parser.dir/build.make CMakeFiles/new_parser.dir/source/work_with_list.c.s
-.PHONY : source/work_with_list.c.s
+source/parser/cheker.c.s:
+	$(MAKE) -f CMakeFiles/new_parser.dir/build.make CMakeFiles/new_parser.dir/source/parser/cheker.c.s
+.PHONY : source/parser/cheker.c.s
 
-source/xml_tag.o: source/xml_tag.c.o
+source/parser/light_parser.o: source/parser/light_parser.c.o
 
-.PHONY : source/xml_tag.o
+.PHONY : source/parser/light_parser.o
 
 # target to build an object file
-source/xml_tag.c.o:
-	$(MAKE) -f CMakeFiles/new_parser.dir/build.make CMakeFiles/new_parser.dir/source/xml_tag.c.o
-.PHONY : source/xml_tag.c.o
+source/parser/light_parser.c.o:
+	$(MAKE) -f CMakeFiles/new_parser.dir/build.make CMakeFiles/new_parser.dir/source/parser/light_parser.c.o
+.PHONY : source/parser/light_parser.c.o
 
-source/xml_tag.i: source/xml_tag.c.i
+source/parser/light_parser.i: source/parser/light_parser.c.i
 
-.PHONY : source/xml_tag.i
+.PHONY : source/parser/light_parser.i
 
 # target to preprocess a source file
-source/xml_tag.c.i:
-	$(MAKE) -f CMakeFiles/new_parser.dir/build.make CMakeFiles/new_parser.dir/source/xml_tag.c.i
-.PHONY : source/xml_tag.c.i
+source/parser/light_parser.c.i:
+	$(MAKE) -f CMakeFiles/new_parser.dir/build.make CMakeFiles/new_parser.dir/source/parser/light_parser.c.i
+.PHONY : source/parser/light_parser.c.i
 
-source/xml_tag.s: source/xml_tag.c.s
+source/parser/light_parser.s: source/parser/light_parser.c.s
 
-.PHONY : source/xml_tag.s
+.PHONY : source/parser/light_parser.s
 
 # target to generate assembly for a file
-source/xml_tag.c.s:
-	$(MAKE) -f CMakeFiles/new_parser.dir/build.make CMakeFiles/new_parser.dir/source/xml_tag.c.s
-.PHONY : source/xml_tag.c.s
+source/parser/light_parser.c.s:
+	$(MAKE) -f CMakeFiles/new_parser.dir/build.make CMakeFiles/new_parser.dir/source/parser/light_parser.c.s
+.PHONY : source/parser/light_parser.c.s
+
+source/parser/list_to_mas.o: source/parser/list_to_mas.c.o
+
+.PHONY : source/parser/list_to_mas.o
+
+# target to build an object file
+source/parser/list_to_mas.c.o:
+	$(MAKE) -f CMakeFiles/new_parser.dir/build.make CMakeFiles/new_parser.dir/source/parser/list_to_mas.c.o
+.PHONY : source/parser/list_to_mas.c.o
+
+source/parser/list_to_mas.i: source/parser/list_to_mas.c.i
+
+.PHONY : source/parser/list_to_mas.i
+
+# target to preprocess a source file
+source/parser/list_to_mas.c.i:
+	$(MAKE) -f CMakeFiles/new_parser.dir/build.make CMakeFiles/new_parser.dir/source/parser/list_to_mas.c.i
+.PHONY : source/parser/list_to_mas.c.i
+
+source/parser/list_to_mas.s: source/parser/list_to_mas.c.s
+
+.PHONY : source/parser/list_to_mas.s
+
+# target to generate assembly for a file
+source/parser/list_to_mas.c.s:
+	$(MAKE) -f CMakeFiles/new_parser.dir/build.make CMakeFiles/new_parser.dir/source/parser/list_to_mas.c.s
+.PHONY : source/parser/list_to_mas.c.s
+
+source/parser/object_parser.o: source/parser/object_parser.c.o
+
+.PHONY : source/parser/object_parser.o
+
+# target to build an object file
+source/parser/object_parser.c.o:
+	$(MAKE) -f CMakeFiles/new_parser.dir/build.make CMakeFiles/new_parser.dir/source/parser/object_parser.c.o
+.PHONY : source/parser/object_parser.c.o
+
+source/parser/object_parser.i: source/parser/object_parser.c.i
+
+.PHONY : source/parser/object_parser.i
+
+# target to preprocess a source file
+source/parser/object_parser.c.i:
+	$(MAKE) -f CMakeFiles/new_parser.dir/build.make CMakeFiles/new_parser.dir/source/parser/object_parser.c.i
+.PHONY : source/parser/object_parser.c.i
+
+source/parser/object_parser.s: source/parser/object_parser.c.s
+
+.PHONY : source/parser/object_parser.s
+
+# target to generate assembly for a file
+source/parser/object_parser.c.s:
+	$(MAKE) -f CMakeFiles/new_parser.dir/build.make CMakeFiles/new_parser.dir/source/parser/object_parser.c.s
+.PHONY : source/parser/object_parser.c.s
+
+source/parser/scene_parser.o: source/parser/scene_parser.c.o
+
+.PHONY : source/parser/scene_parser.o
+
+# target to build an object file
+source/parser/scene_parser.c.o:
+	$(MAKE) -f CMakeFiles/new_parser.dir/build.make CMakeFiles/new_parser.dir/source/parser/scene_parser.c.o
+.PHONY : source/parser/scene_parser.c.o
+
+source/parser/scene_parser.i: source/parser/scene_parser.c.i
+
+.PHONY : source/parser/scene_parser.i
+
+# target to preprocess a source file
+source/parser/scene_parser.c.i:
+	$(MAKE) -f CMakeFiles/new_parser.dir/build.make CMakeFiles/new_parser.dir/source/parser/scene_parser.c.i
+.PHONY : source/parser/scene_parser.c.i
+
+source/parser/scene_parser.s: source/parser/scene_parser.c.s
+
+.PHONY : source/parser/scene_parser.s
+
+# target to generate assembly for a file
+source/parser/scene_parser.c.s:
+	$(MAKE) -f CMakeFiles/new_parser.dir/build.make CMakeFiles/new_parser.dir/source/parser/scene_parser.c.s
+.PHONY : source/parser/scene_parser.c.s
+
+source/parser/take_funtion.o: source/parser/take_funtion.c.o
+
+.PHONY : source/parser/take_funtion.o
+
+# target to build an object file
+source/parser/take_funtion.c.o:
+	$(MAKE) -f CMakeFiles/new_parser.dir/build.make CMakeFiles/new_parser.dir/source/parser/take_funtion.c.o
+.PHONY : source/parser/take_funtion.c.o
+
+source/parser/take_funtion.i: source/parser/take_funtion.c.i
+
+.PHONY : source/parser/take_funtion.i
+
+# target to preprocess a source file
+source/parser/take_funtion.c.i:
+	$(MAKE) -f CMakeFiles/new_parser.dir/build.make CMakeFiles/new_parser.dir/source/parser/take_funtion.c.i
+.PHONY : source/parser/take_funtion.c.i
+
+source/parser/take_funtion.s: source/parser/take_funtion.c.s
+
+.PHONY : source/parser/take_funtion.s
+
+# target to generate assembly for a file
+source/parser/take_funtion.c.s:
+	$(MAKE) -f CMakeFiles/new_parser.dir/build.make CMakeFiles/new_parser.dir/source/parser/take_funtion.c.s
+.PHONY : source/parser/take_funtion.c.s
+
+source/parser/work_with_list.o: source/parser/work_with_list.c.o
+
+.PHONY : source/parser/work_with_list.o
+
+# target to build an object file
+source/parser/work_with_list.c.o:
+	$(MAKE) -f CMakeFiles/new_parser.dir/build.make CMakeFiles/new_parser.dir/source/parser/work_with_list.c.o
+.PHONY : source/parser/work_with_list.c.o
+
+source/parser/work_with_list.i: source/parser/work_with_list.c.i
+
+.PHONY : source/parser/work_with_list.i
+
+# target to preprocess a source file
+source/parser/work_with_list.c.i:
+	$(MAKE) -f CMakeFiles/new_parser.dir/build.make CMakeFiles/new_parser.dir/source/parser/work_with_list.c.i
+.PHONY : source/parser/work_with_list.c.i
+
+source/parser/work_with_list.s: source/parser/work_with_list.c.s
+
+.PHONY : source/parser/work_with_list.s
+
+# target to generate assembly for a file
+source/parser/work_with_list.c.s:
+	$(MAKE) -f CMakeFiles/new_parser.dir/build.make CMakeFiles/new_parser.dir/source/parser/work_with_list.c.s
+.PHONY : source/parser/work_with_list.c.s
+
+source/parser/xml_tag.o: source/parser/xml_tag.c.o
+
+.PHONY : source/parser/xml_tag.o
+
+# target to build an object file
+source/parser/xml_tag.c.o:
+	$(MAKE) -f CMakeFiles/new_parser.dir/build.make CMakeFiles/new_parser.dir/source/parser/xml_tag.c.o
+.PHONY : source/parser/xml_tag.c.o
+
+source/parser/xml_tag.i: source/parser/xml_tag.c.i
+
+.PHONY : source/parser/xml_tag.i
+
+# target to preprocess a source file
+source/parser/xml_tag.c.i:
+	$(MAKE) -f CMakeFiles/new_parser.dir/build.make CMakeFiles/new_parser.dir/source/parser/xml_tag.c.i
+.PHONY : source/parser/xml_tag.c.i
+
+source/parser/xml_tag.s: source/parser/xml_tag.c.s
+
+.PHONY : source/parser/xml_tag.s
+
+# target to generate assembly for a file
+source/parser/xml_tag.c.s:
+	$(MAKE) -f CMakeFiles/new_parser.dir/build.make CMakeFiles/new_parser.dir/source/parser/xml_tag.c.s
+.PHONY : source/parser/xml_tag.c.s
 
 # Help Target
 help:
@@ -2880,18 +3015,33 @@ help:
 	@echo "... source/main.o"
 	@echo "... source/main.i"
 	@echo "... source/main.s"
-	@echo "... source/scene_parser.o"
-	@echo "... source/scene_parser.i"
-	@echo "... source/scene_parser.s"
-	@echo "... source/take_funtion.o"
-	@echo "... source/take_funtion.i"
-	@echo "... source/take_funtion.s"
-	@echo "... source/work_with_list.o"
-	@echo "... source/work_with_list.i"
-	@echo "... source/work_with_list.s"
-	@echo "... source/xml_tag.o"
-	@echo "... source/xml_tag.i"
-	@echo "... source/xml_tag.s"
+	@echo "... source/parser/camera_parser.o"
+	@echo "... source/parser/camera_parser.i"
+	@echo "... source/parser/camera_parser.s"
+	@echo "... source/parser/cheker.o"
+	@echo "... source/parser/cheker.i"
+	@echo "... source/parser/cheker.s"
+	@echo "... source/parser/light_parser.o"
+	@echo "... source/parser/light_parser.i"
+	@echo "... source/parser/light_parser.s"
+	@echo "... source/parser/list_to_mas.o"
+	@echo "... source/parser/list_to_mas.i"
+	@echo "... source/parser/list_to_mas.s"
+	@echo "... source/parser/object_parser.o"
+	@echo "... source/parser/object_parser.i"
+	@echo "... source/parser/object_parser.s"
+	@echo "... source/parser/scene_parser.o"
+	@echo "... source/parser/scene_parser.i"
+	@echo "... source/parser/scene_parser.s"
+	@echo "... source/parser/take_funtion.o"
+	@echo "... source/parser/take_funtion.i"
+	@echo "... source/parser/take_funtion.s"
+	@echo "... source/parser/work_with_list.o"
+	@echo "... source/parser/work_with_list.i"
+	@echo "... source/parser/work_with_list.s"
+	@echo "... source/parser/xml_tag.o"
+	@echo "... source/parser/xml_tag.i"
+	@echo "... source/parser/xml_tag.s"
 .PHONY : help
 
 

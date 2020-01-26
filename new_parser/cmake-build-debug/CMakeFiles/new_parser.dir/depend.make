@@ -265,23 +265,48 @@ CMakeFiles/new_parser.dir/source/main.c.o: ../includes/rt.h
 CMakeFiles/new_parser.dir/source/main.c.o: ../libft/includes/libft.h
 CMakeFiles/new_parser.dir/source/main.c.o: ../source/main.c
 
-CMakeFiles/new_parser.dir/source/scene_parser.c.o: ../ftvector/includes/ftvector.h
-CMakeFiles/new_parser.dir/source/scene_parser.c.o: ../includes/rt.h
-CMakeFiles/new_parser.dir/source/scene_parser.c.o: ../libft/includes/libft.h
-CMakeFiles/new_parser.dir/source/scene_parser.c.o: ../source/scene_parser.c
+CMakeFiles/new_parser.dir/source/parser/camera_parser.c.o: ../ftvector/includes/ftvector.h
+CMakeFiles/new_parser.dir/source/parser/camera_parser.c.o: ../includes/rt.h
+CMakeFiles/new_parser.dir/source/parser/camera_parser.c.o: ../libft/includes/libft.h
+CMakeFiles/new_parser.dir/source/parser/camera_parser.c.o: ../source/parser/camera_parser.c
 
-CMakeFiles/new_parser.dir/source/take_funtion.c.o: ../ftvector/includes/ftvector.h
-CMakeFiles/new_parser.dir/source/take_funtion.c.o: ../includes/rt.h
-CMakeFiles/new_parser.dir/source/take_funtion.c.o: ../libft/includes/libft.h
-CMakeFiles/new_parser.dir/source/take_funtion.c.o: ../source/take_funtion.c
+CMakeFiles/new_parser.dir/source/parser/cheker.c.o: ../ftvector/includes/ftvector.h
+CMakeFiles/new_parser.dir/source/parser/cheker.c.o: ../includes/rt.h
+CMakeFiles/new_parser.dir/source/parser/cheker.c.o: ../libft/includes/libft.h
+CMakeFiles/new_parser.dir/source/parser/cheker.c.o: ../source/parser/cheker.c
 
-CMakeFiles/new_parser.dir/source/work_with_list.c.o: ../ftvector/includes/ftvector.h
-CMakeFiles/new_parser.dir/source/work_with_list.c.o: ../includes/rt.h
-CMakeFiles/new_parser.dir/source/work_with_list.c.o: ../libft/includes/libft.h
-CMakeFiles/new_parser.dir/source/work_with_list.c.o: ../source/work_with_list.c
+CMakeFiles/new_parser.dir/source/parser/light_parser.c.o: ../ftvector/includes/ftvector.h
+CMakeFiles/new_parser.dir/source/parser/light_parser.c.o: ../includes/rt.h
+CMakeFiles/new_parser.dir/source/parser/light_parser.c.o: ../libft/includes/libft.h
+CMakeFiles/new_parser.dir/source/parser/light_parser.c.o: ../source/parser/light_parser.c
 
-CMakeFiles/new_parser.dir/source/xml_tag.c.o: ../ftvector/includes/ftvector.h
-CMakeFiles/new_parser.dir/source/xml_tag.c.o: ../includes/rt.h
-CMakeFiles/new_parser.dir/source/xml_tag.c.o: ../libft/includes/libft.h
-CMakeFiles/new_parser.dir/source/xml_tag.c.o: ../source/xml_tag.c
+CMakeFiles/new_parser.dir/source/parser/list_to_mas.c.o: ../ftvector/includes/ftvector.h
+CMakeFiles/new_parser.dir/source/parser/list_to_mas.c.o: ../includes/rt.h
+CMakeFiles/new_parser.dir/source/parser/list_to_mas.c.o: ../libft/includes/libft.h
+CMakeFiles/new_parser.dir/source/parser/list_to_mas.c.o: ../source/parser/list_to_mas.c
+
+CMakeFiles/new_parser.dir/source/parser/object_parser.c.o: ../ftvector/includes/ftvector.h
+CMakeFiles/new_parser.dir/source/parser/object_parser.c.o: ../includes/rt.h
+CMakeFiles/new_parser.dir/source/parser/object_parser.c.o: ../libft/includes/libft.h
+CMakeFiles/new_parser.dir/source/parser/object_parser.c.o: ../source/parser/object_parser.c
+
+CMakeFiles/new_parser.dir/source/parser/scene_parser.c.o: ../ftvector/includes/ftvector.h
+CMakeFiles/new_parser.dir/source/parser/scene_parser.c.o: ../includes/rt.h
+CMakeFiles/new_parser.dir/source/parser/scene_parser.c.o: ../libft/includes/libft.h
+CMakeFiles/new_parser.dir/source/parser/scene_parser.c.o: ../source/parser/scene_parser.c
+
+CMakeFiles/new_parser.dir/source/parser/take_funtion.c.o: ../ftvector/includes/ftvector.h
+CMakeFiles/new_parser.dir/source/parser/take_funtion.c.o: ../includes/rt.h
+CMakeFiles/new_parser.dir/source/parser/take_funtion.c.o: ../libft/includes/libft.h
+CMakeFiles/new_parser.dir/source/parser/take_funtion.c.o: ../source/parser/take_funtion.c
+
+CMakeFiles/new_parser.dir/source/parser/work_with_list.c.o: ../ftvector/includes/ftvector.h
+CMakeFiles/new_parser.dir/source/parser/work_with_list.c.o: ../includes/rt.h
+CMakeFiles/new_parser.dir/source/parser/work_with_list.c.o: ../libft/includes/libft.h
+CMakeFiles/new_parser.dir/source/parser/work_with_list.c.o: ../source/parser/work_with_list.c
+
+CMakeFiles/new_parser.dir/source/parser/xml_tag.c.o: ../ftvector/includes/ftvector.h
+CMakeFiles/new_parser.dir/source/parser/xml_tag.c.o: ../includes/rt.h
+CMakeFiles/new_parser.dir/source/parser/xml_tag.c.o: ../libft/includes/libft.h
+CMakeFiles/new_parser.dir/source/parser/xml_tag.c.o: ../source/parser/xml_tag.c
 

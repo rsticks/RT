@@ -6,64 +6,50 @@
 /*   By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 15:32:59 by rsticks           #+#    #+#             */
-/*   Updated: 2019/11/28 16:28:25 by rsticks          ###   ########.fr       */
+/*   Updated: 2020/01/26 15:46:13 by daron            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtv1.h"
+#include "rt.h"
 
-t_cl_object			*transform_obj_data(t_object *obj, int *count)
+t_cl_object			*transform_obj_data(t_rt *rt)
 {
 	t_cl_object		*cl_obj;
-	t_object		*past_obj;
+	int i;
 
-	past_obj = obj;
-	*count = 0;
-	while (obj)
+	if (!(cl_obj = (t_cl_object*)malloc(sizeof(t_cl_object) * rt->scene.obj_c)))
+		kill_all("ERROR: Can't allocate memory for cl_obj <transform_obj_data>");
+	i = 0;
+	while (i < rt->scene.obj_c)
 	{
-		(*count)++;
-		obj = obj->next;
-	}
-	cl_obj = (t_cl_object*)malloc(sizeof(t_cl_object) * *count);
-	*count = 0;
-	obj = past_obj;
-	while (obj)
-	{
-		cl_obj[*count].pos = (cl_float3){{obj->pos.x, obj->pos.y, obj->pos.z}};
-		cl_obj[*count].rot = (cl_float3){{obj->rot.x, obj->rot.y, obj->rot.z}};
-		cl_obj[*count].col = (cl_float3){{obj->col.r, obj->col.g, obj->col.b}};
-		cl_obj[*count].r = obj->r;
-		cl_obj[*count].name = obj->name;
-		cl_obj[*count].specular = obj->specular;
-		(*count)++;
-		obj = obj->next;
+		cl_obj[i].pos = (cl_float3){{rt->obj_mas[i].pos.x, rt->obj_mas[i].pos.y, rt->obj_mas[i].pos.z}};
+		cl_obj[i].rot = (cl_float3){{rt->obj_mas[i].dir.x, rt->obj_mas[i].dir.y, rt->obj_mas[i].dir.z}};
+		cl_obj[i].col = (cl_float3){{rt->obj_mas[i].rgb.r, rt->obj_mas[i].rgb.g, rt->obj_mas[i].rgb.b}};
+		cl_obj[i].r = rt->obj_mas[i].radius;
+		cl_obj[i].name = rt->obj_mas[i].type;
+		cl_obj[i].specular = rt->obj_mas[i].spec;
+		cl_obj[i].coef_refl = rt->obj_mas[i].coef_refl;
+		cl_obj[i].limit = rt->obj_mas[i].limit;
+		i++;
 	}
 	return (cl_obj);
 }
 
-t_cl_light			*transform_light_data(t_light *light, int *count)
+t_cl_light			*transform_light_data(t_rt *rt)
 {
 	t_cl_light		*cl_light;
-	t_light			*p_light;
+	int i;
 
-	p_light = light;
-	*count = 0;
-	while (light)
+
+	if(!(cl_light = (t_cl_light*)malloc(sizeof(t_cl_light) * rt->scene.lgh_c)))
+		kill_all("ERROR: Can't allocate memory for cl_light <transform_light_data>");
+	i = 0;
+	while (i < rt->scene.lgh_c)
 	{
-		(*count)++;
-		light = light->next;
-	}
-	cl_light = (t_cl_light*)malloc(sizeof(t_cl_light) * *count);
-	*count = 0;
-	while (p_light)
-	{
-		cl_light[*count].pos =
-		(cl_float3){{p_light->pos.x, p_light->pos.y, p_light->pos.z}};
-		cl_light[*count].inten = p_light->inten;
-		cl_light[*count].col =
-		(cl_float3){{p_light->col.r, p_light->col.g, p_light->col.b}};
-		(*count)++;
-		p_light = p_light->next;
+		cl_light[i].pos =(cl_float3){{rt->lgh_mas[i].pos.x, rt->lgh_mas[i].pos.y, rt->lgh_mas[i].pos.z}};
+		cl_light[i].col =(cl_float3){{rt->lgh_mas[i].rgb.r, rt->lgh_mas[i].rgb.g, rt->lgh_mas[i].rgb.b}};
+		cl_light[i].inten = 20;
+		i++;
 	}
 	return (cl_light);
 }

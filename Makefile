@@ -6,13 +6,13 @@
 #    By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/09 16:02:42 by daron             #+#    #+#              #
-#    Updated: 2019/12/05 18:33:30 by rsticks          ###   ########.fr        #
+#    Updated: 2020/01/25 17:05:32 by daron            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = RTv1
+NAME = RT
 CC = gcc
-FLAGS = -Wall -Werror -Wextra -O3
+FLAGS = -Wall -Wextra -O3
 LIBRARIES = -L$(LIBFT_DIRECTORY) \
             -L$(FTVECTOR_DIRECTORY) \
 			-framework OpenGL \
@@ -40,27 +40,23 @@ FTVECTOR = $(FTVECTOR_DIRECTORY)ftvector.a
 FTVECTOR_DIRECTORY = ./ftvector/
 FTVECTOR_HEADERS = $(FTVECTOR_DIRECTORY)includes/
 
-HEADERS_LIST = rtv1.h
+HEADERS_LIST = rt.h
 HEADERS_DIRECTORY = ./includes/
 HEADERS = $(addprefix $(HEADERS_DIRECTORY), $(HEADERS_LIST))
 
 SOURCES_DIRECTORY = ./source/
 SOURCES_LIST = main.c \
-               	scene_parser.c \
-               		string_parser.c \
-               		light.c \
-               		check_object.c \
-               		cl.c \
-               		transform.c \
-               		event.c \
-               		key_for_cam.c \
-               		key_for_object.c \
-               		key_for_other.c \
-               		mouse.c \
-               		object_parser.c \
-               		intersection.c \
-               		additional_function.c \
-               		additional_function_1.c
+                    parser/work_with_list.c \
+                    parser/xml_tag.c \
+                    parser/scene_parser.c \
+                    parser/take_funtion.c \
+                    parser/camera_parser.c \
+                    parser/light_parser.c \
+                    parser/object_parser.c \
+                    parser/cheker.c \
+                    parser/list_to_mas.c \
+                    transform.c \
+                    cl.c
 SOURCES = $(addprefix $(SOURCES_DIRECTORY), $(SOURCES_LIST))
 
 OBJECTS_DIRECTORY = objects/
@@ -84,6 +80,7 @@ $(NAME): $(LIBFT) $(FTVECTOR) $(OBJECTS_DIRECTORY) $(OBJECTS)
 
 $(OBJECTS_DIRECTORY):
 	@mkdir -p $(OBJECTS_DIRECTORY)
+	@mkdir -p $(OBJECTS_DIRECTORY)/parser
 	@echo "$(NAME): $(GREEN)$(OBJECTS_DIRECTORY) was created$(RESET)"
 
 $(OBJECTS_DIRECTORY)%.o : $(SOURCES_DIRECTORY)%.c $(HEADERS)

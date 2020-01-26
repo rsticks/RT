@@ -24,6 +24,7 @@
 # define PLANE_ID 2
 # define CYLINDER_ID 3
 # define CONE_ID 4
+# define OBJ_FILE_ID	5
 
 /*
 ** Help
@@ -38,6 +39,8 @@ typedef struct		s_cl_object
 	float			r;
 	int				name;
 	float			specular;
+	float			coef_refl;
+	float			limit;
 }					t_cl_object;
 
 typedef	struct		s_cl_light
@@ -567,9 +570,9 @@ void ft_tracing(float x, float y, t_sdl *sdl, __global int *data, int gid)
 
 __kernel void 		start(__global t_cl_object *obj,
 							__global t_cl_light *light,
-							__global int *out_data,
 							__global int *i_mem,
-							__global float *d_mem)
+							__global float *d_mem,
+							__global int *out_data)
 {
 	
 	int				gid;
@@ -586,12 +589,15 @@ __kernel void 		start(__global t_cl_object *obj,
 	sdl.reflect_count = i_mem[4];
 	sdl.o_count = i_mem[5];
 	sdl.l_count = i_mem[6];
+
 	sdl.cam.pos = (float3){d_mem[0], d_mem[1], d_mem[2]};
 	sdl.ambient = d_mem[3];
 	sdl.cam.rot = (float3){d_mem[4], d_mem[5], d_mem[6]};
 	sdl.pref = i_mem[7];
+
 	sdl.obj = obj;
 	sdl.light = light;
+
 	x = gid % sdl.W_WIDTH;
 	y = gid / sdl.W_WIDTH;
 	ft_tracing(x, y, &sdl, out_data, gid);

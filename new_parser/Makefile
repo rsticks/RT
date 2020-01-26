@@ -6,7 +6,7 @@
 #    By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/09 16:02:42 by daron             #+#    #+#              #
-#    Updated: 2020/01/20 14:33:12 by daron            ###   ########.fr        #
+#    Updated: 2020/01/25 16:39:29 by daron            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,7 +45,16 @@ HEADERS_DIRECTORY = ./includes/
 HEADERS = $(addprefix $(HEADERS_DIRECTORY), $(HEADERS_LIST))
 
 SOURCES_DIRECTORY = ./source/
-SOURCES_LIST = main.c work_with_list.c xml_tag.c scene_parser.c take_funtion.c
+SOURCES_LIST = main.c \
+               parser/work_with_list.c \
+               parser/xml_tag.c \
+               parser/scene_parser.c \
+               parser/take_funtion.c \
+               parser/camera_parser.c \
+               parser/light_parser.c \
+               parser/object_parser.c \
+               parser/cheker.c \
+               parser/list_to_mas.c
 SOURCES = $(addprefix $(SOURCES_DIRECTORY), $(SOURCES_LIST))
 
 OBJECTS_DIRECTORY = objects/
@@ -69,6 +78,7 @@ $(NAME): $(LIBFT) $(FTVECTOR) $(OBJECTS_DIRECTORY) $(OBJECTS)
 
 $(OBJECTS_DIRECTORY):
 	@mkdir -p $(OBJECTS_DIRECTORY)
+	@mkdir -p $(OBJECTS_DIRECTORY)/parser
 	@echo "$(NAME): $(GREEN)$(OBJECTS_DIRECTORY) was created$(RESET)"
 
 $(OBJECTS_DIRECTORY)%.o : $(SOURCES_DIRECTORY)%.c $(HEADERS)

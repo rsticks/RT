@@ -99,8 +99,13 @@ add_executable(new_parser
         libft/source/get_next_line.c
         libft/source/projection_point_to_line.c
         source/main.c
-        source/scene_parser.c
-        source/take_funtion.c
-        source/xml_tag.c
-        source/work_with_list.c
+        source/parser/scene_parser.c
+        source/parser/take_funtion.c
+        source/parser/xml_tag.c
+        source/parser/work_with_list.c
+        source/parser/camera_parser.c
+        source/parser/light_parser.c
+        source/parser/object_parser.c
+        source/parser/cheker.c
+        source/parser/list_to_mas.c
         )

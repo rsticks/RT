@@ -1201,57 +1201,122 @@ CMakeFiles/new_parser.dir/source/main.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/new_parser.dir/source/main.c.s"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/daron/RT_command/new_parser/source/main.c -o CMakeFiles/new_parser.dir/source/main.c.s
 
-CMakeFiles/new_parser.dir/source/scene_parser.c.o: CMakeFiles/new_parser.dir/flags.make
-CMakeFiles/new_parser.dir/source/scene_parser.c.o: ../source/scene_parser.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/daron/RT_command/new_parser/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_89) "Building C object CMakeFiles/new_parser.dir/source/scene_parser.c.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/new_parser.dir/source/scene_parser.c.o   -c /Users/daron/RT_command/new_parser/source/scene_parser.c
+CMakeFiles/new_parser.dir/source/parser/scene_parser.c.o: CMakeFiles/new_parser.dir/flags.make
+CMakeFiles/new_parser.dir/source/parser/scene_parser.c.o: ../source/parser/scene_parser.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/daron/RT_command/new_parser/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_89) "Building C object CMakeFiles/new_parser.dir/source/parser/scene_parser.c.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/new_parser.dir/source/parser/scene_parser.c.o   -c /Users/daron/RT_command/new_parser/source/parser/scene_parser.c
 
-CMakeFiles/new_parser.dir/source/scene_parser.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/new_parser.dir/source/scene_parser.c.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/daron/RT_command/new_parser/source/scene_parser.c > CMakeFiles/new_parser.dir/source/scene_parser.c.i
+CMakeFiles/new_parser.dir/source/parser/scene_parser.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/new_parser.dir/source/parser/scene_parser.c.i"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/daron/RT_command/new_parser/source/parser/scene_parser.c > CMakeFiles/new_parser.dir/source/parser/scene_parser.c.i
 
-CMakeFiles/new_parser.dir/source/scene_parser.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/new_parser.dir/source/scene_parser.c.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/daron/RT_command/new_parser/source/scene_parser.c -o CMakeFiles/new_parser.dir/source/scene_parser.c.s
+CMakeFiles/new_parser.dir/source/parser/scene_parser.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/new_parser.dir/source/parser/scene_parser.c.s"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/daron/RT_command/new_parser/source/parser/scene_parser.c -o CMakeFiles/new_parser.dir/source/parser/scene_parser.c.s
 
-CMakeFiles/new_parser.dir/source/take_funtion.c.o: CMakeFiles/new_parser.dir/flags.make
-CMakeFiles/new_parser.dir/source/take_funtion.c.o: ../source/take_funtion.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/daron/RT_command/new_parser/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_90) "Building C object CMakeFiles/new_parser.dir/source/take_funtion.c.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/new_parser.dir/source/take_funtion.c.o   -c /Users/daron/RT_command/new_parser/source/take_funtion.c
+CMakeFiles/new_parser.dir/source/parser/take_funtion.c.o: CMakeFiles/new_parser.dir/flags.make
+CMakeFiles/new_parser.dir/source/parser/take_funtion.c.o: ../source/parser/take_funtion.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/daron/RT_command/new_parser/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_90) "Building C object CMakeFiles/new_parser.dir/source/parser/take_funtion.c.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/new_parser.dir/source/parser/take_funtion.c.o   -c /Users/daron/RT_command/new_parser/source/parser/take_funtion.c
 
-CMakeFiles/new_parser.dir/source/take_funtion.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/new_parser.dir/source/take_funtion.c.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/daron/RT_command/new_parser/source/take_funtion.c > CMakeFiles/new_parser.dir/source/take_funtion.c.i
+CMakeFiles/new_parser.dir/source/parser/take_funtion.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/new_parser.dir/source/parser/take_funtion.c.i"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/daron/RT_command/new_parser/source/parser/take_funtion.c > CMakeFiles/new_parser.dir/source/parser/take_funtion.c.i
 
-CMakeFiles/new_parser.dir/source/take_funtion.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/new_parser.dir/source/take_funtion.c.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/daron/RT_command/new_parser/source/take_funtion.c -o CMakeFiles/new_parser.dir/source/take_funtion.c.s
+CMakeFiles/new_parser.dir/source/parser/take_funtion.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/new_parser.dir/source/parser/take_funtion.c.s"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/daron/RT_command/new_parser/source/parser/take_funtion.c -o CMakeFiles/new_parser.dir/source/parser/take_funtion.c.s
 
-CMakeFiles/new_parser.dir/source/xml_tag.c.o: CMakeFiles/new_parser.dir/flags.make
-CMakeFiles/new_parser.dir/source/xml_tag.c.o: ../source/xml_tag.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/daron/RT_command/new_parser/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_91) "Building C object CMakeFiles/new_parser.dir/source/xml_tag.c.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/new_parser.dir/source/xml_tag.c.o   -c /Users/daron/RT_command/new_parser/source/xml_tag.c
+CMakeFiles/new_parser.dir/source/parser/xml_tag.c.o: CMakeFiles/new_parser.dir/flags.make
+CMakeFiles/new_parser.dir/source/parser/xml_tag.c.o: ../source/parser/xml_tag.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/daron/RT_command/new_parser/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_91) "Building C object CMakeFiles/new_parser.dir/source/parser/xml_tag.c.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/new_parser.dir/source/parser/xml_tag.c.o   -c /Users/daron/RT_command/new_parser/source/parser/xml_tag.c
 
-CMakeFiles/new_parser.dir/source/xml_tag.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/new_parser.dir/source/xml_tag.c.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/daron/RT_command/new_parser/source/xml_tag.c > CMakeFiles/new_parser.dir/source/xml_tag.c.i
+CMakeFiles/new_parser.dir/source/parser/xml_tag.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/new_parser.dir/source/parser/xml_tag.c.i"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/daron/RT_command/new_parser/source/parser/xml_tag.c > CMakeFiles/new_parser.dir/source/parser/xml_tag.c.i
 
-CMakeFiles/new_parser.dir/source/xml_tag.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/new_parser.dir/source/xml_tag.c.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/daron/RT_command/new_parser/source/xml_tag.c -o CMakeFiles/new_parser.dir/source/xml_tag.c.s
+CMakeFiles/new_parser.dir/source/parser/xml_tag.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/new_parser.dir/source/parser/xml_tag.c.s"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/daron/RT_command/new_parser/source/parser/xml_tag.c -o CMakeFiles/new_parser.dir/source/parser/xml_tag.c.s
 
-CMakeFiles/new_parser.dir/source/work_with_list.c.o: CMakeFiles/new_parser.dir/flags.make
-CMakeFiles/new_parser.dir/source/work_with_list.c.o: ../source/work_with_list.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/daron/RT_command/new_parser/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_92) "Building C object CMakeFiles/new_parser.dir/source/work_with_list.c.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/new_parser.dir/source/work_with_list.c.o   -c /Users/daron/RT_command/new_parser/source/work_with_list.c
+CMakeFiles/new_parser.dir/source/parser/work_with_list.c.o: CMakeFiles/new_parser.dir/flags.make
+CMakeFiles/new_parser.dir/source/parser/work_with_list.c.o: ../source/parser/work_with_list.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/daron/RT_command/new_parser/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_92) "Building C object CMakeFiles/new_parser.dir/source/parser/work_with_list.c.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/new_parser.dir/source/parser/work_with_list.c.o   -c /Users/daron/RT_command/new_parser/source/parser/work_with_list.c
 
-CMakeFiles/new_parser.dir/source/work_with_list.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/new_parser.dir/source/work_with_list.c.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/daron/RT_command/new_parser/source/work_with_list.c > CMakeFiles/new_parser.dir/source/work_with_list.c.i
+CMakeFiles/new_parser.dir/source/parser/work_with_list.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/new_parser.dir/source/parser/work_with_list.c.i"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/daron/RT_command/new_parser/source/parser/work_with_list.c > CMakeFiles/new_parser.dir/source/parser/work_with_list.c.i
 
-CMakeFiles/new_parser.dir/source/work_with_list.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/new_parser.dir/source/work_with_list.c.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/daron/RT_command/new_parser/source/work_with_list.c -o CMakeFiles/new_parser.dir/source/work_with_list.c.s
+CMakeFiles/new_parser.dir/source/parser/work_with_list.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/new_parser.dir/source/parser/work_with_list.c.s"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/daron/RT_command/new_parser/source/parser/work_with_list.c -o CMakeFiles/new_parser.dir/source/parser/work_with_list.c.s
+
+CMakeFiles/new_parser.dir/source/parser/camera_parser.c.o: CMakeFiles/new_parser.dir/flags.make
+CMakeFiles/new_parser.dir/source/parser/camera_parser.c.o: ../source/parser/camera_parser.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/daron/RT_command/new_parser/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_93) "Building C object CMakeFiles/new_parser.dir/source/parser/camera_parser.c.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/new_parser.dir/source/parser/camera_parser.c.o   -c /Users/daron/RT_command/new_parser/source/parser/camera_parser.c
+
+CMakeFiles/new_parser.dir/source/parser/camera_parser.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/new_parser.dir/source/parser/camera_parser.c.i"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/daron/RT_command/new_parser/source/parser/camera_parser.c > CMakeFiles/new_parser.dir/source/parser/camera_parser.c.i
+
+CMakeFiles/new_parser.dir/source/parser/camera_parser.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/new_parser.dir/source/parser/camera_parser.c.s"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/daron/RT_command/new_parser/source/parser/camera_parser.c -o CMakeFiles/new_parser.dir/source/parser/camera_parser.c.s
+
+CMakeFiles/new_parser.dir/source/parser/light_parser.c.o: CMakeFiles/new_parser.dir/flags.make
+CMakeFiles/new_parser.dir/source/parser/light_parser.c.o: ../source/parser/light_parser.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/daron/RT_command/new_parser/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_94) "Building C object CMakeFiles/new_parser.dir/source/parser/light_parser.c.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/new_parser.dir/source/parser/light_parser.c.o   -c /Users/daron/RT_command/new_parser/source/parser/light_parser.c
+
+CMakeFiles/new_parser.dir/source/parser/light_parser.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/new_parser.dir/source/parser/light_parser.c.i"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/daron/RT_command/new_parser/source/parser/light_parser.c > CMakeFiles/new_parser.dir/source/parser/light_parser.c.i
+
+CMakeFiles/new_parser.dir/source/parser/light_parser.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/new_parser.dir/source/parser/light_parser.c.s"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/daron/RT_command/new_parser/source/parser/light_parser.c -o CMakeFiles/new_parser.dir/source/parser/light_parser.c.s
+
+CMakeFiles/new_parser.dir/source/parser/object_parser.c.o: CMakeFiles/new_parser.dir/flags.make
+CMakeFiles/new_parser.dir/source/parser/object_parser.c.o: ../source/parser/object_parser.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/daron/RT_command/new_parser/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_95) "Building C object CMakeFiles/new_parser.dir/source/parser/object_parser.c.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/new_parser.dir/source/parser/object_parser.c.o   -c /Users/daron/RT_command/new_parser/source/parser/object_parser.c
+
+CMakeFiles/new_parser.dir/source/parser/object_parser.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/new_parser.dir/source/parser/object_parser.c.i"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/daron/RT_command/new_parser/source/parser/object_parser.c > CMakeFiles/new_parser.dir/source/parser/object_parser.c.i
+
+CMakeFiles/new_parser.dir/source/parser/object_parser.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/new_parser.dir/source/parser/object_parser.c.s"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/daron/RT_command/new_parser/source/parser/object_parser.c -o CMakeFiles/new_parser.dir/source/parser/object_parser.c.s
+
+CMakeFiles/new_parser.dir/source/parser/cheker.c.o: CMakeFiles/new_parser.dir/flags.make
+CMakeFiles/new_parser.dir/source/parser/cheker.c.o: ../source/parser/cheker.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/daron/RT_command/new_parser/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_96) "Building C object CMakeFiles/new_parser.dir/source/parser/cheker.c.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/new_parser.dir/source/parser/cheker.c.o   -c /Users/daron/RT_command/new_parser/source/parser/cheker.c
+
+CMakeFiles/new_parser.dir/source/parser/cheker.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/new_parser.dir/source/parser/cheker.c.i"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/daron/RT_command/new_parser/source/parser/cheker.c > CMakeFiles/new_parser.dir/source/parser/cheker.c.i
+
+CMakeFiles/new_parser.dir/source/parser/cheker.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/new_parser.dir/source/parser/cheker.c.s"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/daron/RT_command/new_parser/source/parser/cheker.c -o CMakeFiles/new_parser.dir/source/parser/cheker.c.s
+
+CMakeFiles/new_parser.dir/source/parser/list_to_mas.c.o: CMakeFiles/new_parser.dir/flags.make
+CMakeFiles/new_parser.dir/source/parser/list_to_mas.c.o: ../source/parser/list_to_mas.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/daron/RT_command/new_parser/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_97) "Building C object CMakeFiles/new_parser.dir/source/parser/list_to_mas.c.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/new_parser.dir/source/parser/list_to_mas.c.o   -c /Users/daron/RT_command/new_parser/source/parser/list_to_mas.c
+
+CMakeFiles/new_parser.dir/source/parser/list_to_mas.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/new_parser.dir/source/parser/list_to_mas.c.i"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/daron/RT_command/new_parser/source/parser/list_to_mas.c > CMakeFiles/new_parser.dir/source/parser/list_to_mas.c.i
+
+CMakeFiles/new_parser.dir/source/parser/list_to_mas.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/new_parser.dir/source/parser/list_to_mas.c.s"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/daron/RT_command/new_parser/source/parser/list_to_mas.c -o CMakeFiles/new_parser.dir/source/parser/list_to_mas.c.s
 
 # Object files for target new_parser
 new_parser_OBJECTS = \
@@ -1343,10 +1408,15 @@ new_parser_OBJECTS = \
 "CMakeFiles/new_parser.dir/libft/source/get_next_line.c.o" \
 "CMakeFiles/new_parser.dir/libft/source/projection_point_to_line.c.o" \
 "CMakeFiles/new_parser.dir/source/main.c.o" \
-"CMakeFiles/new_parser.dir/source/scene_parser.c.o" \
-"CMakeFiles/new_parser.dir/source/take_funtion.c.o" \
-"CMakeFiles/new_parser.dir/source/xml_tag.c.o" \
-"CMakeFiles/new_parser.dir/source/work_with_list.c.o"
+"CMakeFiles/new_parser.dir/source/parser/scene_parser.c.o" \
+"CMakeFiles/new_parser.dir/source/parser/take_funtion.c.o" \
+"CMakeFiles/new_parser.dir/source/parser/xml_tag.c.o" \
+"CMakeFiles/new_parser.dir/source/parser/work_with_list.c.o" \
+"CMakeFiles/new_parser.dir/source/parser/camera_parser.c.o" \
+"CMakeFiles/new_parser.dir/source/parser/light_parser.c.o" \
+"CMakeFiles/new_parser.dir/source/parser/object_parser.c.o" \
+"CMakeFiles/new_parser.dir/source/parser/cheker.c.o" \
+"CMakeFiles/new_parser.dir/source/parser/list_to_mas.c.o"
 
 # External object files for target new_parser
 new_parser_EXTERNAL_OBJECTS =
@@ -1439,13 +1509,18 @@ new_parser: CMakeFiles/new_parser.dir/libft/source/ft_toupper.c.o
 new_parser: CMakeFiles/new_parser.dir/libft/source/get_next_line.c.o
 new_parser: CMakeFiles/new_parser.dir/libft/source/projection_point_to_line.c.o
 new_parser: CMakeFiles/new_parser.dir/source/main.c.o
-new_parser: CMakeFiles/new_parser.dir/source/scene_parser.c.o
-new_parser: CMakeFiles/new_parser.dir/source/take_funtion.c.o
-new_parser: CMakeFiles/new_parser.dir/source/xml_tag.c.o
-new_parser: CMakeFiles/new_parser.dir/source/work_with_list.c.o
+new_parser: CMakeFiles/new_parser.dir/source/parser/scene_parser.c.o
+new_parser: CMakeFiles/new_parser.dir/source/parser/take_funtion.c.o
+new_parser: CMakeFiles/new_parser.dir/source/parser/xml_tag.c.o
+new_parser: CMakeFiles/new_parser.dir/source/parser/work_with_list.c.o
+new_parser: CMakeFiles/new_parser.dir/source/parser/camera_parser.c.o
+new_parser: CMakeFiles/new_parser.dir/source/parser/light_parser.c.o
+new_parser: CMakeFiles/new_parser.dir/source/parser/object_parser.c.o
+new_parser: CMakeFiles/new_parser.dir/source/parser/cheker.c.o
+new_parser: CMakeFiles/new_parser.dir/source/parser/list_to_mas.c.o
 new_parser: CMakeFiles/new_parser.dir/build.make
 new_parser: CMakeFiles/new_parser.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/daron/RT_command/new_parser/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_93) "Linking C executable new_parser"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/daron/RT_command/new_parser/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_98) "Linking C executable new_parser"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/new_parser.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

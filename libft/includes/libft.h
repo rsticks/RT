@@ -6,7 +6,7 @@
 /*   By: daron <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/03 10:36:11 by daron             #+#    #+#             */
-/*   Updated: 2019/11/16 14:19:40 by daron            ###   ########.fr       */
+/*   Updated: 2020/01/25 17:10:40 by daron            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,23 @@
  ** For get_next_line()
 */
 # define BUFF_SIZE 32
+
+/*
+ * s_double_inf
+ * a - for result double value
+ * e - for the pow of value
+ * c - for store char value
+ */
+
+typedef	struct		s_double_inf
+{
+	double			a;
+	int				e;
+	int				c;
+	int				sign;
+	int				i;
+	int				count;
+}					t_double_inf;
 
 typedef	struct		s_list
 {
@@ -51,6 +68,7 @@ void				*ft_memmove(void *destination,
 		const void *source, size_t n);
 void				*ft_memchr(const void *arr, int c, size_t n);
 int					ft_memcmp(const void *arr1, const void *arr2, size_t n);
+void				ft_memset_int(int *ptr, int i, size_t count);
 size_t				ft_strlen(const char *str);
 char				*ft_strdup(const char *str);
 char				*ft_strcpy(char *destination, const char *source);
@@ -68,6 +86,7 @@ char				*ft_strnstr(const char *str_b,
 int					ft_strcmp(const char *s1, const char *s2);
 int					ft_strncmp(const char *s1, const char *s2, size_t n);
 int					ft_atoi(const char *str);
+double				ft_atof(const char *str);
 int					ft_isalpha(int c);
 int					ft_isupcase(char c);
 int					ft_islowcase(char c);

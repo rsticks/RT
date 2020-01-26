@@ -92,10 +92,15 @@ set(CMAKE_DEPENDS_CHECK_C
   "/Users/daron/RT_command/new_parser/libft/source/get_next_line.c" "/Users/daron/RT_command/new_parser/cmake-build-debug/CMakeFiles/new_parser.dir/libft/source/get_next_line.c.o"
   "/Users/daron/RT_command/new_parser/libft/source/projection_point_to_line.c" "/Users/daron/RT_command/new_parser/cmake-build-debug/CMakeFiles/new_parser.dir/libft/source/projection_point_to_line.c.o"
   "/Users/daron/RT_command/new_parser/source/main.c" "/Users/daron/RT_command/new_parser/cmake-build-debug/CMakeFiles/new_parser.dir/source/main.c.o"
-  "/Users/daron/RT_command/new_parser/source/scene_parser.c" "/Users/daron/RT_command/new_parser/cmake-build-debug/CMakeFiles/new_parser.dir/source/scene_parser.c.o"
-  "/Users/daron/RT_command/new_parser/source/take_funtion.c" "/Users/daron/RT_command/new_parser/cmake-build-debug/CMakeFiles/new_parser.dir/source/take_funtion.c.o"
-  "/Users/daron/RT_command/new_parser/source/work_with_list.c" "/Users/daron/RT_command/new_parser/cmake-build-debug/CMakeFiles/new_parser.dir/source/work_with_list.c.o"
-  "/Users/daron/RT_command/new_parser/source/xml_tag.c" "/Users/daron/RT_command/new_parser/cmake-build-debug/CMakeFiles/new_parser.dir/source/xml_tag.c.o"
+  "/Users/daron/RT_command/new_parser/source/parser/camera_parser.c" "/Users/daron/RT_command/new_parser/cmake-build-debug/CMakeFiles/new_parser.dir/source/parser/camera_parser.c.o"
+  "/Users/daron/RT_command/new_parser/source/parser/cheker.c" "/Users/daron/RT_command/new_parser/cmake-build-debug/CMakeFiles/new_parser.dir/source/parser/cheker.c.o"
+  "/Users/daron/RT_command/new_parser/source/parser/light_parser.c" "/Users/daron/RT_command/new_parser/cmake-build-debug/CMakeFiles/new_parser.dir/source/parser/light_parser.c.o"
+  "/Users/daron/RT_command/new_parser/source/parser/list_to_mas.c" "/Users/daron/RT_command/new_parser/cmake-build-debug/CMakeFiles/new_parser.dir/source/parser/list_to_mas.c.o"
+  "/Users/daron/RT_command/new_parser/source/parser/object_parser.c" "/Users/daron/RT_command/new_parser/cmake-build-debug/CMakeFiles/new_parser.dir/source/parser/object_parser.c.o"
+  "/Users/daron/RT_command/new_parser/source/parser/scene_parser.c" "/Users/daron/RT_command/new_parser/cmake-build-debug/CMakeFiles/new_parser.dir/source/parser/scene_parser.c.o"
+  "/Users/daron/RT_command/new_parser/source/parser/take_funtion.c" "/Users/daron/RT_command/new_parser/cmake-build-debug/CMakeFiles/new_parser.dir/source/parser/take_funtion.c.o"
+  "/Users/daron/RT_command/new_parser/source/parser/work_with_list.c" "/Users/daron/RT_command/new_parser/cmake-build-debug/CMakeFiles/new_parser.dir/source/parser/work_with_list.c.o"
+  "/Users/daron/RT_command/new_parser/source/parser/xml_tag.c" "/Users/daron/RT_command/new_parser/cmake-build-debug/CMakeFiles/new_parser.dir/source/parser/xml_tag.c.o"
   )
 set(CMAKE_C_COMPILER_ID "AppleClang")
 

@@ -6,7 +6,7 @@
 #    By: daron <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/05 15:54:48 by daron             #+#    #+#              #
-#    Updated: 2019/11/16 14:19:40 by daron            ###   ########.fr        #
+#    Updated: 2020/01/25 17:10:40 by daron            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -94,7 +94,9 @@ SOURCES_LIST = ft_bzero.c \
 				projection_point_to_line.c \
 				ft_pow.c \
 				ft_strjoin_del.c \
-				ft_linelen.c
+				ft_linelen.c \
+				ft_atof.c \
+				ft_memset_int.c
 SOURCES = $(addprefix $(SOURCES_DIRECTORY), $(SOURCES_LIST))
 
 OBJECTS_DIRECTORY = objects/

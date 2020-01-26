@@ -359,16 +359,31 @@
 		<Unit filename="/Users/daron/RT_command/new_parser/source/main.c">
 			<Option target="new_parser"/>
 		</Unit>
-		<Unit filename="/Users/daron/RT_command/new_parser/source/scene_parser.c">
+		<Unit filename="/Users/daron/RT_command/new_parser/source/parser/camera_parser.c">
 			<Option target="new_parser"/>
 		</Unit>
-		<Unit filename="/Users/daron/RT_command/new_parser/source/take_funtion.c">
+		<Unit filename="/Users/daron/RT_command/new_parser/source/parser/cheker.c">
 			<Option target="new_parser"/>
 		</Unit>
-		<Unit filename="/Users/daron/RT_command/new_parser/source/work_with_list.c">
+		<Unit filename="/Users/daron/RT_command/new_parser/source/parser/light_parser.c">
 			<Option target="new_parser"/>
 		</Unit>
-		<Unit filename="/Users/daron/RT_command/new_parser/source/xml_tag.c">
+		<Unit filename="/Users/daron/RT_command/new_parser/source/parser/list_to_mas.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/source/parser/object_parser.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/source/parser/scene_parser.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/source/parser/take_funtion.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/source/parser/work_with_list.c">
+			<Option target="new_parser"/>
+		</Unit>
+		<Unit filename="/Users/daron/RT_command/new_parser/source/parser/xml_tag.c">
 			<Option target="new_parser"/>
 		</Unit>
 		<Unit filename="/Users/daron/RT_command/new_parser/CMakeLists.txt">
