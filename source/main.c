@@ -154,11 +154,11 @@ int				main(int argc, char **argv)
 	cl->cl_obj = transform_obj_data(&rt);
 	cl->cl_light = transform_light_data(&rt);
 	init_cl(cl, &rt);
-	//start_kernel(cl, &rt);
+	start_kernel(cl, &rt);
 	//sdl.cl = cl;
 
 
-	printf("Window name = %s\nWindow size = {%d, %d}\n maxref = %d \n "
+	printf("\n\nWindow name = %s\nWindow size = {%d, %d}\n maxref = %d \n "
 		   "antialias = %d\n ambient = %g\n effect = %s\n", rt.window.windname,
 		   rt.window.size[0], rt.window.size[0], rt.scene.maxref,
 		   rt.window.anti_alias, rt.scene.ambient, rt.window.effecr_name);

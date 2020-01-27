@@ -6,7 +6,7 @@
 /*   By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 19:16:48 by rsticks           #+#    #+#             */
-/*   Updated: 2020/01/27 14:43:34 by rsticks          ###   ########.fr       */
+/*   Updated: 2020/01/27 16:46:05 by daron            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,14 +117,20 @@ void			start_kernel(t_cl *cl, t_rt *rt)
 	//cl->cl_light = transform_light_data(sdl->light, &cl->l_c);
 	mem_to_kernel(rt, d_m, i_m);
 	gws = rt->window.size[0] * rt->window.size[1];
+	gws = 1000;
 	cl->err = clEnqueueWriteBuffer(cl->q, cl->i_m, CL_TRUE, 0, sizeof(int) * 5, i_m, 0, NULL, NULL);
 	cl->err = clEnqueueWriteBuffer(cl->q, cl->d_m, CL_TRUE, 0, sizeof(float) * 7, d_m, 0, NULL, NULL);
 	cl->err = clEnqueueWriteBuffer(cl->q, cl->obj_mem, CL_TRUE, 0, sizeof(t_cl_object) * rt->scene.obj_c, cl->cl_obj, 0, NULL, NULL);
 	cl->err = clEnqueueWriteBuffer(cl->q, cl->light_mem, CL_TRUE, 0, sizeof(t_cl_light) * rt->scene.lgh_c, cl->cl_light, 0, NULL, NULL);
 	cl->err = clEnqueueNDRangeKernel(cl->q, cl->kernel, 1, NULL, &gws, NULL, 0, NULL, NULL);
 	cl->err = clEnqueueReadBuffer(cl->q, cl->img, CL_TRUE, 0, sizeof(int) * gws, cl->data, 0, NULL, NULL);
+	int i = -1;
+	while (++i < rt->window.size[0] * rt->window.size[1])
+		printf("%d\n", cl->data[i]);
+
+
 	SDL_RenderClear(rt->window.render);
-	SDL_UpdateTexture(rt->window.textur, NULL, cl->data, W_WIDTH * sizeof(int));
+	SDL_UpdateTexture(rt->window.textur, NULL, cl->data, rt->window.size[0] * sizeof(int));
 	SDL_RenderCopy(rt->window.render, rt->window.textur, NULL, NULL);
 	SDL_RenderPresent(rt->window.render);
 	free_o_l(cl);

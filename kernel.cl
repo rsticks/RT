@@ -38,7 +38,7 @@ typedef struct		s_cl_object
 	float3			col;
 	float			r;
 	int				name;
-	float			specular;
+	int			specular;
 	float			coef_refl;
 	float			limit;
 }					t_cl_object;
@@ -132,21 +132,21 @@ float		vec_len(float3 v1);
 float3		vec_norm(float3 v1);
 float3  	vec_cross(float3 v1, float3 v2);
 float		get_quadratic_solution(float a, float b, float discriminant);
-float 		get_sphere_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_sdl *sdl);
-float 		get_plane_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_sdl *sdl);
-float 		get_cone_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_sdl *sdl);
-float 		get_cylinder_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_sdl *sdl);
+float 		get_sphere_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_rt *rt);
+float 		get_plane_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_rt *rt);
+float 		get_cone_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_rt *rt);
+float 		get_cylinder_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_rt *rt);
 int			intersection(t_rt *rt, float3 *ray_dir, float3 *cam_pos);
 float3 object_norm(t_rt *rt, int i, float3 pos);
 int		shadow(t_rt *rt, int i_obj, int i_light, float3 pos);
-void	transfer_light(int i_obj, int i_light, float *tab, float d, t_rt *rt)
-void gloss(t_rt *rt, int i_obj, float *tab, float3 *dist, float d)
+void	transfer_light(int i_obj, int i_light, float *tab, float d, t_rt *rt);
+void gloss(t_rt *rt, int i_obj, float *tab, float3 *dist, float d);
 int 		ref_inter(t_sdl *sdl, int i_cur_obj , float3 pos);
 int 		ref_init(t_sdl *sdl, int i_obj, float3 *pos);
-int reflection(t_rt *rt, int i_obj, float3 *pos, float *tab)
+int reflection(t_rt *rt, int i_obj, float3 *pos, float *tab);
 void 	calculate_light(t_rt *rt, int i_obj, float *tab);
 void		ft_average(float *r, float *tab);
-void 		create_ray(t_sdl *sdl, float x, float y);
+void create_ray(t_rt *rt, float x, float y);
 void 		ft_tracing(float x, float y, t_rt *rt, __global int *data, int gid);
 
 
@@ -390,7 +390,7 @@ int		shadow(t_rt *rt, int i_obj, int i_light, float3 pos)
 				d = get_cone_intersection(&dist, &pos, i, rt);
 			else if (rt->obj[i].name == PLANE_ID)
 				d = get_plane_intersection(&dist, &pos, i, rt);
-			if (d > EPS && d < sdl->t)
+			if (d > EPS && d < rt->t)
 				return (1);
 		}
 		i++;
@@ -404,7 +404,7 @@ void gloss(t_rt *rt, int i_obj, float *tab, float3 *dist, float d)
 	float	tmp;
 	float3	ref;
 
-	if (rt->obj[i_obj].name != PLANE_ID && rt->gloss_activ == 1)
+	if (rt->obj[i_obj].name != PLANE_ID && rt->obj[i_obj].specular == 1)
 	{
 		spec = 0.0;
 		ref = vec_scale(rt->norm, (2.0 * vec_dot(rt->norm, *dist)));
@@ -421,7 +421,7 @@ void gloss(t_rt *rt, int i_obj, float *tab, float3 *dist, float d)
 	}
 }
 
-int ref_inter(t_rt *rt, int i_cur_obj , float3 pos)
+/*int ref_inter(t_rt *rt, int i_cur_obj , float3 pos)
 {
 	double	dist;
 	int i;
@@ -497,6 +497,7 @@ int reflection(t_rt *rt, int i_obj, float3 *pos, float *tab)
 	}
 	return (0);
 }
+*/
 
 void 	calculate_light(t_rt *rt, int i_obj, float *tab)
 {
@@ -504,13 +505,12 @@ void 	calculate_light(t_rt *rt, int i_obj, float *tab)
 	float3 dist;
 	float d;
 	int ind;
-	int	tmp;
 
 	ind = 0;
 	pos = (float3){rt->cam.pos.x + rt->t * rt->ray_dir.x,
 				  rt->cam.pos.y + rt->t * rt->ray_dir.y,
 				  rt->cam.pos.z + rt->t * rt->ray_dir.z};
-	sdl->norm = object_norm(rt, i_obj, pos);
+	rt->norm = object_norm(rt, i_obj, pos);
 
 	while (ind < rt->scene.lgh_c)
 	{
@@ -524,7 +524,7 @@ void 	calculate_light(t_rt *rt, int i_obj, float *tab)
 		gloss(rt, i_obj, tab, &dist , d);
 		ind++;
 	}
-	sdl->refpos = (float3){sdl->ray_dir.x, sdl->ray_dir.y, sdl->ray_dir.z};
+	rt->refpos = (float3){rt->ray_dir.x, rt->ray_dir.y, rt->ray_dir.z};
 	//if (sdl->reflect_count > 0)
 	//	reflection(sdl, i_obj, &pos, tab);
 }
@@ -581,7 +581,7 @@ void ft_tracing(float x, float y, t_rt *rt, __global int *data, int gid)
 		while (x < x_next)
 		{
 			p += 1;
-			create_ray(sdl, x, y);
+			create_ray(rt, x, y);
 			ft_fzero(tab, 4);
 			i = intersection(rt, &rt->ray_dir, &rt->cam.pos);
 			if(i >= 0)
@@ -591,8 +591,9 @@ void ft_tracing(float x, float y, t_rt *rt, __global int *data, int gid)
 		}
 		y = y + (1.0 / rt->window.anti_alias);
 	}
-	data[gid] = (((int)(r[0] / p * 255) & 0xff) << 16) + (((int)(r[1] / p * 255) & 0xff) << 8) 
-	+ (((int)(r[2] / p * 255) & 0xff));
+	//printf("%g, %g, %g\n", r[0], r[1], r[2]);
+	printf("Hellow\n", r[0], r[1], r[2]);
+	data[gid] = (((int)(r[0] / p * 255) & 0xff) << 16) + (((int)(r[1] / p * 255) & 0xff) << 8) + (((int)(r[2] / p * 255) & 0xff));
 }
 
 
@@ -602,12 +603,9 @@ __kernel void 		start(__global t_cl_object *obj,
 							__global float *d_mem,
 							__global int *out_data)
 {
-	
-	int				gid;
-	int				x;
-	int				y;
+	int				gid, x, y;
 	t_rt			rt;
-	int				obj_ind;
+
 	gid = get_global_id(0);
 
 	rt.window.size[0] = i_mem[0];
@@ -623,7 +621,8 @@ __kernel void 		start(__global t_cl_object *obj,
 	rt.obj = obj;
 	rt.light = light;
 
-	x = gid % sdl.W_WIDTH;
-	y = gid / sdl.W_WIDTH;
+	x = gid % rt.window.size[0];
+	y = gid / rt.window.size[1];
+	printf("Hellow\n");
 	ft_tracing(x, y, &rt, out_data, gid);
 }

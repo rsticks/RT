@@ -66,7 +66,7 @@ typedef struct			s_cl_object
 	cl_float3			col;
 	cl_float			r;
 	cl_int				name;
-	cl_float			specular;
+	cl_int			specular;
 	cl_float			coef_refl;
 	cl_float			limit;
 }						t_cl_object;
