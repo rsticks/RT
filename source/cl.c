@@ -6,7 +6,7 @@
 /*   By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 19:16:48 by rsticks           #+#    #+#             */
-/*   Updated: 2020/01/26 16:22:17 by daron            ###   ########.fr       */
+/*   Updated: 2020/01/27 14:43:34 by rsticks          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,25 @@ void			ft_init_cl(t_cl *cl, t_rt *rt)
 	w = rt->window.size[0] * rt->window.size[1];
 	cl->prog = clCreateProgramWithSource(cl->ct, 1,
 	(const char**)&cl->k_s, &cl->k_l, &cl->err);
+	printf("%-32s || %d\n", "clCreateProgramWithSource", cl->err);
 	cl->err = clBuildProgram(cl->prog, 1, cl->dev_id, NULL, NULL, NULL);
+	printf("%-32s || %d\n", "clBuildProgram" , cl->err);
+	if (cl->err == CL_BUILD_PROGRAM_FAILURE)
+	{
+		// Determine the size of the log
+		size_t log_size;
+		clGetProgramBuildInfo(cl->prog, cl->dev_id[0], CL_PROGRAM_BUILD_LOG, 0, NULL, &log_size);
+
+		// Allocate memory for the log
+		char *log = (char *) malloc(log_size);
+
+		// Get the log
+		clGetProgramBuildInfo(cl->prog, cl->dev_id[0], CL_PROGRAM_BUILD_LOG, log_size, log, NULL);
+
+		printf("--------------------------------ERRORS OF KERNEL------------------------------------\n");
+		// Print the log
+		printf("%s\n", log);
+	}
 	cl->kernel = clCreateKernel(cl->prog, "start", &cl->err);
 	cl->obj_mem = clCreateBuffer(cl->ct, CMRW, sizeof(t_cl_object) * rt->scene.obj_c, NULL, &cl->err);
 	cl->light_mem = clCreateBuffer(cl->ct, CMRW, sizeof(t_cl_light) * rt->scene.lgh_c, NULL, &cl->err);
@@ -41,15 +59,26 @@ void			ft_init_cl(t_cl *cl, t_rt *rt)
 
 void			init_cl(t_cl *cl, t_rt *rt)
 {
+	char	test[2048];
+	
 	cl->err = clGetPlatformIDs(0, NULL, &cl->n_plat);
+	printf("%-32s || %d\n", "init cl", cl->err);
 	cl->p_id = (cl_platform_id *)malloc(sizeof(cl_platform_id) * cl->n_plat);
 	cl->err = clGetPlatformIDs(cl->n_plat, cl->p_id, NULL);
+	clGetPlatformInfo(cl->p_id[0], CL_PLATFORM_NAME, 2048, test, NULL);
+	printf("%-32s || %s\n", "platform id", test);
 	cl->err = clGetDeviceIDs(cl->p_id[0], CDTG, 0, NULL, &cl->n_dev);
 	cl->dev_id = (cl_device_id *)malloc(sizeof(cl_device_id) * cl->n_dev);
+	printf("%-32s || %d\n", "num device", cl->n_dev);
 	cl->err = clGetDeviceIDs(cl->p_id[0], CDTG,
 	cl->n_dev, cl->dev_id, NULL);
+	clGetDeviceInfo(cl->dev_id[0], CL_DEVICE_NAME, 1024, test, NULL);
+	printf("%-32s || %s\n", "Device id", test);
+	printf("%-32s || %d\n", "clGetDeviceIDs", cl->err);
 	cl->ct = clCreateContext(NULL, 1, cl->dev_id, NULL, NULL, &cl->err);
+	printf("%-32s || %d\n", "clCreateContext", cl->err);
 	cl->q = clCreateCommandQueue(cl->ct, cl->dev_id[0], 0, &cl->err);
+	printf("%-32s || %d\n", "CreateCommandQueue", cl->err);
 	cl->fd = open("kernel.cl", O_RDONLY);
 	cl->k_s = (char*)malloc(sizeof(char) * 17000);
 	cl->i = read(cl->fd, cl->k_s, 17000);
