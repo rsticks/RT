@@ -6,7 +6,7 @@
 /*   By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/17 16:20:37 by daron             #+#    #+#             */
-/*   Updated: 2019/12/05 16:43:35 by rsticks          ###   ########.fr       */
+/*   Updated: 2020/01/20 19:37:12 by rsticks          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,37 @@
 ** ------------------------------Structures-------------------------------------
 ** -------------------------Structures Fot Cernel-------------------------------
 */
+
+typedef struct s_list_surface
+{
+	/* data */
+};
+
+
+typedef struct 			s_list_vn
+{
+	int					xn;
+	int					yn;
+	int 				zn;
+	struct s_list_vn	*next;
+	struct s_list_vn	*prev;
+}						t_list_vn;
+
+typedef struct			s_list_v
+{
+	int					x;
+	int					y;
+	int					z;
+	struct s_list_v		*next;
+	struct s_list_vn	*prev;
+}						t_list_v;
+
+typedef struct 			s_parse_obj
+{
+	int					fd;
+	char				*line;
+}						t_parse_obj;
+
 
 typedef struct			s_cl_object
 {

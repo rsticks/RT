@@ -1,7 +1,7 @@
 scene
 {
-	cam_pos(0 0 -250)
-	cam_dir(0 0 1)
+	cam_pos(0 0 -2)
+	cam_dir(0 0 0)
 	ambient(15)
 }
 
