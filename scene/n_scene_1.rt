@@ -1,6 +1,6 @@
 <scene>
 	<maxref> {0} </maxref>
-	<name> {Test scene for show ambiant} </name>
+	<name> {Test scene_1} </name>
 	<res> {900 900} </res>
 	<antialias> {1} </antialias>
 	<ambiant> {0.5} </ambiant>

@@ -27,7 +27,7 @@ static void check_inti_maxref(int maxref, int str_c)
 
 static void check_inti_ambiant(float ambiant, int str_c)
 {
-	if (!(ambiant >= 0.0 && ambiant <= 1.0))
+	if (!(ambiant >= 0.0 && ambiant <= 100.0))
 		kill_error("Wrong format for ambiant count", str_c);
 }
 

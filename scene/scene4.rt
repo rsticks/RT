@@ -25,6 +25,7 @@ content
 		pos(-70 0 -90)
 		int(40)
 	}
+
 	object(plane)
 	{
 		col(130 130 130)
@@ -32,6 +33,7 @@ content
 		rot(0 -1 0)
 		spc(200)
 	}
+
 	object(plane)
 	{
 		col(131 130 130)
@@ -39,6 +41,7 @@ content
 		rot(-1 0 0)
 		spc(200)
 	}
+
 	object(plane)
 	{
 		col(130 130 130)
@@ -46,6 +49,7 @@ content
 		rot(2 1 0)
 		spc(200)
 	}
+
 	object(plane)
 	{
 		col(130 130 130)
@@ -53,6 +57,7 @@ content
 		rot(0 0 -1)
 		spc(200)
 	}
+
 	object(plane)
 	{
 		col(130 130 130)
@@ -60,6 +65,7 @@ content
 		rot(0 1 0)
 		spc(200)
 	}
+
 	object(sphere)
 	{
 		col(0 200 100)
