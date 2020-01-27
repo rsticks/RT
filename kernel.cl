@@ -56,17 +56,47 @@ typedef	struct		s_ray
 	float3			dir;
 }					t_ray;
 
-typedef struct		s_point
-{
-	float 			x;
-	float 			y;
-}					t_point;
-
 typedef	struct		s_cam
 {
 	float3			pos;
 	float3			rot;
 }					t_cam;
+
+typedef	struct		s_win
+{
+	int				size[2];
+	int 			anti_alias;
+}					t_win;
+
+typedef	struct		s_scene
+{
+	float	spec; // Уровень блестящести
+	int 	reflection_c; //Количество отражений
+	int		obj_c; // Количество считанных объектов
+	int		lgh_c; // Количество источников света
+
+	int		maxref;
+	float	ambient;
+} t_scene;
+
+typedef struct	s_rt
+{
+	t_scene scene;
+	t_win window;
+	t_cam cam;
+
+	float3					ray_dir;
+	int 					cpt;
+	float					t;
+	float3 					dist;
+	float3					norm;
+	float3					refpos;
+	float3					ref;
+
+	__global t_cl_object	*obj;
+	__global t_cl_light		*light;
+
+}		t_rt;
 
 typedef struct				s_sdl
 {
@@ -106,18 +136,18 @@ float 		get_sphere_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_sdl *
 float 		get_plane_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_sdl *sdl);
 float 		get_cone_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_sdl *sdl);
 float 		get_cylinder_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_sdl *sdl);
-int			intersection(t_sdl *sdl, float3 *ray_dir, float3 *cam_pos);
-float3 		object_norm(t_sdl *sdl, int i, float3 pos);
-int			shadow(t_sdl *sdl, int i_obj, int i_light, float3 pos);
-void 		transfer_light(int i_obj, int i_light, float *tab, float d, t_sdl *sdl);
-void 		gloss(t_sdl *sdl, int i_obj, float *tab, float3 *dist, float d);
+int			intersection(t_rt *rt, float3 *ray_dir, float3 *cam_pos);
+float3 object_norm(t_rt *rt, int i, float3 pos);
+int		shadow(t_rt *rt, int i_obj, int i_light, float3 pos);
+void	transfer_light(int i_obj, int i_light, float *tab, float d, t_rt *rt)
+void gloss(t_rt *rt, int i_obj, float *tab, float3 *dist, float d)
 int 		ref_inter(t_sdl *sdl, int i_cur_obj , float3 pos);
 int 		ref_init(t_sdl *sdl, int i_obj, float3 *pos);
-int 		reflection(t_sdl *sdl, int i_obj, float3 *pos, float *tab);
-void 		calculate_light(t_sdl *sdl, int i_obj, float *tab);
+int reflection(t_rt *rt, int i_obj, float3 *pos, float *tab)
+void 	calculate_light(t_rt *rt, int i_obj, float *tab);
 void		ft_average(float *r, float *tab);
 void 		create_ray(t_sdl *sdl, float x, float y);
-void 		ft_tracing(float x, float y, t_sdl *sdl, __global int *data, int gid);
+void 		ft_tracing(float x, float y, t_rt *rt, __global int *data, int gid);
 
 
 
@@ -204,76 +234,76 @@ float				get_quadratic_solution(float a, float b, float discriminant)
 }
 
 
-float get_sphere_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_sdl *sdl)
+float get_sphere_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_rt *rt)
 {
 	float b;
 	float c;
 	float a;
 	float discriminant;
 
-	sdl->dist = vec_sub(*cam_pos, sdl->obj[i].pos);
+	rt->dist = vec_sub(*cam_pos, rt->obj[i].pos);
 	a = vec_dot(*ray_dir, *ray_dir);
-	b = 2 * vec_dot(*ray_dir, sdl->dist);
-	c = vec_dot(sdl->dist, sdl->dist) - pow(sdl->obj[i].r, 2);
+	b = 2 * vec_dot(*ray_dir, rt->dist);
+	c = vec_dot(rt->dist, rt->dist) - pow(rt->obj[i].r, 2);
 	discriminant = pow(b, 2) - 4 * a * c;
 	if (discriminant < 0)
 		return (-1);
 	return (get_quadratic_solution(a, b , discriminant));
 }
 
-float get_plane_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_sdl *sdl)
+float get_plane_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_rt *rt)
 {
 	float dist;
 	
-	dist = ((vec_dot(sdl->obj[i].rot, sdl->obj[i].pos) - vec_dot(sdl->obj[i].rot, 
-	*cam_pos)) / vec_dot(sdl->obj[i].rot, *ray_dir));
+	dist = ((vec_dot(rt->obj[i].rot, rt->obj[i].pos) - vec_dot(rt->obj[i].rot,
+	*cam_pos)) / vec_dot(rt->obj[i].rot, *ray_dir));
 	if (dist < EPS)
 		return (-1);
 	return (dist);
 }
 
-float get_cone_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_sdl *sdl)
+float get_cone_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_rt *rt)
 {
 	float	b;
 	float	c;
 	float	a;
 	float discriminant;
 
-	sdl->dist = vec_sub(*cam_pos, sdl->obj[i].pos);
-	sdl->obj[i].rot = vec_norm(sdl->obj[i].rot);
-	a = vec_dot(*ray_dir, *ray_dir) - (1 + pow(tan(sdl->obj[i].r), 2)) 
-	* pow(vec_dot(*ray_dir, sdl->obj[i].rot), 2);
-	b = 2 * (vec_dot(*ray_dir, sdl->dist) - (1 + pow(tan(sdl->obj[i].r), 2)) 
-	* vec_dot(*ray_dir, sdl->obj[i].rot) * vec_dot(sdl->dist, sdl->obj[i].rot));
-	c = vec_dot(sdl->dist, sdl->dist) - (1 + pow(tan(sdl->obj[i].r), 2)) 
-	* pow(vec_dot(sdl->dist, sdl->obj[i].rot), 2);
+	rt->dist = vec_sub(*cam_pos, rt->obj[i].pos);
+	rt->obj[i].rot = vec_norm(rt->obj[i].rot);
+	a = vec_dot(*ray_dir, *ray_dir) - (1 + pow(tan(rt->obj[i].r), 2))
+	* pow(vec_dot(*ray_dir, rt->obj[i].rot), 2);
+	b = 2 * (vec_dot(*ray_dir, rt->dist) - (1 + pow(tan(rt->obj[i].r), 2))
+	* vec_dot(*ray_dir, rt->obj[i].rot) * vec_dot(rt->dist, rt->obj[i].rot));
+	c = vec_dot(rt->dist, rt->dist) - (1 + pow(tan(rt->obj[i].r), 2))
+	* pow(vec_dot(rt->dist, rt->obj[i].rot), 2);
 	discriminant = b * b - 4 * a * c;
 	if (discriminant < 0)
 		return (-1);
 	return (get_quadratic_solution(a, b, discriminant));
 }
 
-float get_cylinder_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_sdl *sdl)
+float get_cylinder_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_rt *rt)
 {
 	float b;
 	float c;
 	float a;
 	float discriminant;
 
-	sdl->dist = vec_sub(*cam_pos, sdl->obj[i].pos);
-	sdl->obj[i].rot = vec_norm(sdl->obj[i].rot);
-	a = vec_dot(*ray_dir, *ray_dir) - pow(vec_dot(*ray_dir, sdl->obj[i].rot), 2);
-	b = 2 * (vec_dot(*ray_dir, sdl->dist) - (vec_dot(*ray_dir, sdl->obj[i].rot) 
-	* vec_dot(sdl->dist, sdl->obj[i].rot)));
-	c = vec_dot(sdl->dist, sdl->dist) - pow(vec_dot(sdl->dist, sdl->obj[i].rot), 2) 
-	- pow(sdl->obj[i].r, 2);
+	rt->dist = vec_sub(*cam_pos, rt->obj[i].pos);
+	rt->obj[i].rot = vec_norm(rt->obj[i].rot);
+	a = vec_dot(*ray_dir, *ray_dir) - pow(vec_dot(*ray_dir, rt->obj[i].rot), 2);
+	b = 2 * (vec_dot(*ray_dir, rt->dist) - (vec_dot(*ray_dir, rt->obj[i].rot)
+	* vec_dot(rt->dist, rt->obj[i].rot)));
+	c = vec_dot(rt->dist, rt->dist) - pow(vec_dot(rt->dist, rt->obj[i].rot), 2)
+	- pow(rt->obj[i].r, 2);
 	discriminant = pow(b, 2) - 4 * a * c;
 	if (discriminant < 0)
 		return (-1);
 	return (get_quadratic_solution(a, b, discriminant));
 }
 
-int			intersection(t_sdl *sdl, float3 *ray_dir, float3 *cam_pos)
+int			intersection(t_rt *rt, float3 *ray_dir, float3 *cam_pos)
 {
 	float dist;
 	int i;
@@ -281,22 +311,22 @@ int			intersection(t_sdl *sdl, float3 *ray_dir, float3 *cam_pos)
 
 	i = 0;
 	f = -1;
-	sdl->t = 90000.0;
+	rt->t = 90000.0;
 	dist = 0.01;
-	while (i < sdl->o_count)
+	while (i < rt->scene.obj_c)
 	{
-		if (sdl->obj[i].name == SPHERE_ID)
-			dist = get_sphere_intersection(ray_dir, cam_pos, i, sdl);
-		else if (sdl->obj[i].name == CYLINDER_ID)
-			dist = get_cylinder_intersection(ray_dir, cam_pos, i, sdl);
-		else if (sdl->obj[i].name == CONE_ID)
-			dist = get_cone_intersection(ray_dir, cam_pos, i, sdl);
-		else if (sdl->obj[i].name == PLANE_ID)
-			dist = get_plane_intersection(ray_dir, cam_pos, i, sdl);
-		if (dist > EPS && dist < sdl->t)
+		if (rt->obj[i].name == SPHERE_ID)
+			dist = get_sphere_intersection(ray_dir, cam_pos, i, rt);
+		else if (rt->obj[i].name == CYLINDER_ID)
+			dist = get_cylinder_intersection(ray_dir, cam_pos, i, rt);
+		else if (rt->obj[i].name == CONE_ID)
+			dist = get_cone_intersection(ray_dir, cam_pos, i, rt);
+		else if (rt->obj[i].name == PLANE_ID)
+			dist = get_plane_intersection(ray_dir, cam_pos, i, rt);
+		if (dist > EPS && dist < rt->t)
 		{
 			f = i;
-			sdl->t = dist;
+			rt->t = dist;
 		}
 		i++;
 	}
@@ -304,40 +334,40 @@ int			intersection(t_sdl *sdl, float3 *ray_dir, float3 *cam_pos)
 }
 
 
-float3 object_norm(t_sdl *sdl, int i, float3 pos)
+float3 object_norm(t_rt *rt, int i, float3 pos)
 {
 	float3 norm;
 	float3 tmp;
 	float3 tmp2;
 
-	if (sdl->obj[i].name == CONE_ID || sdl->obj[i].name == CYLINDER_ID)
+	if (rt->obj[i].name == CONE_ID || rt->obj[i].name == CYLINDER_ID)
 	{
-		tmp = vec_scale(sdl->obj[i].rot, (vec_dot(sdl->ray_dir, sdl->obj[i].rot) * sdl->t 
-		+ vec_dot(sdl->dist, sdl->obj[i].rot)));
-		if (sdl->obj[i].name == CONE_ID)
-			tmp = vec_scale(tmp, (1 + pow(tan(sdl->obj[i].r), 2)));
-		tmp2 = vec_sub(pos, sdl->obj[i].pos);
+		tmp = vec_scale(rt->obj[i].rot, (vec_dot(rt->ray_dir, rt->obj[i].rot) * rt->t
+		+ vec_dot(rt->dist, rt->obj[i].rot)));
+		if (rt->obj[i].name == CONE_ID)
+			tmp = vec_scale(tmp, (1 + pow(tan(rt->obj[i].r), 2)));
+		tmp2 = vec_sub(pos, rt->obj[i].pos);
 		norm = vec_sub(tmp2, tmp);
 	}
-	else if (sdl->obj[i].name == PLANE_ID)
-		norm = sdl->obj[i].rot;
-	else if (sdl->obj[i].name == SPHERE_ID)
-		norm = vec_sub(pos, sdl->obj[i].pos);
+	else if (rt->obj[i].name == PLANE_ID)
+		norm = rt->obj[i].rot;
+	else if (rt->obj[i].name == SPHERE_ID)
+		norm = vec_sub(pos, rt->obj[i].pos);
 	return (vec_norm(norm));
 }
 
 
-void	transfer_light(int i_obj, int i_light, float *tab, float d, t_sdl *sdl)
+void	transfer_light(int i_obj, int i_light, float *tab, float d, t_rt *rt)
 {
 	//printf("%f\n", d);
 	
 	tab[3] = ft_clamp(tab[3] * 4.0 * d, 0.0, 1.0);
-	tab[0] += tab[3] * (sdl->obj[i_obj].col.x / 255) * (sdl->light[i_light].col.x / 255);
-	tab[1] += tab[3] * (sdl->obj[i_obj].col.y / 255) * (sdl->light[i_light].col.y / 255);
-	tab[2] += tab[3] * (sdl->obj[i_obj].col.z / 255) * (sdl->light[i_light].col.z / 255);
+	tab[0] += tab[3] * (rt->obj[i_obj].col.x / 255) * (rt->light[i_light].col.x / 255);
+	tab[1] += tab[3] * (rt->obj[i_obj].col.y / 255) * (rt->light[i_light].col.y / 255);
+	tab[2] += tab[3] * (rt->obj[i_obj].col.z / 255) * (rt->light[i_light].col.z / 255);
 }
 
-int		shadow(t_sdl *sdl, int i_obj, int i_light, float3 pos)
+int		shadow(t_rt *rt, int i_obj, int i_light, float3 pos)
 {
 	float3	dist;
 	float 	d;
@@ -345,21 +375,21 @@ int		shadow(t_sdl *sdl, int i_obj, int i_light, float3 pos)
 
 	
 	i = 0;
-	dist = vec_sub(sdl->light[i_light].pos, pos);
-	sdl->t = native_sqrt(vec_dot(dist, dist));
+	dist = vec_sub(rt->light[i_light].pos, pos);
+	rt->t = native_sqrt(vec_dot(dist, dist));
 	dist = vec_norm(dist);
-	while (i < sdl->o_count)
+	while (i < rt->scene.obj_c)
 	{
 		if (i != i_obj)
 		{
-			if (sdl->obj[i].name == SPHERE_ID)
-				d = get_sphere_intersection(&dist, &pos, i, sdl);
-			else if (sdl->obj[i].name == CYLINDER_ID)
-				d = get_cylinder_intersection(&dist, &pos, i, sdl);
-			else if (sdl->obj[i].name == CONE_ID)
-				d = get_cone_intersection(&dist, &pos, i, sdl);
-			else if (sdl->obj[i].name == PLANE_ID)
-				d = get_plane_intersection(&dist, &pos, i, sdl);
+			if (rt->obj[i].name == SPHERE_ID)
+				d = get_sphere_intersection(&dist, &pos, i, rt);
+			else if (rt->obj[i].name == CYLINDER_ID)
+				d = get_cylinder_intersection(&dist, &pos, i, rt);
+			else if (rt->obj[i].name == CONE_ID)
+				d = get_cone_intersection(&dist, &pos, i, rt);
+			else if (rt->obj[i].name == PLANE_ID)
+				d = get_plane_intersection(&dist, &pos, i, rt);
 			if (d > EPS && d < sdl->t)
 				return (1);
 		}
@@ -368,22 +398,21 @@ int		shadow(t_sdl *sdl, int i_obj, int i_light, float3 pos)
 	return (0);
 }
 
-void gloss(t_sdl *sdl, int i_obj, float *tab, float3 *dist, float d)
+void gloss(t_rt *rt, int i_obj, float *tab, float3 *dist, float d)
 {
 	float	spec;
 	float	tmp;
 	float3	ref;
 
-	if (sdl->obj[i_obj].name != PLANE_ID && sdl->gloss_activ == 1)
+	if (rt->obj[i_obj].name != PLANE_ID && rt->gloss_activ == 1)
 	{
 		spec = 0.0;
-		ref = vec_scale(sdl->norm, (2.0 * vec_dot(sdl->norm, *dist)));
+		ref = vec_scale(rt->norm, (2.0 * vec_dot(rt->norm, *dist)));
 		ref = vec_sub(*dist, ref);
-		tmp = vec_dot(ref, sdl->ray_dir);
-		if (tmp > 0.0 && tab[3] > sdl->ambient)
+		tmp = vec_dot(ref, rt->ray_dir);
+		if (tmp > 0.0 && tab[3] > rt->scene.ambient)
 		{
-
-			spec = native_powr(tmp, (int)sdl->obj[i_obj].specular) * 4 * d;
+			spec = native_powr(tmp, (int)rt->obj[i_obj].specular) * 4 * d;
 			spec = ft_clamp(spec, 0.0, 1.0);
 		}
 		tab[1] += spec;
@@ -392,7 +421,7 @@ void gloss(t_sdl *sdl, int i_obj, float *tab, float3 *dist, float d)
 	}
 }
 
-int ref_inter(t_sdl *sdl, int i_cur_obj , float3 pos)
+int ref_inter(t_rt *rt, int i_cur_obj , float3 pos)
 {
 	double	dist;
 	int i;
@@ -442,14 +471,14 @@ int ref_init(t_sdl *sdl, int i_obj, float3 *pos)
 	return (tmp2);
 }
 
-int reflection(t_sdl *sdl, int i_obj, float3 *pos, float *tab)
+int reflection(t_rt *rt, int i_obj, float3 *pos, float *tab)
 {
 	int i_light;
 	float3	dist;
 	float	d;
 	int tmp2;
 
-	while (sdl->cpt < sdl->reflect_count && (tmp2 = ref_init(sdl, i_obj, pos)) != -1)
+	while (rt->cpt < sdl->reflect_count && (tmp2 = ref_init(sdl, i_obj, pos)) != -1)
 	{
 		sdl->cpt++;
 		i_light = 0;
@@ -469,7 +498,7 @@ int reflection(t_sdl *sdl, int i_obj, float3 *pos, float *tab)
 	return (0);
 }
 
-void 	calculate_light(t_sdl *sdl, int i_obj, float *tab)
+void 	calculate_light(t_rt *rt, int i_obj, float *tab)
 {
 	float3 pos;
 	float3 dist;
@@ -478,26 +507,26 @@ void 	calculate_light(t_sdl *sdl, int i_obj, float *tab)
 	int	tmp;
 
 	ind = 0;
-	pos = (float3){sdl->cam.pos.x + sdl->t * sdl->ray_dir.x,
-				  sdl->cam.pos.y + sdl->t * sdl->ray_dir.y,
-				  sdl->cam.pos.z + sdl->t * sdl->ray_dir.z};
-	sdl->norm = object_norm(sdl, i_obj, pos);
+	pos = (float3){rt->cam.pos.x + rt->t * rt->ray_dir.x,
+				  rt->cam.pos.y + rt->t * rt->ray_dir.y,
+				  rt->cam.pos.z + rt->t * rt->ray_dir.z};
+	sdl->norm = object_norm(rt, i_obj, pos);
 
-	while (ind < sdl->l_count)
+	while (ind < rt->scene.lgh_c)
 	{
-		tab[3] = sdl->ambient;
-		dist = vec_sub(sdl->light[ind].pos, pos);
+		tab[3] = rt->scene.ambient;
+		dist = vec_sub(rt->light[ind].pos, pos);
 		d = ft_clamp((1.0 / native_sqrt(native_sqrt(vec_dot(dist, dist)))), 0.0, 1.0);
 		dist = vec_norm(dist);
-		if (shadow(sdl, i_obj, ind, pos) == 0)
-			tab[3] += ft_clamp(vec_dot(dist, sdl->norm), 0.0, 1.0);
-		transfer_light(i_obj, ind, tab, d, sdl);
-		gloss(sdl, i_obj, tab, &dist , d);
+		if (shadow(rt, i_obj, ind, pos) == 0)
+			tab[3] += ft_clamp(vec_dot(dist, rt->norm), 0.0, 1.0);
+		transfer_light(i_obj, ind, tab, d, rt);
+		gloss(rt, i_obj, tab, &dist , d);
 		ind++;
 	}
 	sdl->refpos = (float3){sdl->ray_dir.x, sdl->ray_dir.y, sdl->ray_dir.z};
-	if (sdl->reflect_count > 0)
-		reflection(sdl, i_obj, &pos, tab);
+	//if (sdl->reflect_count > 0)
+	//	reflection(sdl, i_obj, &pos, tab);
 }
 
 
@@ -508,22 +537,21 @@ void	ft_average(float *r, float *tab)
 	r[2] += ft_clamp(tab[2], 0.0, 1.0);
 }
 
-void create_ray(t_sdl *sdl, float x, float y)
+void create_ray(t_rt *rt, float x, float y)
 {
 	float u, v;
 	float3 i, j, k;
 
-	u = (sdl->W_WIDTH - (float)x * 2.0) / sdl->W_HEIGHT;
-	v = (sdl->W_HEIGHT - (float)y * 2.0) / sdl->W_WIDTH;
-	k = vec_sub(sdl->cam.rot, sdl->cam.pos);
+	u = (rt->window.size[0] - (float)x * 2.0) / rt->window.size[1];
+	v = (rt->window.size[1] - (float)y * 2.0) / rt->window.size[0];
+	k = vec_sub(rt->cam.rot, rt->cam.pos);
 	k = vec_norm(k);
 	i = vec_cross(k, (float3){0.0, 1.0, 0.0});
 	i = vec_norm(i);
 	j = vec_cross(i, k);
-	sdl->ray_dir = (float3){u * i.x + v * j.x + FOV * k.x, u * i.y + v * j.y + 
-	FOV * k.y, u * i.z + v * j.z + FOV * k.z}; 
-	sdl->ray_dir = vec_norm(sdl->ray_dir);
-	sdl->cpt = 0;
+	rt->ray_dir = (float3){u * i.x + v * j.x + FOV * k.x, u * i.y + v * j.y + FOV * k.y, u * i.z + v * j.z + FOV * k.z};
+	rt->ray_dir = vec_norm(rt->ray_dir);
+	rt->cpt = 0;
 }
 
 void    ft_fzero(float *s, int n)
@@ -538,7 +566,7 @@ void    ft_fzero(float *s, int n)
 	}
 }
 
-void ft_tracing(float x, float y, t_sdl *sdl, __global int *data, int gid)
+void ft_tracing(float x, float y, t_rt *rt, __global int *data, int gid)
 {
 	float	tab[4];
 	float	r[3];
@@ -555,13 +583,13 @@ void ft_tracing(float x, float y, t_sdl *sdl, __global int *data, int gid)
 			p += 1;
 			create_ray(sdl, x, y);
 			ft_fzero(tab, 4);
-			i = intersection(sdl, &sdl->ray_dir, &sdl->cam.pos);
+			i = intersection(rt, &rt->ray_dir, &rt->cam.pos);
 			if(i >= 0)
-				calculate_light(sdl, i, tab);
+				calculate_light(rt, i, tab);
 			ft_average(r, tab);
-			x = x + (1.0 / sdl->dital);
+			x = x + (1.0 / rt->window.anti_alias);
 		}
-		y = y + (1.0 / sdl->dital);
+		y = y + (1.0 / rt->window.anti_alias);
 	}
 	data[gid] = (((int)(r[0] / p * 255) & 0xff) << 16) + (((int)(r[1] / p * 255) & 0xff) << 8) 
 	+ (((int)(r[2] / p * 255) & 0xff));
@@ -578,27 +606,24 @@ __kernel void 		start(__global t_cl_object *obj,
 	int				gid;
 	int				x;
 	int				y;
-	t_sdl			sdl;
+	t_rt			rt;
 	int				obj_ind;
 	gid = get_global_id(0);
 
-	sdl.W_WIDTH = i_mem[0];
-	sdl.W_HEIGHT = i_mem[1];
-	sdl.dital = i_mem[2];
-	sdl.gloss_activ = i_mem[3];
-	sdl.reflect_count = i_mem[4];
-	sdl.o_count = i_mem[5];
-	sdl.l_count = i_mem[6];
+	rt.window.size[0] = i_mem[0];
+	rt.window.size[0] = i_mem[1];
+	rt.window.anti_alias = i_mem[2];
+	rt.scene.obj_c = i_mem[3];
+	rt.scene.lgh_c = i_mem[4];
 
-	sdl.cam.pos = (float3){d_mem[0], d_mem[1], d_mem[2]};
-	sdl.ambient = d_mem[3];
-	sdl.cam.rot = (float3){d_mem[4], d_mem[5], d_mem[6]};
-	sdl.pref = i_mem[7];
+	rt.cam.pos = (float3){d_mem[0], d_mem[1], d_mem[2]};
+	rt.scene.ambient = d_mem[3];
+	rt.cam.rot = (float3){d_mem[4], d_mem[5], d_mem[6]};
 
-	sdl.obj = obj;
-	sdl.light = light;
+	rt.obj = obj;
+	rt.light = light;
 
 	x = gid % sdl.W_WIDTH;
 	y = gid / sdl.W_WIDTH;
-	ft_tracing(x, y, &sdl, out_data, gid);
+	ft_tracing(x, y, &rt, out_data, gid);
 }
