@@ -6,7 +6,7 @@
 /*   By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/17 16:20:37 by daron             #+#    #+#             */
-/*   Updated: 2020/01/26 16:04:49 by daron            ###   ########.fr       */
+/*   Updated: 2020/01/28 16:48:48 by daron            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ typedef struct			s_cl_object
 	cl_float3			col;
 	cl_float			r;
 	cl_int				name;
-	cl_int			specular;
+	cl_int				specular;
 	cl_float			coef_refl;
 	cl_float			limit;
 }						t_cl_object;
@@ -227,7 +227,7 @@ typedef struct	s_rt
 	t_light *lgh_mas; // Текущий объект с которым работаем
 
 	t_obj			*select_obj;
-	t_cl				*cl;
+	t_cl			*cl;
 
 }		t_rt;
 

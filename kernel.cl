@@ -38,7 +38,7 @@ typedef struct		s_cl_object
 	float3			col;
 	float			r;
 	int				name;
-	int			specular;
+	int				specular;
 	float			coef_refl;
 	float			limit;
 }					t_cl_object;
@@ -86,12 +86,13 @@ typedef struct	s_rt
 	t_cam cam;
 
 	float3					ray_dir;
-	int 					cpt;
 	float					t;
 	float3 					dist;
 	float3					norm;
 	float3					refpos;
 	float3					ref;
+	int 					pref;
+	int 					cpt;
 
 	__global t_cl_object	*obj;
 	__global t_cl_light		*light;
@@ -146,7 +147,7 @@ int 		ref_init(t_sdl *sdl, int i_obj, float3 *pos);
 int reflection(t_rt *rt, int i_obj, float3 *pos, float *tab);
 void 	calculate_light(t_rt *rt, int i_obj, float *tab);
 void		ft_average(float *r, float *tab);
-void create_ray(t_rt *rt, float x, float y);
+void 		create_ray(t_rt *rt, float x, float y);
 void 		ft_tracing(float x, float y, t_rt *rt, __global int *data, int gid);
 
 
@@ -316,7 +317,10 @@ int			intersection(t_rt *rt, float3 *ray_dir, float3 *cam_pos)
 	while (i < rt->scene.obj_c)
 	{
 		if (rt->obj[i].name == SPHERE_ID)
+		{
 			dist = get_sphere_intersection(ray_dir, cam_pos, i, rt);
+			printf("dist = %g\n", dist);
+		}
 		else if (rt->obj[i].name == CYLINDER_ID)
 			dist = get_cylinder_intersection(ray_dir, cam_pos, i, rt);
 		else if (rt->obj[i].name == CONE_ID)
@@ -584,6 +588,7 @@ void ft_tracing(float x, float y, t_rt *rt, __global int *data, int gid)
 			create_ray(rt, x, y);
 			ft_fzero(tab, 4);
 			i = intersection(rt, &rt->ray_dir, &rt->cam.pos);
+			printf("x, y = %d, %d object = %d\n", (int)x, (int)y, i);
 			//if(i >= 0)
 			//	calculate_light(rt, i, tab);
 			ft_average(r, tab);
@@ -591,16 +596,16 @@ void ft_tracing(float x, float y, t_rt *rt, __global int *data, int gid)
 		}
 		y = y + (1.0 / rt->window.anti_alias);
 	}
-	printf("%g, %g, %g\n", r[0], r[1], r[2]);
+	//printf("%g, %g, %g\n", r[0], r[1], r[2]);
 	data[gid] = (((int)(r[0] / p * 255) & 0xff) << 16) + (((int)(r[1] / p * 255) & 0xff) << 8) + (((int)(r[2] / p * 255) & 0xff));
 }
 
 
 __kernel void 		start(__global t_cl_object *obj,
 							__global t_cl_light *light,
+							__global int *out_data,
 							__global int *i_mem,
-							__global float *d_mem,
-							__global int *out_data)
+							__global float *d_mem)
 {
 	int				gid, x, y;
 	t_rt			rt;
@@ -617,15 +622,26 @@ __kernel void 		start(__global t_cl_object *obj,
 	rt.scene.ambient = d_mem[3];
 	rt.cam.rot = (float3){d_mem[4], d_mem[5], d_mem[6]};
 
-	if (gid == 10)
-		printf("То что мы получаем на видеокарте - W_size = (%d %d) Antialias = %d obj_c = %d obj_c = %d\n",
-			rt.window.size[0], rt.window.size[1],
-			rt.window.anti_alias, rt.scene.obj_c, rt.scene.lgh_c);
-
 	rt.obj = obj;
 	rt.light = light;
 
+	if (gid == 1)
+	{
+		/*printf("То что мы получаем на видеокарте - W_size = (%d %d) Antialias = %d obj_c = %d obj_c = %d "
+			"cam_pos = (%g, %g, %g) cam_rot = (%g, %g, %g) ambient= %g\n",
+			rt.window.size[0], rt.window.size[1],
+			rt.window.anti_alias, rt.scene.obj_c, rt.scene.lgh_c,
+			rt.cam.pos.x,rt.cam.pos.y, rt.cam.pos.z,
+			rt.cam.rot.x, rt.cam.rot.y, rt.cam.rot.z, rt.scene.ambient);*/
+
+		printf("type = %d\n pos = (%g, %g, %g)\n rot = (%g, %g, %g)\n color = (%g, %g, %g)\n radius = %g\n",
+				rt.obj[0].name, rt.obj[0].pos.x, rt.obj[0].pos.y, rt.obj[0].pos.z,
+				rt.obj[0].rot.x, rt.obj[0].rot.y, rt.obj[0].rot.z,
+				rt.obj[0].col.x, rt.obj[0].col.y, rt.obj[0].col.z,
+				rt.obj[0].r);
+	}
+
 	x = gid % rt.window.size[0];
 	y = gid / rt.window.size[1];
-	//ft_tracing(x, y, &rt, out_data, gid);
+	ft_tracing(x, y, &rt, out_data, gid);
 }

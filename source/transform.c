@@ -6,7 +6,7 @@
 /*   By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 15:32:59 by rsticks           #+#    #+#             */
-/*   Updated: 2020/01/26 15:46:13 by daron            ###   ########.fr       */
+/*   Updated: 2020/01/28 16:53:30 by daron            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,25 @@ t_cl_object			*transform_obj_data(t_rt *rt)
 	i = 0;
 	while (i < rt->scene.obj_c)
 	{
-		cl_obj[i].pos = (cl_float3){{rt->obj_mas[i].pos.x, rt->obj_mas[i].pos.y, rt->obj_mas[i].pos.z}};
-		cl_obj[i].rot = (cl_float3){{rt->obj_mas[i].dir.x, rt->obj_mas[i].dir.y, rt->obj_mas[i].dir.z}};
-		cl_obj[i].col = (cl_float3){{rt->obj_mas[i].rgb.r, rt->obj_mas[i].rgb.g, rt->obj_mas[i].rgb.b}};
+		cl_obj[i].pos = (cl_float3){rt->obj_mas[i].pos.x, rt->obj_mas[i].pos.y, rt->obj_mas[i].pos.z};
+		cl_obj[i].rot = (cl_float3){rt->obj_mas[i].dir.x, rt->obj_mas[i].dir.y, rt->obj_mas[i].dir.z};
+		cl_obj[i].col = (cl_float3){(float)rt->obj_mas[i].rgb.r, (float)rt->obj_mas[i].rgb.g, (float)rt->obj_mas[i].rgb.b};
 		cl_obj[i].r = rt->obj_mas[i].radius;
 		cl_obj[i].name = rt->obj_mas[i].type;
 		cl_obj[i].specular = rt->obj_mas[i].spec;
 		cl_obj[i].coef_refl = rt->obj_mas[i].coef_refl;
 		cl_obj[i].limit = rt->obj_mas[i].limit;
+
+		printf(" Not Kernel - type = %d\n pos = (%g, %g, %g)\n rot = (%g, %g, %g)\n color = (%d, %d, %d)\n radius = %g\n\n",
+			   cl_obj[i].name,
+			   cl_obj[i].pos.x, cl_obj[i].pos.y, cl_obj[i].pos.z,
+			   cl_obj[i].rot.x, cl_obj[i].rot.y, cl_obj[i].rot.z,
+			   cl_obj[i].col.x, cl_obj[i].col.y, cl_obj[i].col.z,
+			   cl_obj[i].r);
+		
 		i++;
 	}
+	
 	return (cl_obj);
 }
 
@@ -46,9 +55,13 @@ t_cl_light			*transform_light_data(t_rt *rt)
 	i = 0;
 	while (i < rt->scene.lgh_c)
 	{
-		cl_light[i].pos =(cl_float3){{rt->lgh_mas[i].pos.x, rt->lgh_mas[i].pos.y, rt->lgh_mas[i].pos.z}};
-		cl_light[i].col =(cl_float3){{rt->lgh_mas[i].rgb.r, rt->lgh_mas[i].rgb.g, rt->lgh_mas[i].rgb.b}};
+		cl_light[i].pos =(cl_float3){rt->lgh_mas[i].pos.x, rt->lgh_mas[i].pos.y, rt->lgh_mas[i].pos.z};
+		cl_light[i].col =(cl_float3){rt->lgh_mas[i].rgb.r, rt->lgh_mas[i].rgb.g, rt->lgh_mas[i].rgb.b};
 		cl_light[i].inten = 20;
+
+		printf(" Not Kernel - Light pos = (%g, %g, %g)\n color = (%d, %d, %d)\n\n",
+			   cl_light[i].pos.x, cl_light[i].pos.y, cl_light[i].pos.z,
+			   cl_light[i].col.x, cl_light[i].col.y, cl_light[i].col.z);
 		i++;
 	}
 	return (cl_light);

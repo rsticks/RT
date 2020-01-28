@@ -6,7 +6,7 @@
 /*   By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/17 16:08:56 by daron             #+#    #+#             */
-/*   Updated: 2020/01/27 17:19:40 by daron            ###   ########.fr       */
+/*   Updated: 2020/01/28 16:48:48 by daron            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,10 +155,10 @@ int				main(int argc, char **argv)
 	cl->cl_light = transform_light_data(&rt);
 	init_cl(cl, &rt);
 	start_kernel(cl, &rt);
-	//sdl.cl = cl;
+	rt.cl = cl;
 
 
-	/*printf("\n\nWindow name = %s\nWindow size = {%d, %d}\n maxref = %d \n "
+	printf("\n\nWindow name = %s\nWindow size = {%d, %d}\n maxref = %d \n "
 		   "antialias = %d\n ambient = %g\n effect = %s\n", rt.window.windname,
 		   rt.window.size[0], rt.window.size[1], rt.scene.maxref,
 		   rt.window.anti_alias, rt.scene.ambient, rt.window.effecr_name);
@@ -206,7 +206,7 @@ int				main(int argc, char **argv)
 			   rt.obj_mas[i].obj_on, rt.obj_mas[i].file_name);
 		i++;
 		printf("\n");
-	}*/
+	}
 
 	while (1)
 		while (SDL_PollEvent(&rt.window.event))
