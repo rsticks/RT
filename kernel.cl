@@ -584,15 +584,14 @@ void ft_tracing(float x, float y, t_rt *rt, __global int *data, int gid)
 			create_ray(rt, x, y);
 			ft_fzero(tab, 4);
 			i = intersection(rt, &rt->ray_dir, &rt->cam.pos);
-			if(i >= 0)
-				calculate_light(rt, i, tab);
+			//if(i >= 0)
+			//	calculate_light(rt, i, tab);
 			ft_average(r, tab);
 			x = x + (1.0 / rt->window.anti_alias);
 		}
 		y = y + (1.0 / rt->window.anti_alias);
 	}
-	//printf("%g, %g, %g\n", r[0], r[1], r[2]);
-	printf("Hellow\n", r[0], r[1], r[2]);
+	printf("%g, %g, %g\n", r[0], r[1], r[2]);
 	data[gid] = (((int)(r[0] / p * 255) & 0xff) << 16) + (((int)(r[1] / p * 255) & 0xff) << 8) + (((int)(r[2] / p * 255) & 0xff));
 }
 
@@ -609,7 +608,7 @@ __kernel void 		start(__global t_cl_object *obj,
 	gid = get_global_id(0);
 
 	rt.window.size[0] = i_mem[0];
-	rt.window.size[0] = i_mem[1];
+	rt.window.size[1] = i_mem[1];
 	rt.window.anti_alias = i_mem[2];
 	rt.scene.obj_c = i_mem[3];
 	rt.scene.lgh_c = i_mem[4];
@@ -618,11 +617,15 @@ __kernel void 		start(__global t_cl_object *obj,
 	rt.scene.ambient = d_mem[3];
 	rt.cam.rot = (float3){d_mem[4], d_mem[5], d_mem[6]};
 
+	if (gid == 10)
+		printf("То что мы получаем на видеокарте - W_size = (%d %d) Antialias = %d obj_c = %d obj_c = %d\n",
+			rt.window.size[0], rt.window.size[1],
+			rt.window.anti_alias, rt.scene.obj_c, rt.scene.lgh_c);
+
 	rt.obj = obj;
 	rt.light = light;
 
 	x = gid % rt.window.size[0];
 	y = gid / rt.window.size[1];
-	printf("Hellow\n");
-	ft_tracing(x, y, &rt, out_data, gid);
+	//ft_tracing(x, y, &rt, out_data, gid);
 }

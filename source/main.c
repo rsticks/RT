@@ -6,7 +6,7 @@
 /*   By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/17 16:08:56 by daron             #+#    #+#             */
-/*   Updated: 2020/01/26 16:24:45 by daron            ###   ########.fr       */
+/*   Updated: 2020/01/27 17:19:40 by daron            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void			sdl_initialize(t_rt *rt)
 {
 	if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
 		kill_all("Can't initialize SDL <sdl_initialize>");
-	if (!(rt->window.window = SDL_CreateWindow((const char*)rt->window.windname, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, rt->window.size[0], rt->window.size[0], SDL_WINDOW_SHOWN)))
+	if (!(rt->window.window = SDL_CreateWindow((const char*)rt->window.windname, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, rt->window.size[0], rt->window.size[1], SDL_WINDOW_SHOWN)))
 		kill_all("Can't initialize Window <sdl_initialize>");
 	if (!(rt->window.render = SDL_CreateRenderer(rt->window.window, -1, SDL_RENDERER_ACCELERATED)))
 		kill_all("Can't render Window <sdl_initialize>");
@@ -158,9 +158,9 @@ int				main(int argc, char **argv)
 	//sdl.cl = cl;
 
 
-	printf("\n\nWindow name = %s\nWindow size = {%d, %d}\n maxref = %d \n "
+	/*printf("\n\nWindow name = %s\nWindow size = {%d, %d}\n maxref = %d \n "
 		   "antialias = %d\n ambient = %g\n effect = %s\n", rt.window.windname,
-		   rt.window.size[0], rt.window.size[0], rt.scene.maxref,
+		   rt.window.size[0], rt.window.size[1], rt.scene.maxref,
 		   rt.window.anti_alias, rt.scene.ambient, rt.window.effecr_name);
 	printf("\n");
 	printf("Camera pos = {%g, %g, %g}\n Camera dir = {%g, %g, %g}\n",
@@ -206,7 +206,7 @@ int				main(int argc, char **argv)
 			   rt.obj_mas[i].obj_on, rt.obj_mas[i].file_name);
 		i++;
 		printf("\n");
-	}
+	}*/
 
 	while (1)
 		while (SDL_PollEvent(&rt.window.event))

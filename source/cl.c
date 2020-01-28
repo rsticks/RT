@@ -6,7 +6,7 @@
 /*   By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 19:16:48 by rsticks           #+#    #+#             */
-/*   Updated: 2020/01/27 16:46:05 by daron            ###   ########.fr       */
+/*   Updated: 2020/01/28 14:09:32 by daron            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,16 +45,18 @@ void			ft_init_cl(t_cl *cl, t_rt *rt)
 		printf("%s\n", log);
 	}
 	cl->kernel = clCreateKernel(cl->prog, "start", &cl->err);
+	printf("%-32s || %d\n", "clCreateKernel", cl->err);
 	cl->obj_mem = clCreateBuffer(cl->ct, CMRW, sizeof(t_cl_object) * rt->scene.obj_c, NULL, &cl->err);
 	cl->light_mem = clCreateBuffer(cl->ct, CMRW, sizeof(t_cl_light) * rt->scene.lgh_c, NULL, &cl->err);
 	cl->img = clCreateBuffer(cl->ct, CMRW, sizeof(int) * w, NULL, &cl->err);
-	cl->i_m = clCreateBuffer(cl->ct, CMRW, sizeof(int) * 8, NULL, &cl->err);
+	cl->i_m = clCreateBuffer(cl->ct, CMRW, sizeof(int) * 5, NULL, &cl->err);
 	cl->d_m = clCreateBuffer(cl->ct, CMRW, sizeof(float) * 7, NULL, &cl->err);
 	cl->err = clSetKernelArg(cl->kernel, 0, sizeof(cl_mem), &cl->obj_mem);
 	cl->err = clSetKernelArg(cl->kernel, 1, sizeof(cl_mem), &cl->light_mem);
 	cl->err = clSetKernelArg(cl->kernel, 2, sizeof(cl_mem), &cl->img);
 	cl->err = clSetKernelArg(cl->kernel, 3, sizeof(cl_mem), &cl->i_m);
 	cl->err = clSetKernelArg(cl->kernel, 4, sizeof(cl_mem), &cl->d_m);
+	printf("%-32s || %d\n", "clSetKernelArg", cl->err);
 }
 
 void			init_cl(t_cl *cl, t_rt *rt)
@@ -116,22 +118,29 @@ void			start_kernel(t_cl *cl, t_rt *rt)
 	//cl->cl_obj = transform_obj_data(sdl->obj, &cl->o_c);
 	//cl->cl_light = transform_light_data(sdl->light, &cl->l_c);
 	mem_to_kernel(rt, d_m, i_m);
+	printf("то что должно быть при попадание на видеокарту  %d %d %d\n", i_m[0], i_m[1], i_m[2]);
 	gws = rt->window.size[0] * rt->window.size[1];
-	gws = 1000;
+	//gws = 1000;
+	//printf("Hell1\n");
 	cl->err = clEnqueueWriteBuffer(cl->q, cl->i_m, CL_TRUE, 0, sizeof(int) * 5, i_m, 0, NULL, NULL);
+	//printf("Hell11\n");
 	cl->err = clEnqueueWriteBuffer(cl->q, cl->d_m, CL_TRUE, 0, sizeof(float) * 7, d_m, 0, NULL, NULL);
+	//printf("Hell111\n");
 	cl->err = clEnqueueWriteBuffer(cl->q, cl->obj_mem, CL_TRUE, 0, sizeof(t_cl_object) * rt->scene.obj_c, cl->cl_obj, 0, NULL, NULL);
+	//printf("Hell1111\n");
 	cl->err = clEnqueueWriteBuffer(cl->q, cl->light_mem, CL_TRUE, 0, sizeof(t_cl_light) * rt->scene.lgh_c, cl->cl_light, 0, NULL, NULL);
+	//printf("Hell2\n");
 	cl->err = clEnqueueNDRangeKernel(cl->q, cl->kernel, 1, NULL, &gws, NULL, 0, NULL, NULL);
+	//printf("Hell3\n");
 	cl->err = clEnqueueReadBuffer(cl->q, cl->img, CL_TRUE, 0, sizeof(int) * gws, cl->data, 0, NULL, NULL);
-	int i = -1;
-	while (++i < rt->window.size[0] * rt->window.size[1])
-		printf("%d\n", cl->data[i]);
+//	int i = -1;
+//	while (++i < rt->window.size[0] * rt->window.size[1])
+//		printf("%d\n", cl->data[i]);
+	//printf("Hell4\n");
 
-
-	SDL_RenderClear(rt->window.render);
-	SDL_UpdateTexture(rt->window.textur, NULL, cl->data, rt->window.size[0] * sizeof(int));
-	SDL_RenderCopy(rt->window.render, rt->window.textur, NULL, NULL);
-	SDL_RenderPresent(rt->window.render);
-	free_o_l(cl);
+	//SDL_RenderClear(rt->window.render);
+	//SDL_UpdateTexture(rt->window.textur, NULL, cl->data, rt->window.size[0] * sizeof(int));
+	//SDL_RenderCopy(rt->window.render, rt->window.textur, NULL, NULL);
+	//SDL_RenderPresent(rt->window.render);
+	//free_o_l(cl);
 }
