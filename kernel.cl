@@ -85,6 +85,9 @@ typedef struct	s_rt
 	t_win window;
 	t_cam cam;
 
+	__global t_cl_object	*obj;
+	__global t_cl_light		*light;
+
 	float3					ray_dir;
 	float					t;
 	float3 					dist;
@@ -94,8 +97,7 @@ typedef struct	s_rt
 	int 					pref;
 	int 					cpt;
 
-	__global t_cl_object	*obj;
-	__global t_cl_light		*light;
+
 
 }		t_rt;
 
@@ -633,16 +635,15 @@ __kernel void 		start(__global t_cl_object *obj,
 				rt.window.anti_alias, rt.scene.obj_c, rt.scene.lgh_c,
 				rt.cam.pos.x,rt.cam.pos.y, rt.cam.pos.z,
 				rt.cam.rot.x, rt.cam.rot.y, rt.cam.rot.z, rt.scene.ambient);
-		printf("In Kernel Object type = %d\n pos = (%g, %g, %g)\n rot = (%g, %g, %g)\n color = (%g, %g, %g)\n radius = %g\n\n",
+		printf("In Kernel Light pos = (%g, %g, %g)\n color = (%g, %g, %g)\n\n",
+				rt.light[0].pos.x, rt.light[0].pos.y, rt.light[0].pos.z,
+				rt.light[0].col.x, rt.light[0].col.y, rt.light[0].col.z);
+		printf("In Kernel Object type = %d\n pos = (%g, %g, %g)\n rot = (%g, %g, %g)\n color = (%g, %g, %g)\n radius = %g\n",
 				rt.obj[0].name,
 				rt.obj[0].pos.x, rt.obj[0].pos.y, rt.obj[0].pos.z,
 				rt.obj[0].rot.x, rt.obj[0].rot.y, rt.obj[0].rot.z,
 				rt.obj[0].col.x, rt.obj[0].col.y, rt.obj[0].col.z,
 				rt.obj[0].r);
-		printf("In Kernel Light pos = (%g, %g, %g)\ncolor = (%g, %g, %g)\n\n",
-				rt.light[0].pos.x, rt.light[0].pos.y, rt.light[0].pos.z,
-				rt.light[0].col.r, rt.light[0].col.g, rt.light[0].col.b);
-
 	}
 
 	x = gid % rt.window.size[0];

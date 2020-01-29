@@ -6,7 +6,7 @@
 /*   By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/17 16:08:56 by daron             #+#    #+#             */
-/*   Updated: 2020/01/28 16:48:48 by daron            ###   ########.fr       */
+/*   Updated: 2020/01/29 13:48:53 by daron            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,8 +157,8 @@ int				main(int argc, char **argv)
 	start_kernel(cl, &rt);
 	rt.cl = cl;
 
-
-	printf("\n\nWindow name = %s\nWindow size = {%d, %d}\n maxref = %d \n "
+	printf("-------------------------------------------------------------------\n");
+	printf("Window name = %s\nWindow size = {%d, %d}\n maxref = %d \n "
 		   "antialias = %d\n ambient = %g\n effect = %s\n", rt.window.windname,
 		   rt.window.size[0], rt.window.size[1], rt.scene.maxref,
 		   rt.window.anti_alias, rt.scene.ambient, rt.window.effecr_name);
