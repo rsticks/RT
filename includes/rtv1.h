@@ -6,7 +6,7 @@
 /*   By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/17 16:20:37 by daron             #+#    #+#             */
-/*   Updated: 2020/01/20 19:37:12 by rsticks          ###   ########.fr       */
+/*   Updated: 2020/01/27 16:25:36 by rsticks          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,10 @@
 ** -------------------------Structures Fot Cernel-------------------------------
 */
 
-typedef struct s_list_surface
-{
-	/* data */
-};
+// typedef struct s_list_surface
+// {
+// 	/* data */
+// };
 
 
 typedef struct 			s_list_vn
@@ -210,6 +210,8 @@ typedef struct			s_move
 /*
 ** ------------------Function Prototype--------------------------------
 */
+
+void					parsing_obj(char *path);
 void					ft_init_cl(t_cl *cl);
 void					start_kernel(t_cl *cl, t_sdl *sdl);
 void					init_cl(t_cl *cl);

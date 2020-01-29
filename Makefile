@@ -6,7 +6,7 @@
 #    By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/09 16:02:42 by daron             #+#    #+#              #
-#    Updated: 2019/12/05 18:33:30 by rsticks          ###   ########.fr        #
+#    Updated: 2020/01/27 16:29:47 by rsticks          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -60,7 +60,9 @@ SOURCES_LIST = main.c \
                		object_parser.c \
                		intersection.c \
                		additional_function.c \
-               		additional_function_1.c
+               		additional_function_1.c \
+					parse_obj.c \
+					
 SOURCES = $(addprefix $(SOURCES_DIRECTORY), $(SOURCES_LIST))
 
 OBJECTS_DIRECTORY = objects/

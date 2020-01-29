@@ -6,7 +6,7 @@
 /*   By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/17 16:08:56 by daron             #+#    #+#             */
-/*   Updated: 2020/01/20 18:53:36 by rsticks          ###   ########.fr       */
+/*   Updated: 2020/01/27 16:25:19 by rsticks          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ int				main(int argc, char **argv)
 	if (!(cl = (t_cl*)malloc(sizeof(t_cl))))
 		kill_all("Can't initialize CL <main>");
 	cl->data = (int*)malloc(sizeof(int) * W_HEIGHT * W_WIDTH);
+	
 	sdl_initialize(&sdl);
 	scene_parser(&sdl, argv[1]);
 	sdl.textur = SDL_CreateTexture(sdl.render, SDL_PIXELFORMAT_ARGB8888,
