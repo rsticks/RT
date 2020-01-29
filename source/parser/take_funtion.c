@@ -165,17 +165,17 @@ t_rgb2 get_vector_value_rgb(char *str, int str_c)
 	{
 		if (*str == 'r')
 		{
-			vec.r = ft_atoi(++str);
+			vec.r = (float)ft_atoi(++str);
 			cheak[0]++;
 		}
 		else if (*str == 'g')
 		{
-			vec.g = ft_atoi(++str);
+			vec.g = (float)ft_atoi(++str);
 			cheak[1]++;
 		}
 		else if (*str == 'b')
 		{
-			vec.b = ft_atoi(++str);
+			vec.b = (float)ft_atoi(++str);
 			cheak[2]++;
 		}
 		str++;

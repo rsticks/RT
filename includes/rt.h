@@ -6,7 +6,7 @@
 /*   By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/17 16:20:37 by daron             #+#    #+#             */
-/*   Updated: 2020/01/28 16:48:48 by daron            ###   ########.fr       */
+/*   Updated: 2020/01/29 13:16:04 by daron            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,9 +109,9 @@ typedef struct			s_cl
 */
 typedef struct			s_rgb2
 {
-	int					r;
-	int					g;
-	int					b;
+	float					r;
+	float					g;
+	float					b;
 }						t_rgb2;
 
 typedef	struct		s_read
@@ -172,7 +172,7 @@ typedef struct			s_obj
 
 	int				check[11];
 
-	struct s_object		*next;
+	struct s_obj		*next;
 }						t_obj;
 
 typedef struct			s_move

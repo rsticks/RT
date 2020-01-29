@@ -171,7 +171,7 @@ int				main(int argc, char **argv)
 	int i = 0;
 	while (i < rt.scene.lgh_c)
 	{
-		printf("Light pos = {%g, %g, %g}\nLight rgb = {%d, %d, %d}\n",
+		printf("Light pos = {%g, %g, %g}\nLight rgb = {%g, %g, %g}\n",
 			   rt.lgh_mas[i].pos.x, rt.lgh_mas[i].pos.y, rt.lgh_mas[i].pos.z,
 			   rt.lgh_mas[i].rgb.r, rt.lgh_mas[i].rgb.g, rt.lgh_mas[i].rgb.b);
 		i++;
@@ -186,7 +186,7 @@ int				main(int argc, char **argv)
 			   "Refract on/off= %d ind_refr = %g coef_refr = %g\n"
 			   "Dir = {%g, %g, %g}\n"
 			   "Pos = {%g, %g, %g}\n"
-			   "RGB = {%d, %d, %d}\n"
+			   "RGB = {%g, %g, %g}\n"
 			   "Radius = %g\n"
 			   "Spec = %d\n"
 			   "Limit = %g\n"

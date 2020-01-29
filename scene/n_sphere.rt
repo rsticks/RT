@@ -18,7 +18,7 @@
 
 <object>
 	<type> {sphere} </type>
-	<pos> {x00.00 y0.00 z00.00} </pos>
+	<pos> {x1.00 y2.00 z00.00} </pos>
 	<radius> {25.00} </radius>
 	<rgb> {r0 g255 b255} </rgb>
 	<reflect> {off} </reflect>

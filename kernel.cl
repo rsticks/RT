@@ -319,7 +319,7 @@ int			intersection(t_rt *rt, float3 *ray_dir, float3 *cam_pos)
 		if (rt->obj[i].name == SPHERE_ID)
 		{
 			dist = get_sphere_intersection(ray_dir, cam_pos, i, rt);
-			printf("dist = %g\n", dist);
+			//printf("dist = %g\n", dist);
 		}
 		else if (rt->obj[i].name == CYLINDER_ID)
 			dist = get_cylinder_intersection(ray_dir, cam_pos, i, rt);
@@ -588,7 +588,7 @@ void ft_tracing(float x, float y, t_rt *rt, __global int *data, int gid)
 			create_ray(rt, x, y);
 			ft_fzero(tab, 4);
 			i = intersection(rt, &rt->ray_dir, &rt->cam.pos);
-			printf("x, y = %d, %d object = %d\n", (int)x, (int)y, i);
+			//printf("x, y = %d, %d object = %d\n", (int)x, (int)y, i);
 			//if(i >= 0)
 			//	calculate_light(rt, i, tab);
 			ft_average(r, tab);
@@ -627,18 +627,22 @@ __kernel void 		start(__global t_cl_object *obj,
 
 	if (gid == 1)
 	{
-		/*printf("То что мы получаем на видеокарте - W_size = (%d %d) Antialias = %d obj_c = %d obj_c = %d "
-			"cam_pos = (%g, %g, %g) cam_rot = (%g, %g, %g) ambient= %g\n",
-			rt.window.size[0], rt.window.size[1],
-			rt.window.anti_alias, rt.scene.obj_c, rt.scene.lgh_c,
-			rt.cam.pos.x,rt.cam.pos.y, rt.cam.pos.z,
-			rt.cam.rot.x, rt.cam.rot.y, rt.cam.rot.z, rt.scene.ambient);*/
-
-		printf("type = %d\n pos = (%g, %g, %g)\n rot = (%g, %g, %g)\n color = (%g, %g, %g)\n radius = %g\n",
-				rt.obj[0].name, rt.obj[0].pos.x, rt.obj[0].pos.y, rt.obj[0].pos.z,
+		printf("In Kernel - W_size = (%d %d) Antialias = %d obj_c = %d obj_c = %d "
+				"cam_pos = (%g, %g, %g) cam_rot = (%g, %g, %g) ambient= %g\n\n",
+				rt.window.size[0], rt.window.size[1],
+				rt.window.anti_alias, rt.scene.obj_c, rt.scene.lgh_c,
+				rt.cam.pos.x,rt.cam.pos.y, rt.cam.pos.z,
+				rt.cam.rot.x, rt.cam.rot.y, rt.cam.rot.z, rt.scene.ambient);
+		printf("In Kernel Object type = %d\n pos = (%g, %g, %g)\n rot = (%g, %g, %g)\n color = (%g, %g, %g)\n radius = %g\n\n",
+				rt.obj[0].name,
+				rt.obj[0].pos.x, rt.obj[0].pos.y, rt.obj[0].pos.z,
 				rt.obj[0].rot.x, rt.obj[0].rot.y, rt.obj[0].rot.z,
 				rt.obj[0].col.x, rt.obj[0].col.y, rt.obj[0].col.z,
 				rt.obj[0].r);
+		printf("In Kernel Light pos = (%g, %g, %g)\ncolor = (%g, %g, %g)\n\n",
+				rt.light[0].pos.x, rt.light[0].pos.y, rt.light[0].pos.z,
+				rt.light[0].col.r, rt.light[0].col.g, rt.light[0].col.b);
+
 	}
 
 	x = gid % rt.window.size[0];

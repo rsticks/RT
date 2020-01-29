@@ -19,9 +19,9 @@
 
 typedef struct	s_vector
 {
-	double		x;
-	double		y;
-	double		z;
+	float		x;
+	float		y;
+	float		z;
 }				t_vector;
 
 /*

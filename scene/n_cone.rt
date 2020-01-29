@@ -18,7 +18,7 @@
 
 <object>
 	<type> {cone} </type>
-	<pos> {x00.00 y00.00 z00.00} </pos>
+	<pos> {x1.00 y2.00 z00.00} </pos>
 	<dir> {x0.0 y1.0 z0.0} </dir>
 	<radius> {60.00} </radius>
 	<rgb> {r250 g0 b250} </rgb>
