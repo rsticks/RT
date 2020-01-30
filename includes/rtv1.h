@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rtv1.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kzina <kzina@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/17 16:20:37 by daron             #+#    #+#             */
-/*   Updated: 2019/12/05 16:43:35 by rsticks          ###   ########.fr       */
+/*   Updated: 2020/01/30 20:07:57 by kzina            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,25 @@
 # include "ftvector.h"
 # include "libft.h"
 # include <SDL2/SDL.h>
+# include "../frameworks/SDL2_image.framework/Headers/SDL_image.h"
+# include "../frameworks/SDL2_ttf.framework/Headers/SDL_ttf.h"
 
 # define CMRW			CL_MEM_READ_WRITE
 # define CDTG			CL_DEVICE_TYPE_GPU
+# define WHITE			255,255,255,255
+# define BLACK			0,0,0,255
+# define RED			255,0,0,255
+# define BLUE			67,91,112,255
+# define SILV			192,192,192,255
 
 /*
 ** Size configuration
 */
 
-# define W_WIDTH 		1400
-# define W_HEIGHT 		1400
+# define WIDTH_M		400
+# define HEIGHT_M		1280
+# define W_WIDTH 		1280
+# define W_HEIGHT 		1280
 # define FOV			2.0
 
 /*
@@ -145,6 +154,60 @@ typedef struct			s_object
 }						t_object;
 
 /*
+** ------------------Strcture for gui--------------------------------
+*/
+
+typedef	struct			s_ui 
+{
+	short			t_c;
+	cl_float3		t_v;
+	cl_float3		t_v2;
+	//t_hsv			hsv;
+	char			c_num;
+	char			*tmp;
+	char			*c_name;
+	char			*r_dim;
+	char			m_visible;
+	char			b_hover;
+	char			b_se_hover;
+	char			b_se_down;
+	char			case_active;
+	char			b_down;
+	char			c_hover;
+	char			c_down;
+	char			ra_hover;
+	char			ra_down;
+	char			b_sp_hover;
+	char			b_sp_active;
+	char			*n_save;
+	char			save_num;
+	char			b_state[19];
+	char			nav_state;
+	short			id;
+	short			k_edit;
+	//t_obj			*c_elem;
+	SDL_Point		p_tmp;
+	SDL_Rect		t_rect;
+	SDL_Color		c_clr[3];
+	SDL_Rect		area[16];
+	SDL_Rect		ra_rect[11];
+	SDL_Rect		b_rect[20];
+	SDL_Rect		cam_b_rect[8];
+	SDL_Rect		lgt_b_rect[12];
+	SDL_Rect		obj_b_rect[19];
+	SDL_Rect		param_b_rect[3];
+	SDL_Rect		*b_se_rect;
+	SDL_Rect		*case_rect;
+	SDL_Rect		r_hover;
+	SDL_Surface		*s_tmp;
+	SDL_Surface		*s_ui;
+	SDL_Surface		*s_cam;
+	SDL_Surface		*s_ver;
+	TTF_Font		**font;
+}						t_ui;
+
+
+/*
 ** ambient - Ambient light scene
 ** line_count - Count of line in scene file
 ** dital - Scene ditalization level
@@ -153,8 +216,12 @@ typedef struct			s_sdl
 {
 	SDL_Window			*window;
 	SDL_Renderer		*render;
+	SDL_Window			*window2;
+	SDL_Renderer		*render2;
 	SDL_Event			event;
 	SDL_Texture			*textur;
+	SDL_Texture			*textur2;
+	SDL_Surface			*w_icon;
 	t_cam				cam;
 	t_object			*obj;
 	t_light				*light;
@@ -167,6 +234,9 @@ typedef struct			s_sdl
 	int					pref;
 	t_object			*select_obj;
 	t_cl				*cl;
+	t_ui				*ui;
+	SDL_Cursor			*cursor;
+	SDL_Surface			*s_back;
 }						t_sdl;
 
 typedef struct			s_move
@@ -214,5 +284,9 @@ void					detail_key(t_sdl *sdl);
 void					swithc_gloss(t_sdl *sdl);
 void					reflection_key(t_sdl *sdl);
 void					swithc_pref(t_sdl *sdl);
+
+
+void        			sdl_init_menu(t_sdl *sdl);
+void        			sdl_refresh(t_sdl *sdl, t_cl *cl);
 
 #endif

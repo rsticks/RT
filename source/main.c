@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kzina <kzina@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/17 16:08:56 by daron             #+#    #+#             */
-/*   Updated: 2019/11/28 16:28:09 by rsticks          ###   ########.fr       */
+/*   Updated: 2020/01/20 18:59:35 by kzina            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,13 @@ void			sdl_initialize(t_sdl *sdl)
 {
 	if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
 		kill_all("Can't initialize SDL <sdl_initialize>");
-	if (!(sdl->window = SDL_CreateWindow("RTv1", SDL_WINDOWPOS_UNDEFINED,
-		SDL_WINDOWPOS_UNDEFINED, W_WIDTH, W_HEIGHT, SDL_WINDOW_SHOWN)))
+	if (!(sdl->window = SDL_CreateWindow("RTv1", SDL_WINDOWPOS_CENTERED,
+		SDL_WINDOWPOS_CENTERED, W_WIDTH, W_HEIGHT, SDL_WINDOW_SHOWN)))
 		kill_all("Can't initialize Window <sdl_initialize>");
 	if (!(sdl->render = SDL_CreateRenderer(sdl->window, -1,
 		SDL_RENDERER_ACCELERATED)))
 		kill_all("Can't render Window <sdl_initialize>");
+	sdl_init_menu(sdl);
 }
 
 int				main(int argc, char **argv)

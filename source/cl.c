@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cl.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kzina <kzina@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 19:16:48 by rsticks           #+#    #+#             */
-/*   Updated: 2019/11/28 16:27:50 by rsticks          ###   ########.fr       */
+/*   Updated: 2020/01/21 17:01:34 by kzina            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,9 +102,6 @@ void			start_kernel(t_cl *cl, t_sdl *sdl)
 	&gws, NULL, 0, NULL, NULL);
 	cl->err = clEnqueueReadBuffer(cl->q, cl->img,
 	CL_TRUE, 0, sizeof(int) * gws, cl->data, 0, NULL, NULL);
-	SDL_RenderClear(sdl->render);
-	SDL_UpdateTexture(sdl->textur, NULL, cl->data, W_WIDTH * sizeof(int));
-	SDL_RenderCopy(sdl->render, sdl->textur, NULL, NULL);
-	SDL_RenderPresent(sdl->render);
+	sdl_refresh(sdl, cl);
 	free_o_l(cl);
 }
