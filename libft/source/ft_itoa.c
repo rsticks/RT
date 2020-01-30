@@ -6,7 +6,7 @@
 /*   By: daron <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/05 10:27:08 by daron             #+#    #+#             */
-/*   Updated: 2019/11/16 14:19:40 by daron            ###   ########.fr       */
+/*   Updated: 2020/01/25 17:10:40 by daron            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ static char	*ft_min_int(void)
 {
 	char	*ptr;
 
-	ptr = ft_memalloc(12);
+	if (!(ptr = (char*)malloc(sizeof(char) * 12)))
+		return (NULL);
 	ptr[0] = '-';
 	ptr[1] = '2';
 	ptr[2] = '1';
@@ -46,6 +47,7 @@ static char	*ft_min_int(void)
 	ptr[8] = '6';
 	ptr[9] = '4';
 	ptr[10] = '8';
+	ptr[11] = '\0';
 	return (ptr);
 }
 

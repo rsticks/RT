@@ -1,24 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   additional_function.c                              :+:      :+:    :+:   */
+/*   ft_memset_int.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+        */
+/*   By: daron <daron@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/21 15:54:57 by daron             #+#    #+#             */
-/*   Updated: 2020/01/30 14:01:55 by daron            ###   ########.fr       */
+/*   Created: 2020/01/21 17:37:05 by daron             #+#    #+#             */
+/*   Updated: 2020/01/21 17:37:05 by daron            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rt.h"
+#include "libft.h"
 
-void			my_free(t_rt *rt)
+void		ft_memset_int(int *ptr, int i, size_t count)
 {
+	size_t	k;
 
-	free(rt->obj_mas);
-	free(rt->lgh_mas);
-
-	SDL_DestroyRenderer(rt->window.render);
-	SDL_DestroyWindow(rt->window.window);
-	SDL_Quit();
+	k = 0;
+	while (k < count)
+	{
+		ptr[k] = i;
+		k++;
+	}
 }

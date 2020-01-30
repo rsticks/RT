@@ -1,0 +1,101 @@
+<scene>
+	<maxref> {0} </maxref>
+	<name> {Test scene_4} </name>
+	<res> {900 900} </res>
+	<antialias> {1} </antialias>
+	<ambiant> {0.15} </ambiant>
+</scene>
+
+<camera>
+	<pos> {x0.00 y00.00 z-250.00} </pos>
+	<dir> {x1.0 y0.00 z1.00} </dir>
+</camera>
+
+<light>
+	<pos> {x-40.00 y60.00 z-10.00} </pos>
+	<rgb> {r250 g250 b250} </rgb>
+</light>
+
+<light>
+	<pos> {x100.00 y70.00 z-10.00} </pos>
+	<rgb> {r250 g250 b250} </rgb>
+</light>
+
+<object>
+	<type> {plane} </type>
+	<pos> {x0.00 y0.00 z200.00} </pos>
+	<dir> {x0.0 y0.0 z-1.0} </dir>
+	<reflect> {off} </reflect>
+	<rgb> {r130 g130 b130} </rgb>
+	<refract> {off} </refract>
+</object>
+
+<object>
+	<type> {plane} </type>
+	<pos> {x0.00 y0.00 z-700.00} </pos>
+	<dir> {x0.0 y0.0 z1.0} </dir>
+	<reflect> {off} </reflect>
+	<rgb> {r130 g200 b240} </rgb>
+	<refract> {off} </refract>
+</object>
+
+<object>
+	<type> {sphere} </type>
+	<pos> {x-12.00 y25.00 z5.00} </pos>
+	<radius> {25.00} </radius>
+	<rgb> {r0 g250 b250} </rgb>
+	<reflect> {off} </reflect>
+	<spec> {off} </spec>
+	<refract> {off} </refract>
+</object>
+
+<object>
+	<type> {sphere} </type>
+	<pos> {x8.00 y-53.00 z-44.00} </pos>
+	<radius> {35.00} </radius>
+	<rgb> {r190 g140 b250} </rgb>
+	<reflect> {off} </reflect>
+	<spec> {off} </spec>
+	<refract> {off} </refract>
+</object>
+
+<object>
+	<type> {sphere} </type>
+	<pos> {x-109.00 y-74.00 z84.00} </pos>
+	<radius> {10.00} </radius>
+	<rgb> {r200 g10 b100} </rgb>
+	<reflect> {off} </reflect>
+	<spec> {off} </spec>
+	<refract> {off} </refract>
+</object>
+
+<object>
+	<type> {sphere} </type>
+	<pos> {x-118.00 y-166.00 z35.00} </pos>
+	<radius> {20.00} </radius>
+	<rgb> {r200 g10 b200} </rgb>
+	<reflect> {off} </reflect>
+	<spec> {off} </spec>
+	<refract> {off} </refract>
+</object>
+
+<object>
+	<type> {sphere} </type>
+	<pos> {x-40.00 y134.00 z101.00} </pos>
+	<radius> {25.00} </radius>
+	<rgb> {r180 g250 b150} </rgb>
+	<reflect> {off} </reflect>
+	<spec> {off} </spec>
+	<refract> {off} </refract>
+</object>
+
+<object>
+	<type> {cylinder} </type>
+	<pos> {x-30.00 y0.00 z40.00} </pos>
+	<dir> {x1.0 y1.0 z0.0} </dir>
+	<radius> {10.00} </radius>
+	<rgb> {r10 g150 b240} </rgb>
+	<reflect> {off} </reflect>
+	<spec> {off} </spec>
+	<refract> {off} </refract>
+</object>
