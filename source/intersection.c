@@ -6,14 +6,14 @@
 /*   By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 15:00:42 by rsticks           #+#    #+#             */
-/*   Updated: 2020/01/30 15:14:36 by daron            ###   ########.fr       */
+/*   Updated: 2020/01/30 15:33:21 by daron            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
 static double	get_cone_intersection(t_vector *ray_dir, t_vector *cam_pos,
-		int obj, t_rt *rt)
+		int i, t_rt *rt)
 {
 	double		b;
 	double		c;
@@ -36,7 +36,7 @@ static double	get_cone_intersection(t_vector *ray_dir, t_vector *cam_pos,
 }
 
 static double	get_plane_intersection(t_vector *ray_dir, t_vector *cam_pos,
-		int obj, t_rt *rt)
+		int i, t_rt *rt)
 {
 	float		dist;
 
@@ -48,7 +48,7 @@ static double	get_plane_intersection(t_vector *ray_dir, t_vector *cam_pos,
 }
 
 static double	get_sphere_intersection(t_vector *ray_dir, t_vector *cam_pos,
-		int obj, t_rt *rt)
+		int i, t_rt *rt)
 {
 	double		b;
 	double		c;
@@ -67,7 +67,7 @@ static double	get_sphere_intersection(t_vector *ray_dir, t_vector *cam_pos,
 }
 
 static double	get_cylinder_intersection(t_vector *ray_dir, t_vector *cam_pos,
-		int obj, t_rt *rt)
+		int i, t_rt *rt)
 {
 	double		b;
 	double		c;
@@ -76,7 +76,7 @@ static double	get_cylinder_intersection(t_vector *ray_dir, t_vector *cam_pos,
 	t_vector	oc;
 
 	oc = vec_sub(cam_pos, &rt->obj_mas[i].pos);
-	obj->rot = vec_norm(&rt->obj_mas[i].dir);
+	rt->obj_mas[i].dir = vec_norm(&rt->obj_mas[i].dir);
 	a = vec_dot(ray_dir, ray_dir) - pow(vec_dot(ray_dir, &rt->obj_mas[i].dir), 2);
 	b = 2 * (vec_dot(ray_dir, &oc) - (vec_dot(ray_dir, &rt->obj_mas[i].dir) *
 			vec_dot(&oc, &rt->obj_mas[i].dir)));
@@ -87,7 +87,7 @@ static double	get_cylinder_intersection(t_vector *ray_dir, t_vector *cam_pos,
 	return (get_quadratic_solution(a, b, discriminant));
 }
 
-int		*intersection(t_rt *rt, t_vector *ray_dir, t_vector *cam_pos)
+int		intersection(t_rt *rt, t_vector *ray_dir, t_vector *cam_pos)
 {
 	int			obj;
 	float		dist;
@@ -109,7 +109,7 @@ int		*intersection(t_rt *rt, t_vector *ray_dir, t_vector *cam_pos)
 			dist = get_plane_intersection(ray_dir, cam_pos, i, rt);
 		if (dist > EPS && dist < t && (t = dist) > -1)
 			obj = i;
-		i++
+		i++;
 	}
 	return (obj);
 }

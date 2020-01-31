@@ -23,9 +23,7 @@ static void	create_guide_sides(t_move *move, t_rt *rt)
 
 static void	event_2(t_rt *rt, t_move *move)
 {
-	if (SDLK_e == rt->window.event.key.keysym.sym && rt->window.event.type == SDL_KEYDOWN)
-		swithc_pref(rt);
-	else if (rt->window.event.type == SDL_KEYDOWN && rt->select_obj == -1)
+	if (rt->window.event.type == SDL_KEYDOWN && rt->select_obj == -1)
 		key_down(rt, move);
 	else if (rt->window.event.type == SDL_KEYDOWN && rt->select_obj != -1)
 		key_down_for_object(rt, move);

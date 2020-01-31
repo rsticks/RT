@@ -6,7 +6,7 @@
 /*   By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/17 16:20:37 by daron             #+#    #+#             */
-/*   Updated: 2020/01/30 14:31:03 by daron            ###   ########.fr       */
+/*   Updated: 2020/01/31 15:48:34 by daron            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@
 # define CYLINDER_ID	3
 # define CONE_ID		4
 # define OBJ_FILE_ID	5
+# define ELLIPSOID_ID	5
 
 /*
 ** Static parametrs
@@ -127,9 +128,6 @@ typedef	struct			s_cam
 	int					check[2];
 }						t_cam;
 
-/*
-** inten - Intensity
-*/
 typedef	struct			s_light
 {
 	t_vector			pos;
@@ -138,40 +136,26 @@ typedef	struct			s_light
 	struct s_light		*next;
 }						t_light;
 
-/*
-** r - Radius
-** specular - Reflection level
-** name - Object ID
-*/
 typedef struct			s_obj
 {
 	char 				*obj_name; //Храним имя объекта строкаой
 	int					type; // Идентификатор типа SPHERE_ID
-
 	t_vector			pos;
 	t_vector			dir;
 	t_rgb2				rgb;
-
 	int					reflect;//если == 1 то этот объект будет отражающим
 	float				coef_refl; // коэффициент отражения
-
 	int					spec; // блестящесть
 	float				radius;
-
 	float				limit; // ограничение объекта
-
 	int					refr; //если == 1 то этот объект будет преломлять свет
 	float				ind_refr; // Коэффициент преломления
 	float				coef_refr;
-
 	int					text_on; //есль == 1 говорит что текстуры включены
 	char				*texture;//иня файла где храниться текстура
-
 	int					obj_on;//есль == 1 говорит это будет obj фаил
 	char				*file_name; // имя obj файла
-
 	int					check[11];
-
 	struct s_obj		*next;
 }						t_obj;
 
@@ -189,12 +173,10 @@ typedef	struct		s_win
 	int					effect_on;
 	int					size[2];
 	int 				anti_alias;//Уровень антиалиасинга
-
 	SDL_Window			*window;
 	SDL_Renderer		*render;
 	SDL_Event			event;
 	SDL_Texture			*textur;
-
 	int					check[6];
 }						t_win;
 
@@ -203,7 +185,6 @@ typedef	struct			s_scene
 	float				spec; // Уровень блестящести
 	int					obj_c; // Количество считанных объектов
 	int					lgh_c; // Количество источников света
-
 	int					maxref;
 	float				ambient;
 	int					check[4];
@@ -212,49 +193,19 @@ typedef	struct			s_scene
 typedef struct			s_rt
 {
 	t_read				read_b;
-
 	t_scene 			scene;
 	t_win 				window;
 	t_cam 				cam;
-
 	t_obj 				*obj_head; // голова списка
 	t_light 			*lgh_head; // голова списка
 	t_obj 				*obj_cur; // Текущий объект с которым работаем
 	t_light 			*lgh_cur; // Текущий объект с которым работаем
-
 	t_obj 				*obj_mas; // Текущий объект с которым работаем
 	t_light 			*lgh_mas; // Текущий объект с которым работаем
-
 	int					select_obj;
 	t_cl				*cl;
 
 }						t_rt;
-
-/*
-** ambient - Ambient light scene
-** line_count - Count of line in scene file
-** dital - Scene ditalization level
-*/
-typedef struct			s_sdl
-{
-	SDL_Window			*window;
-	SDL_Renderer		*render;
-	SDL_Event			event;
-	SDL_Texture			*textur;
-	t_cam				cam;
-	t_obj				*obj;
-	t_light				*light;
-	float				ambient;
-	int					line_count;
-	char				**scene;
-	int					dital;
-	int					gloss_activ;
-	int					reflect_count;
-	int					pref;
-	t_obj				*select_obj;
-	t_cl				*cl;
-}						t_sdl;
-
 /*
 ** ------------------Function Prototype--------------------------------
 */
@@ -277,12 +228,14 @@ void					key_down_for_object(t_rt *rt, t_move *move);
 void					detail_key(t_rt *rt);
 void					swithc_gloss(t_rt *rt);
 void					reflection_key(t_rt *rt);
-void					swithc_pref(t_rt *rt);
 void					printf_scene_data(t_rt *rt);
-
+int						intersection(t_rt *rt, t_vector *ray_dir, t_vector *cam_pos);
 /*
 ** ------------------Function Parser--------------------------------
 */
+void					init_rt(t_rt *rt, char *filename, int str_c);
+void					parse_line(t_rt *rt, char *line, int str_c);
+void					init_struct(t_rt *rt);
 void					check_tag(t_rt *rt, char *line, int str_c);
 void					create_list(t_rt *rt, char *type);
 void					scene_parser(t_rt *rt, char *line, int str_c);
@@ -312,8 +265,4 @@ void					cheak_light(t_rt *rt);
 void					cheak_scene(t_rt *rt);
 void					cheak_object(t_rt *rt);
 void					cheak_part(t_rt *rt);
-
-
-
-
 #endif

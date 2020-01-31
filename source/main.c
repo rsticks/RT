@@ -6,7 +6,7 @@
 /*   By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/17 16:08:56 by daron             #+#    #+#             */
-/*   Updated: 2020/01/30 15:07:14 by daron            ###   ########.fr       */
+/*   Updated: 2020/01/30 17:02:50 by daron            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,77 +34,6 @@ void kill_error(char *message, int string_number)
 	kill_all(ft_strjoin_del(ft_strjoin(
 			ft_strjoin("ERROR: ", message),
 			" String number "), ft_itoa(string_number), 'R'));
-}
-
-void init_struct(t_rt *rt)
-{
-	if (!(rt->read_b.buff = (char**)malloc(sizeof(char*) * 2)))
-		kill_all("ERROR can't create buffer for reading file <init_struct>");
-	rt->read_b.str_c = 0;
-
-	rt->scene.spec = 0.0;
-	rt->scene.obj_c = 0;
-	rt->scene.lgh_c = 0;
-	rt->select_obj = -1;
-
-	rt->obj_head = NULL;
-	rt->lgh_head = NULL;
-
-	rt->window.windname = NULL;
-	rt->window.effecr_name = NULL;
-	rt->window.effect_on = 0;
-
-	ft_memset_int(rt->scene.check, 0, 4);
-	ft_memset_int(rt->window.check, 0, 6);
-	ft_memset_int(rt->cam.check, 0, 2);
-}
-
-void parse_line(t_rt *rt, char *line, int str_c)
-{
-	if (*line)
-	{
-		if (rt->read_b.str_c >= 1)
-		{
-			if (rt->read_b.str_c >= 1 && (ft_strequ(rt->read_b.buff[0], "scene")) > 0)
-				scene_parser(rt, line, str_c);
-			else if (rt->read_b.str_c >= 1 && (ft_strequ(rt->read_b.buff[0], "camera")) > 0)
-				camera_parser(rt, line, str_c);
-			else if (rt->read_b.str_c >= 1 && (ft_strequ(rt->read_b.buff[0], "light")) > 0)
-				light_parser(rt, line, str_c);
-			else if (rt->read_b.str_c >= 1 && (ft_strequ(rt->read_b.buff[0], "object")) > 0)
-				object_parser(rt, line, str_c);
-			else
-				kill_error("Uncorrected object tag" , str_c - 1);
-		}
-		else
-			check_tag(rt, line, str_c);
-	}
-}
-
-void init_rt(t_rt *rt, char *filename, int str_c)
-{
-	int fd;
-	int read_count;
-	char *line;
-
-	if ((fd = open(filename, O_RDWR)) < 0)
-		kill_all(ft_strjoin("ERROR: Can't open file ", filename));
-	init_struct(rt);
-	while ((read_count = get_next_line(fd, &line)) > 0)
-	{
-		parse_line(rt, line, str_c);
-		free(line);
-		str_c++;
-	}
-	close(fd);
-	free(rt->read_b.buff);
-	cheak_camera(rt);
-	cheak_scene(rt);
-	cheak_object(rt);
-	if (rt->lgh_head != NULL)
-		cheak_light(rt);
-	cheak_part(rt);
-	list_to_mas(rt);
 }
 
 void printf_scene_data(t_rt *rt)
@@ -175,23 +104,11 @@ int				main(int argc, char **argv)
 	sdl_initialize(&rt);
 	if(!(cl->data = (int*)malloc(sizeof(int) * rt.window.size[0] * rt.window.size[1])))
 		kill_all("Can't initialize CL_data <main>");
-
 	rt.window.textur = SDL_CreateTexture(rt.window.render, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_TARGET, rt.window.size[0], rt.window.size[1]);
-
-	cl->cl_obj = transform_obj_data(&rt);
-	cl->cl_light = transform_light_data(&rt);
-
 	init_cl(cl, &rt);
 	start_kernel(cl, &rt);
 	rt.cl = cl;
 	printf_scene_data(&rt);
-
-	while (1)
-		while (SDL_PollEvent(&rt.window.event))
-			if ((SDL_QUIT == rt.window.event.type) || (SDL_SCANCODE_ESCAPE == rt.window.event.key.keysym.scancode))
-					exit(0);
-
-
-	//events(&rt);
+	events(&rt);
 	return (0);
 }

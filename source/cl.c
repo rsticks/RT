@@ -6,7 +6,7 @@
 /*   By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 19:16:48 by rsticks           #+#    #+#             */
-/*   Updated: 2020/01/30 12:42:22 by daron            ###   ########.fr       */
+/*   Updated: 2020/01/30 17:02:50 by daron            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,37 +117,21 @@ void			start_kernel(t_cl *cl, t_rt *rt)
 	int			i_m[6];
 	float		d_m[7];
 
-	//cl->cl_obj = transform_obj_data(sdl->obj, &cl->o_c);
-	//cl->cl_light = transform_light_data(sdl->light, &cl->l_c);
+	cl->cl_obj = transform_obj_data(rt);
+	cl->cl_light = transform_light_data(rt);
 	mem_to_kernel(rt, d_m, i_m);
-	/*printf("то что должно быть при попадание на видеокарту  - W_size = (%d %d) Antialias = %d obj_c = %d obj_c = %d "
-		   "cam_pos = (%g, %g, %g) cam_rot = (%g, %g, %g) ambient= %g\n",
-		   rt->window.size[0], rt->window.size[1],
-		   rt->window.anti_alias, rt->scene.obj_c, rt->scene.lgh_c,
-		   rt->cam.pos.x,rt->cam.pos.y, rt->cam.pos.z,
-		   rt->cam.dir.x, rt->cam.dir.y, rt->cam.dir.z, rt->scene.ambient);*/
 	gws = rt->window.size[0] * rt->window.size[1];
-	//gws = 1000;
-	//printf("Hell1\n");
 	cl->err = clEnqueueWriteBuffer(cl->q, cl->i_m, CL_TRUE, 0, sizeof(int) * 6, i_m, 0, NULL, NULL);
-	//printf("Hell11\n");
 	cl->err = clEnqueueWriteBuffer(cl->q, cl->d_m, CL_TRUE, 0, sizeof(float) * 7, d_m, 0, NULL, NULL);
-	//printf("Hell111\n");
 	cl->err = clEnqueueWriteBuffer(cl->q, cl->obj_mem, CL_TRUE, 0, sizeof(t_cl_object) * rt->scene.obj_c, cl->cl_obj, 0, NULL, NULL);
-	//printf("Hell1111\n");
 	cl->err = clEnqueueWriteBuffer(cl->q, cl->light_mem, CL_TRUE, 0, sizeof(t_cl_light) * rt->scene.lgh_c, cl->cl_light, 0, NULL, NULL);
-	//printf("Hell2\n");
 	cl->err = clEnqueueNDRangeKernel(cl->q, cl->kernel, 1, NULL, &gws, NULL, 0, NULL, NULL);
-	//printf("Hell3\n");
 	cl->err = clEnqueueReadBuffer(cl->q, cl->img, CL_TRUE, 0, sizeof(int) * gws, cl->data, 0, NULL, NULL);
-	/*int i = -1;
-	while (++i < rt->window.size[0] * rt->window.size[1])
-		printf("%d\n", cl->data[i]);*/
-	//printf("Hell4\n");
+
 
 	SDL_RenderClear(rt->window.render);
 	SDL_UpdateTexture(rt->window.textur, NULL, cl->data, rt->window.size[0] * sizeof(int));
 	SDL_RenderCopy(rt->window.render, rt->window.textur, NULL, NULL);
 	SDL_RenderPresent(rt->window.render);
-	//free_o_l(cl);
+	free_o_l(cl);
 }

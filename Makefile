@@ -55,11 +55,17 @@ SOURCES_LIST = main.c \
                     parser/object_parser.c \
                     parser/cheker.c \
                     parser/list_to_mas.c \
+                    parser/parser_main_f.c \
                     transform.c \
                     cl.c \
                     additional_function.c \
                     additional_function_1.c \
-
+                    events/event.c \
+                    events/key_for_cam.c \
+                    events/key_for_object.c \
+                    events/key_for_other.c \
+                    events/mouse.c \
+                    intersection.c
 SOURCES = $(addprefix $(SOURCES_DIRECTORY), $(SOURCES_LIST))
 
 OBJECTS_DIRECTORY = objects/
