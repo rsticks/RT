@@ -32,6 +32,7 @@ t_cl_object			*transform_obj_data(t_rt *rt)
 		cl_obj[i].limit = rt->obj_mas[i].limit;
 		cl_obj[i].reflect = rt->obj_mas[i].reflect;
 		cl_obj[i].coef_refl = rt->obj_mas[i].coef_refl;
+		cl_obj[i].ellips_sentre = rt->obj_mas[i].ellips_sentre;
 
 		/*printf("Not Kernel - type = %d\npos = (%g, %g, %g)\nrot = (%g, %g, %g)\ncol = (%g, %g, %g)\nradius = %g\nreflect = %d coef = %g\n\n",
 			   cl_obj[i].name,

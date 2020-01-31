@@ -6,7 +6,7 @@
 /*   By: daron <daron@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/31 15:49:21 by daron             #+#    #+#             */
-/*   Updated: 2020/01/31 15:50:08 by daron            ###   ########.fr       */
+/*   Updated: 2020/01/31 17:25:10 by daron            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,13 @@ void init_rt(t_rt *rt, char *filename, int str_c)
 		cheak_light(rt);
 	cheak_part(rt);
 
+	create_list(rt, "object");
+	rt->obj_cur->type = ELLIPSOID_ID;
+	rt->obj_cur->pos = (t_vector){0,0,0};
+	rt->obj_cur->dir = (t_vector){-1,0,0};
+	rt->obj_cur->ellips_sentre = 100;
+	rt->obj_cur->rgb = (t_rgb2){101, 207, 198};
+	rt->obj_cur->radius = 150;
 
 
 

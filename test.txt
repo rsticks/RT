@@ -1,0 +1,148 @@
+init cl                          || 0
+platform id                      || Apple
+num device                       || 1
+Device id                        || AMD Radeon Pro 570 Compute Engine
+clGetDeviceIDs                   || 0
+clCreateContext                  || 0
+CreateCommandQueue               || 0
+clCreateProgramWithSource        || 0
+clBuildProgram                   || -11
+--------------------------------ERRORS OF KERNEL------------------------------------
+<program source>:644:2: error: use of undeclared identifier 'ft_tra'
+        ft_tra
+ ^
+<program source>:644:8: error: expected '}'
+        ft_tra
+       ^
+<program source>:622:1: note: to match this '{'
+{
+^
+
+clCreateKernel                   || -45
+clSetKernelArg                   || -48
+-------------------------------------------------------------------
+Window name = Test scene_4
+Window size = {900, 900}
+ maxref = 0 
+ antialias = 1
+ ambient = 0.15
+ effect = (null)
+
+Camera pos = {0, 0, -250}
+ Camera dir = {1, 0, 1}
+
+Light pos = {-40, 60, -10}
+Light rgb = {250, 250, 250}
+
+Light pos = {100, 70, -10}
+Light rgb = {250, 250, 250}
+
+Name = plane type = 2
+Object reflection = 0 refl_coeff = 0
+Refract on/off= 0 ind_refr = 0 coef_refr = 0
+Dir = {0, 0, -1}
+Pos = {0, 0, 200}
+RGB = {130, 130, 130}
+Radius = 0
+Spec = 0
+Limit = 0
+Texture_on = 0 texture_name = (null)
+Obj_on = 0 file_name = (null)
+
+Name = plane type = 2
+Object reflection = 1 refl_coeff = 0.9
+Refract on/off= 0 ind_refr = 0 coef_refr = 0.9
+Dir = {0, 0, 1}
+Pos = {0, 0, -700}
+RGB = {130, 200, 240}
+Radius = 0
+Spec = 0
+Limit = 0
+Texture_on = 0 texture_name = (null)
+Obj_on = 0 file_name = (null)
+
+Name = sphere type = 1
+Object reflection = 0 refl_coeff = 0
+Refract on/off= 0 ind_refr = 0 coef_refr = 0
+Dir = {0, 0, 0}
+Pos = {-12, 25, 5}
+RGB = {0, 250, 250}
+Radius = 25
+Spec = 0
+Limit = 0
+Texture_on = 0 texture_name = (null)
+Obj_on = 0 file_name = (null)
+
+Name = sphere type = 1
+Object reflection = 1 refl_coeff = 0.9
+Refract on/off= 0 ind_refr = 0 coef_refr = 0.9
+Dir = {0, 0, 0}
+Pos = {8, -53, -44}
+RGB = {190, 140, 250}
+Radius = 35
+Spec = 0
+Limit = 0
+Texture_on = 0 texture_name = (null)
+Obj_on = 0 file_name = (null)
+
+Name = sphere type = 1
+Object reflection = 0 refl_coeff = 0
+Refract on/off= 0 ind_refr = 0 coef_refr = 0
+Dir = {0, 0, 0}
+Pos = {-109, -74, 84}
+RGB = {200, 10, 100}
+Radius = 10
+Spec = 0
+Limit = 0
+Texture_on = 0 texture_name = (null)
+Obj_on = 0 file_name = (null)
+
+Name = sphere type = 1
+Object reflection = 0 refl_coeff = 0
+Refract on/off= 0 ind_refr = 0 coef_refr = 0
+Dir = {0, 0, 0}
+Pos = {-118, -166, 35}
+RGB = {200, 10, 200}
+Radius = 20
+Spec = 0
+Limit = 0
+Texture_on = 0 texture_name = (null)
+Obj_on = 0 file_name = (null)
+
+Name = sphere type = 1
+Object reflection = 0 refl_coeff = 0
+Refract on/off= 0 ind_refr = 0 coef_refr = 0
+Dir = {0, 0, 0}
+Pos = {-40, 134, 101}
+RGB = {180, 250, 150}
+Radius = 25
+Spec = 0
+Limit = 0
+Texture_on = 0 texture_name = (null)
+Obj_on = 0 file_name = (null)
+
+Name = cylinder type = 3
+Object reflection = 0 refl_coeff = 0
+Refract on/off= 0 ind_refr = 0 coef_refr = 0
+Dir = {1, 1, 0}
+Pos = {-30, 0, 40}
+RGB = {10, 150, 240}
+Radius = 10
+Spec = 0
+Limit = 0
+Texture_on = 0 texture_name = (null)
+Obj_on = 0 file_name = (null)
+
+Name = (null) type = 6
+Object reflection = 0 refl_coeff = 0
+Refract on/off= 0 ind_refr = 0 coef_refr = 0
+Dir = {-1, 0, 0}
+Pos = {0, 0, 0}
+RGB = {101, 207, 198}
+Radius = 150
+Spec = 0
+Limit = 0
+Texture_on = 0 texture_name = (null)
+Obj_on = 0 file_name = (null)
+
+-------------------------------------------------------------------

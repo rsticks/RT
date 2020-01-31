@@ -25,6 +25,7 @@
 # define CYLINDER_ID 3
 # define CONE_ID 4
 # define OBJ_FILE_ID	5
+# define ELLIPSOID_ID	6
 
 /*
 ** Help
@@ -42,6 +43,8 @@ typedef struct				s_cl_object
 	float					limit;
 	int						reflect;
 	float					coef_refl;
+
+	float					ellips_sentre;
 }							t_cl_object;
 
 typedef	struct				s_cl_light
@@ -96,6 +99,9 @@ typedef struct				s_rt
 	float3					ref;
 	int 					pref;
 	int 					cpt;
+
+	float					a;
+	float					b;
 }							t_rt;
 
 void						ft_fzero(float *s, int n);
@@ -112,6 +118,7 @@ float 						get_sphere_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_r
 float 						get_plane_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_rt *rt);
 float 						get_cone_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_rt *rt);
 float 						get_cylinder_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_rt *rt);
+float 						get_ellipsoid_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_rt *rt);
 int							intersection(t_rt *rt, float3 *ray_dir, float3 *cam_pos);
 float3 						object_norm(t_rt *rt, int i, float3 pos);
 int							shadow(t_rt *rt, int i_obj, int i_light, float3 pos);
@@ -227,6 +234,22 @@ float get_sphere_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_rt *rt)
 	return (get_quadratic_solution(a, b , discriminant));
 }
 
+float get_ellipsoid_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_rt *rt)
+{
+	float c;
+	float discriminant;
+
+	rt->dist = vec_sub(*cam_pos, rt->obj[i].pos);
+	rt->obj[i].rot = vec_norm(rt->obj[i].rot);
+	rt->a = 4 * pow(rt->obj[i].r, 2) * vec_dot(*ray_dir, *ray_dir) - 4 * pow(rt->obj[i].ellips_sentre, 2) * pow(vec_dot(*ray_dir, rt->obj[i].rot), 2);
+	rt->b = 8 * pow(rt->obj[i].r, 2) * vec_dot(*ray_dir, rt->dist) - 4 * vec_dot(*ray_dir, rt->obj[i].rot) * rt->obj[i].ellips_sentre * (pow(rt->obj[i].r, 2) + 2 * vec_dot(rt->dist, rt->obj[i].rot) * rt->obj[i].ellips_sentre - rt->obj[i].ellips_sentre);
+	c = 4 * pow(rt->obj[i].r, 2) * vec_dot(rt->dist, rt->dist) - pow((pow(rt->obj[i].r, 2) + 2 * vec_dot(rt->dist, rt->obj[i].rot) * rt->obj[i].ellips_sentre - rt->obj[i].ellips_sentre), 2);
+	discriminant = pow(rt->b, 2) - 4 * rt->a * c;
+	if (discriminant < 0)
+		return (-1);
+	return (get_quadratic_solution(rt->a, rt->b , discriminant));
+}
+
 float get_plane_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_rt *rt)
 {
 	float dist;
@@ -299,6 +322,11 @@ int			intersection(t_rt *rt, float3 *ray_dir, float3 *cam_pos)
 			dist = get_cone_intersection(ray_dir, cam_pos, i, rt);
 		else if (rt->obj[i].name == PLANE_ID)
 			dist = get_plane_intersection(ray_dir, cam_pos, i, rt);
+		else if (rt->obj[i].name == ELLIPSOID_ID) {
+			dist = get_ellipsoid_intersection(ray_dir, cam_pos, i, rt);
+			//if (dist != -1)
+			//	printf("dist = %g\n", dist);
+		}
 		if (dist > EPS && dist < rt->t)
 		{
 			f = i;
@@ -316,7 +344,16 @@ float3 object_norm(t_rt *rt, int i, float3 pos)
 	float3 tmp;
 	float3 tmp2;
 
-	if (rt->obj[i].name == CONE_ID || rt->obj[i].name == CYLINDER_ID)
+	float3 cmin, r;
+
+	if (rt->obj[i].name == ELLIPSOID_ID)
+	{
+		cmin = vec_sum(rt->obj[i].pos, vec_scale(rt->obj[i].rot, (rt->obj[i].ellips_sentre / 2)));
+		r = vec_sub(vec_sum(rt->obj[i].pos, vec_scale(rt->obj[i].rot, rt->t)), cmin);
+		norm = vec_sub(r, vec_scale(rt->obj[i].rot, (1 - pow(rt->b, 2) / pow(rt->a, 2)) * vec_dot(r, rt->obj[i].rot)));
+		return (vec_norm(norm));
+	}
+	else if (rt->obj[i].name == CONE_ID || rt->obj[i].name == CYLINDER_ID)
 	{
 		tmp = vec_scale(rt->obj[i].rot, (vec_dot(rt->ray_dir, rt->obj[i].rot) * rt->t
 		+ vec_dot(rt->dist, rt->obj[i].rot)));
@@ -331,7 +368,6 @@ float3 object_norm(t_rt *rt, int i, float3 pos)
 		norm = vec_sub(pos, rt->obj[i].pos);
 	return (vec_norm(norm));
 }
-
 
 void	transfer_light(int i_obj, int i_light, float *tab, float d, t_rt *rt)
 {
@@ -597,36 +633,8 @@ __kernel void 		start(__global t_cl_object *obj,
 	rt.cam.pos = (float3){d_mem[0], d_mem[1], d_mem[2]};
 	rt.scene.ambient = d_mem[3];
 	rt.cam.rot = (float3){d_mem[4], d_mem[5], d_mem[6]};
-
 	rt.obj = obj;
 	rt.light = light;
-
-	/*if (gid == 1)
-	{
-		printf("In Kernel - W_size = (%d %d) Antialias = %d obj_c = %d light_c = %d\n"
-				"cam_pos = (%g, %g, %g) cam_rot = (%g, %g, %g) ambient= %g\n\n",
-				rt.window.size[0], rt.window.size[1],
-				rt.window.anti_alias, rt.scene.obj_c, rt.scene.lgh_c,
-				rt.cam.pos.x,rt.cam.pos.y, rt.cam.pos.z,
-				rt.cam.rot.x, rt.cam.rot.y, rt.cam.rot.z, rt.scene.ambient);
-
-		int i ;
-		i = -1;
-		while (++i < rt.scene.obj_c)
-			printf("In Kernel Object type = %d\n pos = (%g, %g, %g)\n rot = (%g, %g, %g)\n color = (%g, %g, %g)\n radius = %g\nreflect = %d coef = %g\n",
-				rt.obj[i].name,
-				rt.obj[i].pos.x, rt.obj[i].pos.y, rt.obj[i].pos.z,
-				rt.obj[i].rot.x, rt.obj[i].rot.y, rt.obj[i].rot.z,
-				rt.obj[i].col.x, rt.obj[i].col.y, rt.obj[i].col.z,
-				rt.obj[i].r,
-				rt.obj[i].reflect, rt.obj[i].coef_refl);
-		i = -1;
-		while (++i < rt.scene.lgh_c)
-			printf("In Kernel Light pos = (%g, %g, %g)\n color = (%g, %g, %g)\n\n",
-				rt.light[i].pos.x, rt.light[i].pos.y, rt.light[i].pos.z,
-				rt.light[i].col.x, rt.light[i].col.y, rt.light[i].col.z);
-
-	}*/
 	x = gid % rt.window.size[0];
 	y = gid / rt.window.size[1];
 	ft_tracing(x, y, &rt, out_data, gid);

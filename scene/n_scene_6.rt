@@ -34,7 +34,7 @@
 	<type> {plane} </type>
 	<pos> {x0.00 y0.00 z-700.00} </pos>
 	<dir> {x0.0 y0.0 z1.0} </dir>
-	<reflect> {off} </reflect>
+	<reflect> {on c0.9} </reflect>
 	<rgb> {r130 g200 b240} </rgb>
 	<refract> {off} </refract>
 </object>
@@ -54,7 +54,7 @@
 	<pos> {x8.00 y-53.00 z-44.00} </pos>
 	<radius> {35.00} </radius>
 	<rgb> {r190 g140 b250} </rgb>
-	<reflect> {off} </reflect>
+	<reflect> {on c0.9} </reflect>
 	<spec> {off} </spec>
 	<refract> {off} </refract>
 </object>
