@@ -6,7 +6,7 @@
 /*   By: kzina <kzina@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/17 16:20:37 by daron             #+#    #+#             */
-/*   Updated: 2020/01/30 20:07:57 by kzina            ###   ########.fr       */
+/*   Updated: 2020/02/01 20:00:35 by kzina            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,10 @@
 # define PLANE_ID		2
 # define CYLINDER_ID	3
 # define CONE_ID		4
+# define SPHERE			"Sphere"
+# define PLANE			"Plane"
+# define CYLINDER		"Cylinder"
+# define CONE			"Cone"
 
 /*
 ** Static parametrs
@@ -159,53 +163,11 @@ typedef struct			s_object
 
 typedef	struct			s_ui 
 {
-	short			t_c;
-	cl_float3		t_v;
-	cl_float3		t_v2;
-	//t_hsv			hsv;
-	char			c_num;
-	char			*tmp;
-	char			*c_name;
-	char			*r_dim;
-	char			m_visible;
-	char			b_hover;
-	char			b_se_hover;
-	char			b_se_down;
-	char			case_active;
-	char			b_down;
-	char			c_hover;
-	char			c_down;
-	char			ra_hover;
-	char			ra_down;
-	char			b_sp_hover;
-	char			b_sp_active;
-	char			*n_save;
-	char			save_num;
-	char			b_state[19];
-	char			nav_state;
-	short			id;
-	short			k_edit;
-	//t_obj			*c_elem;
-	SDL_Point		p_tmp;
-	SDL_Rect		t_rect;
-	SDL_Color		c_clr[3];
-	SDL_Rect		area[16];
-	SDL_Rect		ra_rect[11];
-	SDL_Rect		b_rect[20];
-	SDL_Rect		cam_b_rect[8];
-	SDL_Rect		lgt_b_rect[12];
-	SDL_Rect		obj_b_rect[19];
-	SDL_Rect		param_b_rect[3];
-	SDL_Rect		*b_se_rect;
-	SDL_Rect		*case_rect;
-	SDL_Rect		r_hover;
-	SDL_Surface		*s_tmp;
-	SDL_Surface		*s_ui;
-	SDL_Surface		*s_cam;
-	SDL_Surface		*s_ver;
-	TTF_Font		**font;
+	SDL_Surface		*temp_surf[10];
+	SDL_Texture		*textur[10];
+	SDL_Rect		rect[10];
+	TTF_Font		*font[2];
 }						t_ui;
-
 
 /*
 ** ambient - Ambient light scene
@@ -288,5 +250,8 @@ void					swithc_pref(t_sdl *sdl);
 
 void        			sdl_init_menu(t_sdl *sdl);
 void        			sdl_refresh(t_sdl *sdl, t_cl *cl);
+void					my_free_ui(t_sdl *sdl);
+void					draw_selected(t_sdl *sdl);
+void					draw_essentil_menu(t_sdl *sdl);
 
 #endif

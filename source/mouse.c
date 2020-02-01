@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mouse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kzina <kzina@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 14:34:47 by daron             #+#    #+#             */
-/*   Updated: 2019/11/28 16:28:13 by rsticks          ###   ########.fr       */
+/*   Updated: 2020/02/01 20:00:12 by kzina            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,6 @@ void			mouse_down(t_sdl *sdl)
 		v = (W_HEIGHT - (double)y * 2.0) / W_WIDTH;
 		pos = (t_vector){SC.pos.x + u, SC.pos.y + v, SC.pos.z};
 		SSO = mouse_intersection(u, v, &pos, sdl);
+		draw_selected(sdl);
 	}
 }

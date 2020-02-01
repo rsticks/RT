@@ -6,7 +6,7 @@
 /*   By: kzina <kzina@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 15:54:57 by daron             #+#    #+#             */
-/*   Updated: 2020/01/20 18:51:56 by kzina            ###   ########.fr       */
+/*   Updated: 2020/02/01 19:04:27 by kzina            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ t_light			*ft_add_light_link(t_sdl *sdl, t_light *link)
 
 static void		my_sdl_free(t_sdl *sdl)
 {
+	SDL_DestroyRenderer(sdl->render2);
+	SDL_DestroyWindow(sdl->window2);
 	SDL_DestroyRenderer(sdl->render);
 	SDL_DestroyWindow(sdl->window);
 	SDL_Quit();
@@ -89,5 +91,6 @@ void			my_free(t_sdl *sdl)
 		light = light_next;
 	}
 	ind = -1;
+	my_free_ui(sdl);
 	my_sdl_free(sdl);
 }
