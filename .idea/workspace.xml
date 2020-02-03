@@ -10,23 +10,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="02902703-0622-413f-b0c9-123879fde588" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RT" beforeDir="false" afterPath="$PROJECT_DIR$/RT" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/includes/rt.h" beforeDir="false" afterPath="$PROJECT_DIR$/includes/rt.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/kernel.cl" beforeDir="false" afterPath="$PROJECT_DIR$/kernel.cl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/objects/cl.o" beforeDir="false" afterPath="$PROJECT_DIR$/objects/cl.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/objects/events/event.o" beforeDir="false" afterPath="$PROJECT_DIR$/objects/events/event.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/objects/intersection.o" beforeDir="false" afterPath="$PROJECT_DIR$/objects/intersection.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/objects/parser/cheker.o" beforeDir="false" afterPath="$PROJECT_DIR$/objects/parser/cheker.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/objects/parser/object_parser.o" beforeDir="false" afterPath="$PROJECT_DIR$/objects/parser/object_parser.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/objects/parser/work_with_list.o" beforeDir="false" afterPath="$PROJECT_DIR$/objects/parser/work_with_list.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scene/n_scene_5.rt" beforeDir="false" afterPath="$PROJECT_DIR$/scene/n_scene_5.rt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/cl.c" beforeDir="false" afterPath="$PROJECT_DIR$/source/cl.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/events/event.c" beforeDir="false" afterPath="$PROJECT_DIR$/source/events/event.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scene/n_scene_6.rt" beforeDir="false" afterPath="$PROJECT_DIR$/scene/n_scene_6.rt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source/intersection.c" beforeDir="false" afterPath="$PROJECT_DIR$/source/intersection.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source/parser/cheker.c" beforeDir="false" afterPath="$PROJECT_DIR$/source/parser/cheker.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source/parser/object_parser.c" beforeDir="false" afterPath="$PROJECT_DIR$/source/parser/object_parser.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source/parser/parser_main_f.c" beforeDir="false" afterPath="$PROJECT_DIR$/source/parser/parser_main_f.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/transform.c" beforeDir="false" afterPath="$PROJECT_DIR$/source/transform.c" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,7 +68,7 @@
       <workItem from="1580652685403" duration="1450000" />
       <workItem from="1580725833942" duration="231000" />
       <workItem from="1580727672014" duration="1560000" />
-      <workItem from="1580729733160" duration="4137000" />
+      <workItem from="1580729733160" duration="8862000" />
     </task>
     <servers />
   </component>

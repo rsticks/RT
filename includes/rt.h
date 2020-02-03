@@ -6,7 +6,7 @@
 /*   By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/17 16:20:37 by daron             #+#    #+#             */
-/*   Updated: 2020/02/03 14:32:01 by daron            ###   ########.fr       */
+/*   Updated: 2020/02/03 14:44:28 by daron            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@
 # define CONE_ID		4
 # define OBJ_FILE_ID	5
 # define DISK_ID		6
+# define PARABOLOID_ID	7
 
 /*
 ** Static parametrs

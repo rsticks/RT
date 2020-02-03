@@ -62,12 +62,12 @@
 </object>
 
 <object>
-	<type> {disk} </type>
-	<pos> {x00.93, y0.00, z00.32} </pos>
-	<dir> {x0.23, y20.23, z59.91} </dir>
-	<radius> {30.00} </radius>
-	<rgb> {r51 g204 b255} </rgb>
-	<reflect> {on c0.9} </reflect>
-	<spec> {on} </spec>
+	<type> {paraboloid} </type>
+	<pos> {x59.99, y49.99, z0.43} </pos>
+	<dir> {x0.0, y1.0, z0.0} </dir>
+	<radius> {15.00} </radius>
+	<rgb> {r240 g150 b0} </rgb>
+	<reflect> {on c0.6} </reflect>
+	<spec> {off} </spec>
 	<refract> {off} </refract>
 </object>

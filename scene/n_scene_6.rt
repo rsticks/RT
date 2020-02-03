@@ -84,7 +84,7 @@
 	<pos> {x-40.00 y134.00 z101.00} </pos>
 	<radius> {25.00} </radius>
 	<rgb> {r180 g250 b150} </rgb>
-	<reflect> {off} </reflect>
+	<reflect> {on c0.8} </reflect>
 	<spec> {off} </spec>
 	<refract> {off} </refract>
 </object>
@@ -96,6 +96,17 @@
 	<radius> {10.00} </radius>
 	<rgb> {r10 g150 b240} </rgb>
 	<reflect> {off} </reflect>
+	<spec> {off} </spec>
+	<refract> {off} </refract>
+</object>
+
+<object>
+	<type> {paraboloid} </type>
+	<pos> {x0.51, y0.0, z129.99} </pos>
+	<dir> {x0.56, y0.65, z0.49} </dir>
+	<radius> {15.00} </radius>
+	<rgb> {r240 g150 b0} </rgb>
+	<reflect> {on c0.6} </reflect>
 	<spec> {off} </spec>
 	<refract> {off} </refract>
 </object>

@@ -26,12 +26,12 @@
 # define CONE_ID 4
 # define OBJ_FILE_ID	5
 # define DISK_ID		6
+# define PARABOLOID_ID	7
 
 /*
 ** Help
 */
 # define EPS 0.0001
-# define INFINITY 90000.0
 
 typedef struct				s_cl_object
 {
@@ -115,6 +115,7 @@ float 						get_plane_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_rt
 float 						get_cone_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_rt *rt);
 float 						get_cylinder_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_rt *rt);
 float 						get_disk_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_rt *rt);
+float get_paraboloid_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_rt *rt);
 int							intersection(t_rt *rt, float3 *ray_dir, float3 *cam_pos);
 float3 						object_norm(t_rt *rt, int i, float3 pos);
 int							shadow(t_rt *rt, int i_obj, int i_light, float3 pos);
@@ -230,6 +231,23 @@ float get_sphere_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_rt *rt)
 	return (get_quadratic_solution(a, b , discriminant));
 }
 
+float get_paraboloid_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_rt *rt)
+{
+	float b;
+	float c;
+	float a;
+	float discriminant;
+
+	rt->dist = vec_sub(*cam_pos, rt->obj[i].pos);
+	a = vec_dot(*ray_dir, *ray_dir) - pow(vec_dot(*ray_dir, rt->obj[i].rot), 2);
+	b = 2 * (vec_dot(*ray_dir, rt->dist) - vec_dot(*ray_dir, rt->obj[i].rot) * (vec_dot(rt->dist, rt->obj[i].rot) + 2 * rt->obj[i].r));
+	c = vec_dot(rt->dist, rt->dist) - vec_dot(rt->dist, rt->obj[i].rot) * (vec_dot(rt->dist, rt->obj[i].rot) + 4 * rt->obj[i].r);
+	discriminant = pow(b, 2) - 4 * a * c;
+	if (discriminant < 0)
+		return (-1);
+	return (get_quadratic_solution(a, b , discriminant));
+}
+
 float get_plane_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_rt *rt)
 {
 	float dist;
@@ -301,7 +319,7 @@ int			intersection(t_rt *rt, float3 *ray_dir, float3 *cam_pos)
 
 	i = 0;
 	f = -1;
-	rt->t = INFINITY;
+	rt->t = 90000.0;
 	dist = 0.01;
 	while (i < rt->scene.obj_c)
 	{
@@ -315,6 +333,8 @@ int			intersection(t_rt *rt, float3 *ray_dir, float3 *cam_pos)
 			dist = get_plane_intersection(ray_dir, cam_pos, i, rt);
 		else if (rt->obj[i].name == DISK_ID)
 			dist = get_disk_intersection(ray_dir, cam_pos, i, rt);
+		else if (rt->obj[i].name == PARABOLOID_ID)
+			dist = get_paraboloid_intersection(ray_dir, cam_pos, i, rt);
 		if (dist > EPS && dist < rt->t)
 		{
 			f = i;
@@ -326,21 +346,23 @@ int			intersection(t_rt *rt, float3 *ray_dir, float3 *cam_pos)
 }
 
 
-float3 object_norm(t_rt *rt, int i, float3 pos)
-{
+float3 object_norm(t_rt *rt, int i, float3 pos) {
 	float3 norm;
 	float3 tmp;
 	float3 tmp2;
 
 	if (rt->obj[i].name == CONE_ID || rt->obj[i].name == CYLINDER_ID)
 	{
-		tmp = vec_scale(rt->obj[i].rot, (vec_dot(rt->ray_dir, rt->obj[i].rot) * rt->t
-		+ vec_dot(rt->dist, rt->obj[i].rot)));
+		tmp = vec_scale(rt->obj[i].rot,
+						(vec_dot(rt->ray_dir, rt->obj[i].rot) * rt->t
+						 + vec_dot(rt->dist, rt->obj[i].rot)));
 		if (rt->obj[i].name == CONE_ID)
 			tmp = vec_scale(tmp, (1 + pow(tan(rt->obj[i].r), 2)));
 		tmp2 = vec_sub(pos, rt->obj[i].pos);
 		norm = vec_sub(tmp2, tmp);
-	}
+	} else if (rt->obj[i].name == PARABOLOID_ID)
+		norm = vec_sub( vec_sub(pos, rt->obj[i].pos), vec_scale(rt->obj[i].rot,
+				(vec_dot(vec_sub(pos, rt->obj[i].pos), rt->obj[i].rot) + rt->obj[i].r)));
 	else if (rt->obj[i].name == PLANE_ID || rt->obj[i].name == DISK_ID)
 		norm = rt->obj[i].rot;
 	else if (rt->obj[i].name == SPHERE_ID)
@@ -382,6 +404,8 @@ int		shadow(t_rt *rt, int i_obj, int i_light, float3 pos)
 				d = get_plane_intersection(&dist, &pos, i, rt);
 			else if (rt->obj[i].name == DISK_ID)
 				d = get_disk_intersection(&dist, &pos, i, rt);
+			else if (rt->obj[i].name == PARABOLOID_ID)
+				d = get_paraboloid_intersection(&dist, &pos, i, rt);
 			if (d > EPS && d < rt->t)
 				return (1);
 		}
@@ -396,7 +420,7 @@ void gloss(t_rt *rt, int i_obj, float *tab, float3 *dist, float d)
 	float	tmp;
 	float3	ref;
 
-	if (rt->obj[i_obj].name != PLANE_ID && rt->obj[i_obj].specular == 1)
+	if (rt->obj[i_obj].specular == 1.0)
 	{
 		spec = 0.0;
 		ref = vec_scale(rt->norm, (2.0 * vec_dot(rt->norm, *dist)));
@@ -436,6 +460,8 @@ int ref_inter(t_rt *rt, int i_cur_obj , float3 pos)
 				dist = get_plane_intersection(&rt->ref, &pos, i, rt);
 			else if (rt->obj[i].name == DISK_ID)
 				dist = get_disk_intersection(&rt->ref, &pos, i, rt);
+			else if (rt->obj[i].name == PARABOLOID_ID)
+				dist = get_paraboloid_intersection(&rt->ref, &pos, i, rt);
 			if (dist > EPS && dist < rt->t)
 			{
 				f = i;
