@@ -6,7 +6,7 @@
 /*   By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/17 16:08:56 by daron             #+#    #+#             */
-/*   Updated: 2020/01/30 15:07:14 by daron            ###   ########.fr       */
+/*   Updated: 2020/01/30 17:19:26 by rsticks          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,11 +175,10 @@ int				main(int argc, char **argv)
 	sdl_initialize(&rt);
 	if(!(cl->data = (int*)malloc(sizeof(int) * rt.window.size[0] * rt.window.size[1])))
 		kill_all("Can't initialize CL_data <main>");
-
 	rt.window.textur = SDL_CreateTexture(rt.window.render, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_TARGET, rt.window.size[0], rt.window.size[1]);
-
 	cl->cl_obj = transform_obj_data(&rt);
 	cl->cl_light = transform_light_data(&rt);
+	parsing_obj("objs/cube.obj");
 
 	init_cl(cl, &rt);
 	start_kernel(cl, &rt);

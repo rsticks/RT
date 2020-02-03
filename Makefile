@@ -6,13 +6,13 @@
 #    By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/09 16:02:42 by daron             #+#    #+#              #
-#    Updated: 2020/01/30 15:07:37 by daron            ###   ########.fr        #
+#    Updated: 2020/01/30 16:09:16 by rsticks          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = RT
 CC = gcc
-FLAGS = -Wall -Wextra -O3
+FLAGS = -Wall -Wextra -g
 LIBRARIES = -L$(LIBFT_DIRECTORY) \
             -L$(FTVECTOR_DIRECTORY) \
 			-framework OpenGL \
@@ -40,7 +40,8 @@ FTVECTOR = $(FTVECTOR_DIRECTORY)ftvector.a
 FTVECTOR_DIRECTORY = ./ftvector/
 FTVECTOR_HEADERS = $(FTVECTOR_DIRECTORY)includes/
 
-HEADERS_LIST = rt.h
+HEADERS_LIST =	rt.h
+				
 HEADERS_DIRECTORY = ./includes/
 HEADERS = $(addprefix $(HEADERS_DIRECTORY), $(HEADERS_LIST))
 
@@ -59,6 +60,7 @@ SOURCES_LIST = main.c \
                     cl.c \
                     additional_function.c \
                     additional_function_1.c \
+					parser_obj/parse_obj.c \
 
 SOURCES = $(addprefix $(SOURCES_DIRECTORY), $(SOURCES_LIST))
 
@@ -85,6 +87,7 @@ $(OBJECTS_DIRECTORY):
 	@mkdir -p $(OBJECTS_DIRECTORY)
 	@mkdir -p $(OBJECTS_DIRECTORY)/parser
 	@mkdir -p $(OBJECTS_DIRECTORY)/events
+	@mkdir -p $(OBJECTS_DIRECTORY)/parser_obj
 	@echo "$(NAME): $(GREEN)$(OBJECTS_DIRECTORY) was created$(RESET)"
 
 $(OBJECTS_DIRECTORY)%.o : $(SOURCES_DIRECTORY)%.c $(HEADERS)
