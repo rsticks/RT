@@ -6,7 +6,7 @@
 /*   By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 12:30:37 by daron             #+#    #+#             */
-/*   Updated: 2020/01/30 15:07:14 by daron            ###   ########.fr       */
+/*   Updated: 2020/02/03 14:31:47 by daron            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void		events(t_rt *rt)
 			if ((SDL_QUIT == rt->window.event.type) ||
 				(SDL_SCANCODE_ESCAPE == rt->window.event.key.keysym.scancode))
 			{
+				printf_scene_data(rt);
 				my_free(rt);
 				exit(0);
 			}

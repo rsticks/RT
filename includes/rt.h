@@ -6,7 +6,7 @@
 /*   By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/17 16:20:37 by daron             #+#    #+#             */
-/*   Updated: 2020/01/31 15:48:34 by daron            ###   ########.fr       */
+/*   Updated: 2020/02/03 14:32:01 by daron            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@
 # define CYLINDER_ID	3
 # define CONE_ID		4
 # define OBJ_FILE_ID	5
-# define ELLIPSOID_ID	5
+# define DISK_ID		6
 
 /*
 ** Static parametrs
@@ -70,6 +70,8 @@ typedef struct			s_cl_object
 	cl_int				reflect;
 	cl_float			coef_refl;
 	cl_float			limit;
+
+	float				ellips_sentre;
 }						t_cl_object;
 
 typedef	struct			s_cl_light
@@ -155,6 +157,9 @@ typedef struct			s_obj
 	char				*texture;//иня файла где храниться текстура
 	int					obj_on;//есль == 1 говорит это будет obj фаил
 	char				*file_name; // имя obj файла
+
+	float				ellips_sentre;
+
 	int					check[11];
 	struct s_obj		*next;
 }						t_obj;
@@ -220,6 +225,7 @@ void					sdl_initialize(t_rt *rt);
 double					get_quadratic_solution(double a, double b, double discriminant);
 void					my_free(t_rt *rt);
 float					ft_clamp(float value, float min, float max);
+void printf_scene_data(t_rt *rt);
 
 void					events(t_rt *rt);
 void					mouse_down(t_rt *rt);

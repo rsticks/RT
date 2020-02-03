@@ -6,7 +6,7 @@
 /*   By: daron <daron@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/22 17:58:47 by daron             #+#    #+#             */
-/*   Updated: 2020/01/25 16:24:40 by daron            ###   ########.fr       */
+/*   Updated: 2020/02/03 14:31:47 by daron            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ void check_inti_obj_type(t_rt *rt, int str_c)
 		rt->obj_cur->type = PLANE_ID;
 	else if ((ft_strnequ("object_f", rt->obj_cur->obj_name, 8)) == 1)
 		rt->obj_cur->type = OBJ_FILE_ID;
+	else if ((ft_strnequ("disk", rt->obj_cur->obj_name, 4)) == 1)
+		rt->obj_cur->type = DISK_ID;
 	else
 		kill_error("uncorrected object type" , str_c);
 }

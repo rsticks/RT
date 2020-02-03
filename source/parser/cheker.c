@@ -62,7 +62,7 @@ void cheak_object(t_rt *rt)
 			kill_all("ERROR: You must set the rafraction level");
 		else if (obj->check[3] == 0)
 			kill_all("ERROR: You must set the object color");
-		else if (obj->type == SPHERE_ID && obj->check[3] == 0)
+		else if ((obj->type == DISK_ID || obj->type == SPHERE_ID) && obj->check[3] == 0)
 			kill_all("ERROR: You must set the sphere radius");
 		obj = obj->next;
 	}

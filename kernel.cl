@@ -25,11 +25,13 @@
 # define CYLINDER_ID 3
 # define CONE_ID 4
 # define OBJ_FILE_ID	5
+# define DISK_ID		6
 
 /*
 ** Help
 */
 # define EPS 0.0001
+# define INFINITY 90000.0
 
 typedef struct				s_cl_object
 {
@@ -112,6 +114,7 @@ float 						get_sphere_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_r
 float 						get_plane_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_rt *rt);
 float 						get_cone_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_rt *rt);
 float 						get_cylinder_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_rt *rt);
+float 						get_disk_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_rt *rt);
 int							intersection(t_rt *rt, float3 *ray_dir, float3 *cam_pos);
 float3 						object_norm(t_rt *rt, int i, float3 pos);
 int							shadow(t_rt *rt, int i_obj, int i_light, float3 pos);
@@ -238,6 +241,17 @@ float get_plane_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_rt *rt)
 	return (dist);
 }
 
+float get_disk_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_rt *rt)
+{
+	float dist;
+
+	dist = ((vec_dot(rt->obj[i].rot, rt->obj[i].pos) - vec_dot(rt->obj[i].rot, *cam_pos)) / vec_dot(rt->obj[i].rot, *ray_dir));
+	if (dist > EPS  && vec_len(vec_sub(vec_sum(*cam_pos, vec_scale(*ray_dir, dist)), rt->obj[i].pos)) <= rt->obj[i].r)
+		return dist;
+	else
+		return (-1);
+}
+
 float get_cone_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_rt *rt)
 {
 	float	b;
@@ -287,7 +301,7 @@ int			intersection(t_rt *rt, float3 *ray_dir, float3 *cam_pos)
 
 	i = 0;
 	f = -1;
-	rt->t = 90000.0;
+	rt->t = INFINITY;
 	dist = 0.01;
 	while (i < rt->scene.obj_c)
 	{
@@ -299,6 +313,8 @@ int			intersection(t_rt *rt, float3 *ray_dir, float3 *cam_pos)
 			dist = get_cone_intersection(ray_dir, cam_pos, i, rt);
 		else if (rt->obj[i].name == PLANE_ID)
 			dist = get_plane_intersection(ray_dir, cam_pos, i, rt);
+		else if (rt->obj[i].name == DISK_ID)
+			dist = get_disk_intersection(ray_dir, cam_pos, i, rt);
 		if (dist > EPS && dist < rt->t)
 		{
 			f = i;
@@ -325,7 +341,7 @@ float3 object_norm(t_rt *rt, int i, float3 pos)
 		tmp2 = vec_sub(pos, rt->obj[i].pos);
 		norm = vec_sub(tmp2, tmp);
 	}
-	else if (rt->obj[i].name == PLANE_ID)
+	else if (rt->obj[i].name == PLANE_ID || rt->obj[i].name == DISK_ID)
 		norm = rt->obj[i].rot;
 	else if (rt->obj[i].name == SPHERE_ID)
 		norm = vec_sub(pos, rt->obj[i].pos);
@@ -364,6 +380,8 @@ int		shadow(t_rt *rt, int i_obj, int i_light, float3 pos)
 				d = get_cone_intersection(&dist, &pos, i, rt);
 			else if (rt->obj[i].name == PLANE_ID)
 				d = get_plane_intersection(&dist, &pos, i, rt);
+			else if (rt->obj[i].name == DISK_ID)
+				d = get_disk_intersection(&dist, &pos, i, rt);
 			if (d > EPS && d < rt->t)
 				return (1);
 		}
@@ -416,6 +434,8 @@ int ref_inter(t_rt *rt, int i_cur_obj , float3 pos)
 				dist = get_cone_intersection(&rt->ref, &pos, i, rt);
 			else if (rt->obj[i].name == PLANE_ID)
 				dist = get_plane_intersection(&rt->ref, &pos, i, rt);
+			else if (rt->obj[i].name == DISK_ID)
+				dist = get_disk_intersection(&rt->ref, &pos, i, rt);
 			if (dist > EPS && dist < rt->t)
 			{
 				f = i;
@@ -431,7 +451,7 @@ int ref_init(t_rt *rt, int i_obj, float3 *pos)
 {
 	int	tmp2;
 
-	rt->t = 8000.0;
+	rt->t = INFINITY;
 	rt->ref = vec_scale(rt->norm, (2 * vec_dot(rt->refpos, rt->norm)));
 	rt->ref = vec_sub(rt->refpos, rt->ref);
 	rt->ref = vec_norm(rt->ref);

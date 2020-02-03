@@ -7,8 +7,8 @@
 </scene>
 
 <camera>
-	<pos> {x0.00 y00.00 z-250.00} </pos>
-	<dir> {x1.0 y1.00 z1.00} </dir>
+	<pos> {x-61.62, y115.8, z217.46} </pos>
+	<dir> {x-48.99, y20.99, z1.11} </dir>
 </camera>
 
 <light>
@@ -31,31 +31,11 @@
 </object>
 
 <object>
-	<type> {sphere} </type>
-	<pos> {x-12.00 y25.00 z5.00} </pos>
-	<radius> {25.00} </radius>
-	<rgb> {r0 g250 b250} </rgb>
-	<reflect> {off} </reflect>
-	<spec> {off} </spec>
-	<refract> {off} </refract>
-</object>
-
-<object>
-	<type> {sphere} </type>
-	<pos> {x45.00 y-23.00 z-13.00} </pos>
-	<radius> {35.00} </radius>
-	<rgb> {r0 g250 b250} </rgb>
-	<reflect> {on c0.9} </reflect>
-	<spec> {off} </spec>
-	<refract> {off} </refract>
-</object>
-
-<object>
-	<type> {cylinder} </type>
-	<pos> {x-100.00 y0.00 z40.00} </pos>
-	<dir> {x1.0 y2.0 z1.0} </dir>
-	<radius> {10.00} </radius>
-	<rgb> {r240 g150 b0} </rgb>
+	<type> {disk} </type>
+	<pos> {x00.5 y-0.6 z1.7} </pos>
+	<dir> {x0.23 y20.23 z59.91} </dir>
+	<radius> {30.00} </radius>
+	<rgb> {r51 g255 b102} </rgb>
 	<reflect> {off} </reflect>
 	<spec> {on} </spec>
 	<refract> {off} </refract>
@@ -63,11 +43,22 @@
 
 <object>
 	<type> {disk} </type>
-	<pos> {x00.93, y0.00, z00.32} </pos>
+	<pos> {x-49.9, y0.0, z0.19} </pos>
+	<dir> {x0.23, y20.23, z59.91} </dir>
+	<radius> {30.00} </radius>
+	<rgb> {r255 g55 b0} </rgb>
+	<reflect> {off} </reflect>
+	<spec> {on} </spec>
+	<refract> {off} </refract>
+</object>
+
+<object>
+	<type> {disk} </type>
+	<pos> {x-100.93, y0.00, z-1.32} </pos>
 	<dir> {x0.23, y20.23, z59.91} </dir>
 	<radius> {30.00} </radius>
 	<rgb> {r51 g204 b255} </rgb>
-	<reflect> {on c0.9} </reflect>
+	<reflect> {off} </reflect>
 	<spec> {on} </spec>
 	<refract> {off} </refract>
 </object>

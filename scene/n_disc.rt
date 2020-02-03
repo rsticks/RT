@@ -1,0 +1,28 @@
+<scene>
+	<maxref> {0} </maxref>
+	<name> {Show simple object cone} </name>
+	<res> {800 800} </res>
+	<antialias> {1} </antialias>
+	<ambiant> {0.15} </ambiant>
+</scene>
+
+<camera>
+	<pos> {x-80.00 y25.00 z7.00} </pos>
+	<dir> {x120.0 y-30.00 z19.00} </dir>
+</camera>
+
+<light>
+	<pos> {x-40.00 y60.00 z-10.00} </pos>
+	<rgb> {r255 g255 b255} </rgb>
+</light>
+
+<object>
+	<type> {disk} </type>
+	<pos> {x00.00 y00.00 z00.00} </pos>
+	<dir> {x1.0 y0.0 z0.0} </dir>
+	<radius> {50.00} </radius>
+	<rgb> {r255 g1 b1} </rgb>
+	<spec> {off} </spec>
+	<reflect> {off} </reflect>
+	<refract> {off} </refract>
+</object>
