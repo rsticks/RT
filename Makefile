@@ -6,7 +6,7 @@
 #    By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/09 16:02:42 by daron             #+#    #+#              #
-#    Updated: 2020/01/30 16:09:16 by rsticks          ###   ########.fr        #
+#    Updated: 2020/02/04 18:20:50 by rsticks          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,10 +56,17 @@ SOURCES_LIST = main.c \
                     parser/object_parser.c \
                     parser/cheker.c \
                     parser/list_to_mas.c \
+                    parser/parser_main_f.c \
                     transform.c \
                     cl.c \
                     additional_function.c \
                     additional_function_1.c \
+                    events/event.c \
+                    events/key_for_cam.c \
+                    events/key_for_object.c \
+                    events/key_for_other.c \
+                    events/mouse.c \
+                    intersection.c \
 					parser_obj/parse_obj.c \
 
 SOURCES = $(addprefix $(SOURCES_DIRECTORY), $(SOURCES_LIST))

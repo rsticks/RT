@@ -6,13 +6,13 @@
 /*   By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 14:34:47 by daron             #+#    #+#             */
-/*   Updated: 2020/01/30 15:12:53 by daron            ###   ########.fr       */
+/*   Updated: 2020/01/30 15:14:21 by daron            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-static int	*mouse_intersection(double u, double v,
+static int	mouse_intersection(double u, double v,
 		t_vector *pos, t_rt *rt)
 {
 	t_vector	i;
