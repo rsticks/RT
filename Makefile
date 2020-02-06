@@ -20,7 +20,7 @@ LIBRARIES = -L$(LIBFT_DIRECTORY) \
 			-F./frameworks \
             -rpath ./frameworks \
             -framework OpenCl \
-            -framework SDL2 \
+            -framework SDL2 \a
             -framework SDL2_ttf \
             -framework SDL2_image \
             -framework SDL2_mixer

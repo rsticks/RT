@@ -9,20 +9,14 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="02902703-0622-413f-b0c9-123879fde588" name="Default Changelist" comment="">
+    <list default="true" id="66330fad-9510-48a7-bde9-2912ae5cd0de" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/RT_command.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/RT_command.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RT" beforeDir="false" afterPath="$PROJECT_DIR$/RT" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/includes/rt.h" beforeDir="false" afterPath="$PROJECT_DIR$/includes/rt.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kernel.cl" beforeDir="false" afterPath="$PROJECT_DIR$/kernel.cl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/objects/intersection.o" beforeDir="false" afterPath="$PROJECT_DIR$/objects/intersection.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/objects/parser/cheker.o" beforeDir="false" afterPath="$PROJECT_DIR$/objects/parser/cheker.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/objects/parser/object_parser.o" beforeDir="false" afterPath="$PROJECT_DIR$/objects/parser/object_parser.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scene/n_scene_5.rt" beforeDir="false" afterPath="$PROJECT_DIR$/scene/n_scene_5.rt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scene/n_scene_6.rt" beforeDir="false" afterPath="$PROJECT_DIR$/scene/n_scene_6.rt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/intersection.c" beforeDir="false" afterPath="$PROJECT_DIR$/source/intersection.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/parser/cheker.c" beforeDir="false" afterPath="$PROJECT_DIR$/source/parser/cheker.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/parser/object_parser.c" beforeDir="false" afterPath="$PROJECT_DIR$/source/parser/object_parser.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/parser/parser_main_f.c" beforeDir="false" afterPath="$PROJECT_DIR$/source/parser/parser_main_f.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/with_disk.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/without_disk.txt" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,14 +29,7 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="IgnoredFileRootStore">
-    <option name="generatedRoots">
-      <set>
-        <option value="$PROJECT_DIR$/.idea" />
-      </set>
-    </option>
-  </component>
-  <component name="ProjectId" id="1XA4aLtVKOSLiKjjMjRD37B3EPC" />
+  <component name="ProjectId" id="1XLGQmXnjDIvLS2VlcLqNArXFaR" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showExcludedFiles" value="true" />
@@ -51,24 +38,21 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="02902703-0622-413f-b0c9-123879fde588" name="Default Changelist" comment="" />
-      <created>1580475629010</created>
+      <changelist id="66330fad-9510-48a7-bde9-2912ae5cd0de" name="Default Changelist" comment="" />
+      <created>1580817947588</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1580475629010</updated>
-      <workItem from="1580475633595" duration="5833000" />
-      <workItem from="1580553004595" duration="6866000" />
-      <workItem from="1580652685403" duration="1450000" />
-      <workItem from="1580725833942" duration="231000" />
-      <workItem from="1580727672014" duration="1560000" />
-      <workItem from="1580729733160" duration="8862000" />
+      <updated>1580817947588</updated>
+      <workItem from="1580817948947" duration="6000" />
+      <workItem from="1580908270440" duration="34000" />
+      <workItem from="1580921175989" duration="189000" />
+      <workItem from="1580980197815" duration="352000" />
     </task>
     <servers />
   </component>
@@ -76,10 +60,9 @@
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="960" y="523" key="com.intellij.ide.util.TipDialog" timestamp="1580727798524">
+    <state x="931" y="532" key="com.intellij.ide.util.TipDialog" timestamp="1580980198537">
       <screen x="0" y="23" width="2560" height="1337" />
     </state>
-    <state x="960" y="523" key="com.intellij.ide.util.TipDialog/0.23.2560.1337@0.23.2560.1337" timestamp="1580727798524" />
-    <state x="1080" y="590" key="com.intellij.ide.util.TipDialog/0.23.2880.1517@0.23.2880.1517" timestamp="1580652689976" />
+    <state x="931" y="532" key="com.intellij.ide.util.TipDialog/0.23.2560.1337@0.23.2560.1337" timestamp="1580980198536" />
   </component>
 </project>

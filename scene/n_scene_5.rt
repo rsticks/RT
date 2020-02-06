@@ -36,7 +36,7 @@
 	<radius> {25.00} </radius>
 	<rgb> {r0 g250 b250} </rgb>
 	<reflect> {off} </reflect>
-	<spec> {off} </spec>
+	<spec> {on} </spec>
 	<refract> {off} </refract>
 </object>
 
