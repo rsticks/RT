@@ -6,7 +6,7 @@
 /*   By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 18:53:55 by rsticks           #+#    #+#             */
-/*   Updated: 2020/02/04 18:02:21 by rsticks          ###   ########.fr       */
+/*   Updated: 2020/02/05 16:12:26 by rsticks          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -307,4 +307,5 @@ void			parsing_obj(char *path, int num)
 			final_parse(data);	
 	}
 	close(data->fd);
+	printf("f || %d %d %d \n", data->f[0].v.x, data->f[0].v.y, data->f[0].v.z);
 }
