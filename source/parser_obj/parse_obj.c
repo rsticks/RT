@@ -6,7 +6,7 @@
 /*   By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 18:53:55 by rsticks           #+#    #+#             */
-/*   Updated: 2020/02/05 16:12:26 by rsticks          ###   ########.fr       */
+/*   Updated: 2020/02/06 16:40:09 by rsticks          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,18 +27,10 @@ static void		counter(t_parse_obj *data, char *str, u_int32_t *count)
 
 	j = 1;
 	i = 0;
-	while (j && get_next_line(data->fd, &data->line))
+	while (ft_strstr(data->line, str) && data->gnl)
 	{
-		if (ft_strstr(data->line, str))
-		{
-			(*count)++;
-			i = 1;
-		}
-		else if (i == 1)
-		{
-			j = 0;
-		}
-		free(data->line);
+		(*count)++;
+		data->gnl = get_next_line(data->fd, &data->line);
 	}
 }
 
@@ -158,31 +150,36 @@ void			parse_vn(t_parse_obj *data)
 		free(data->line);
 }
 
-int				while_not_slash(char *c)
+char				*while_not_slash(char *c, int *i)
 {
 	while (*c != '/' && *c != ' ')
 		c++;
 	if (*c == '/')
 	{
 		c++;
-		return (1);
+		*i = 1;
 	}
 	else
-		return (0);
+		*i = 0;
+	return (c);
 }
 
 char			*f_pars_x(t_parse_obj *data, char *c, u_int32_t count)
 {
 	t_int_vec	x;
+	int i;
+
 
 	x.x = 0;
 	x.y = 0;
 	x.z = 0;
 	x.x = ft_atoi(c);
-	if (!while_not_slash(c))
+	c = while_not_slash(c, &i);
+	if (!i)
 		return (c);
 	x.y = ft_atoi(c);
-	if (!while_not_slash(c))
+	c = while_not_slash(c, &i);
+	if (!i)
 		return (c);
 	x.z = ft_atoi(c);
 	data->f[count].v.x = x.x;
@@ -193,16 +190,19 @@ char			*f_pars_x(t_parse_obj *data, char *c, u_int32_t count)
 
 char			*f_pars_y(t_parse_obj *data, char *c, u_int32_t count)
 {
+	int i;
 	t_int_vec	y;
 
 	y.x = 0;
 	y.y = 0;
 	y.z = 0;
 	y.x = ft_atoi(c);
-	if (!while_not_slash(c))
+	c = while_not_slash(c, &i);
+	if (!i)
 		return (c);
 	y.y = ft_atoi(c);
-	if (!while_not_slash(c))
+	c = while_not_slash(c, &i);
+	if (!i)
 		return (c);
 	y.z = ft_atoi(c);
 	data->f[count].v.y = y.x;
@@ -213,16 +213,19 @@ char			*f_pars_y(t_parse_obj *data, char *c, u_int32_t count)
 
 char			*f_pars_z(t_parse_obj *data, char *c, u_int32_t count)
 {
+	int i;
 	t_int_vec	z;
 
 	z.x = 0;
 	z.y = 0;
 	z.z = 0;
 	z.x = ft_atoi(c);
-	if (!while_not_slash(c))
+	c = while_not_slash(c, &i);
+	if (!i)
 		return (c);
 	z.y = ft_atoi(c);
-	if (!while_not_slash(c))
+	c = while_not_slash(c, &i);
+	if (!i)
 		return (c);
 	z.z = ft_atoi(c);
 	data->f[count].v.z = z.x;
@@ -272,26 +275,26 @@ static void		init_data(t_parse_obj *data, int num)
 void			parsing_obj(char *path, int num)
 {
 	t_parse_obj *data;
-	int			gnl;
 
-	gnl = 1;
 	if (!(data = (t_parse_obj*)malloc(sizeof(t_parse_obj))))
 		kill_all("Can't initialize obj_data\n");
 	init_data(data, num);
 	data->name = path;
 	if (!(data->fd = open(path, O_RDONLY)))
 		kill_all("Can't open obj file\n");
-	counter(data, "v ", &data->count_v);
-	while (gnl)
+	data->gnl = get_next_line(data->fd, &data->line);
+	while (data->gnl)
 	{
-		if (ft_strstr(data->line, "vn "))
+		if (ft_strstr(data->line, "v "))
+			counter(data, "v ", &data->count_v);
+		else if (ft_strstr(data->line, "vn "))
 			counter(data, "vn ", &data->count_vn);
 		else if (ft_strstr(data->line, "vt "))
 			counter(data, "vt ", &data->count_vt);
 		else if (ft_strstr(data->line, "f "))
 			counter(data, "f ", &data->count_f);
 		else
-			gnl = get_next_line(data->fd, &data->line);
+			get_next_line(data->fd, &data->line);
 	}
 	close(data->fd);
 	data->fd = open(path, O_RDONLY);
@@ -307,5 +310,11 @@ void			parsing_obj(char *path, int num)
 			final_parse(data);	
 	}
 	close(data->fd);
-	printf("f || %d %d %d \n", data->f[0].v.x, data->f[0].v.y, data->f[0].v.z);
+	for (size_t i = 0; i < data->count_f; i++)
+	{
+		printf("f || %d/%d/%d %d/%d/%d %d/%d/%d \n", 
+		data->f[i].v.x, data->f[i].vn.x, data->f[i].vt.x,
+		data->f[i].v.y, data->f[i].vn.y, data->f[i].vt.y,
+		data->f[i].v.z, data->f[i].vn.z, data->f[i].vt.z);
+	}
 }

@@ -1,7 +1,7 @@
 <scene>
 	<maxref> {2} </maxref>
 	<name> {Test scene_4} </name>
-	<res> {1000 1000} </res>
+	<res> {2560 1300} </res>
 	<antialias> {4} </antialias>
 	<ambiant> {0.15} </ambiant>
 </scene>
@@ -44,7 +44,7 @@
 	<type> {sphere} </type>
 	<pos> {x45.00 y-23.00 z-13.00} </pos>
 	<radius> {35.00} </radius>
-	<rgb> {r0 g250 b250} </rgb>
+	<rgb> {r250 g0 b0} </rgb>
 	<reflect> {on c0.9} </reflect>
 	<spec> {off} </spec>
 	<refract> {off} </refract>
