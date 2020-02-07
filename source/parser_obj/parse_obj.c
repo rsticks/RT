@@ -6,7 +6,7 @@
 /*   By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 18:53:55 by rsticks           #+#    #+#             */
-/*   Updated: 2020/02/07 17:38:38 by rsticks          ###   ########.fr       */
+/*   Updated: 2020/02/07 17:45:23 by rsticks          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -329,3 +329,5 @@ t_parse_obj			*parsing_obj(char *path, int num)
 	// }
 	return (data);
 }
+
+
