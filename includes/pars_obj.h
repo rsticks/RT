@@ -6,7 +6,7 @@
 /*   By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/30 15:36:04 by rsticks           #+#    #+#             */
-/*   Updated: 2020/02/06 15:57:54 by rsticks          ###   ########.fr       */
+/*   Updated: 2020/02/07 17:20:37 by rsticks          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,17 @@ typedef struct 			s_list_vt
 	cl_float			v;
 }						t_list_vt;
 
-typedef struct			s_list_v
+typedef struct			s_cl_data_obj
 {
+	cl_int				num;
 	cl_float3			v;
-}						t_list_v;
+	cl_float3			vn;
+	cl_float			u1;
+	cl_float			v1;
+	cl_int3				vf;
+	cl_int3				vnf;
+	cl_int3				vtf;
+}						t_cl_data_obj;
 
 typedef struct			s_list_f
 {
@@ -40,6 +47,7 @@ typedef struct			s_list_f
 
 typedef struct 			s_parse_obj
 {
+	size_t				max_c;
 	int					num_obj;
 	char				*name;
 	u_int32_t			count_vt;
@@ -53,9 +61,10 @@ typedef struct 			s_parse_obj
 	t_list_vt			*vt;
 	t_list_f			*f;
 	int					gnl;
+	t_cl_data_obj		*d_obj;
 }						t_parse_obj;
 
-void					parsing_obj(char *path, int num);
+t_parse_obj				*parsing_obj(char *path, int num);
 void					parse_v(t_parse_obj *data);
 
 #endif

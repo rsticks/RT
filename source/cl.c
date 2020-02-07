@@ -6,7 +6,7 @@
 /*   By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 19:16:48 by rsticks           #+#    #+#             */
-/*   Updated: 2020/01/30 17:02:50 by daron            ###   ########.fr       */
+/*   Updated: 2020/02/07 17:35:31 by rsticks          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,15 @@ void			ft_init_cl(t_cl *cl, t_rt *rt)
 	cl->img = clCreateBuffer(cl->ct, CMRW, sizeof(int) * w, NULL, &cl->err);
 	cl->i_m = clCreateBuffer(cl->ct, CMRW, sizeof(int) * 6, NULL, &cl->err);
 	cl->d_m = clCreateBuffer(cl->ct, CMRW, sizeof(float) * 7, NULL, &cl->err);
+	cl->obj = clCreateBuffer(cl->ct, CMRW, sizeof(t_cl_data_obj) * rt->data_obj->max_c, NULL, &cl->err);
+	
 	cl->err = clSetKernelArg(cl->kernel, 0, sizeof(cl_mem), &cl->obj_mem);
 	cl->err = clSetKernelArg(cl->kernel, 1, sizeof(cl_mem), &cl->light_mem);
 	cl->err = clSetKernelArg(cl->kernel, 2, sizeof(cl_mem), &cl->img);
 	cl->err = clSetKernelArg(cl->kernel, 3, sizeof(cl_mem), &cl->i_m);
 	cl->err = clSetKernelArg(cl->kernel, 4, sizeof(cl_mem), &cl->d_m);
+	cl->err = clSetKernelArg(cl->kernel, 5, sizeof(cl_mem), &cl->obj);
+
 	printf("%-32s || %d\n", "clSetKernelArg", cl->err);
 }
 
@@ -125,6 +129,7 @@ void			start_kernel(t_cl *cl, t_rt *rt)
 	cl->err = clEnqueueWriteBuffer(cl->q, cl->d_m, CL_TRUE, 0, sizeof(float) * 7, d_m, 0, NULL, NULL);
 	cl->err = clEnqueueWriteBuffer(cl->q, cl->obj_mem, CL_TRUE, 0, sizeof(t_cl_object) * rt->scene.obj_c, cl->cl_obj, 0, NULL, NULL);
 	cl->err = clEnqueueWriteBuffer(cl->q, cl->light_mem, CL_TRUE, 0, sizeof(t_cl_light) * rt->scene.lgh_c, cl->cl_light, 0, NULL, NULL);
+	cl->err = clEnqueueWriteBuffer(cl->q, cl->obj, CL_TRUE, 0, sizeof(t_cl_data_obj) * rt->data_obj->max_c, rt->data_obj->d_obj, 0, NULL, NULL);
 	cl->err = clEnqueueNDRangeKernel(cl->q, cl->kernel, 1, NULL, &gws, NULL, 0, NULL, NULL);
 	cl->err = clEnqueueReadBuffer(cl->q, cl->img, CL_TRUE, 0, sizeof(int) * gws, cl->data, 0, NULL, NULL);
 

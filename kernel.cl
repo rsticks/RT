@@ -31,6 +31,18 @@
 */
 # define EPS 0.0001
 
+typedef struct			s_cl_data_obj
+{
+	int					num;
+	float3				v;
+	float3				vn;
+	float				u1;
+	float				v1;
+	int3				vf;
+	int3				vnf;
+	int3				vtf;
+}						t_cl_data_obj;
+
 typedef struct				s_cl_object
 {
 	float3					pos;
@@ -227,6 +239,25 @@ float get_sphere_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_rt *rt)
 	return (get_quadratic_solution(a, b , discriminant));
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 float get_plane_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_rt *rt)
 {
 	float dist;
@@ -237,6 +268,19 @@ float get_plane_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_rt *rt)
 		return (-1);
 	return (dist);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 float get_cone_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_rt *rt)
 {
@@ -571,7 +615,6 @@ void ft_tracing(float x, float y, t_rt *rt, __global int *data, int gid)
 		}
 		y = y + (1.0 / rt->window.anti_alias);
 	}
-	//printf("%g, %g, %g\n", r[0], r[1], r[2]);
 	data[gid] = (((int)(r[0] / p * 255) & 0xff) << 16) + (((int)(r[1] / p * 255) & 0xff) << 8) + (((int)(r[2] / p * 255) & 0xff));
 }
 
@@ -580,7 +623,8 @@ __kernel void 		start(__global t_cl_object *obj,
 							__global t_cl_light *light,
 							__global int *out_data,
 							__global int *i_mem,
-							__global float *d_mem)
+							__global float *d_mem,
+							__global t_cl_data_obj *d_obj)
 {
 	int				gid, x, y;
 	t_rt			rt;
