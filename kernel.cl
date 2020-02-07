@@ -645,6 +645,11 @@ __kernel void 		start(__global t_cl_object *obj,
 	rt.obj = obj;
 	rt.light = light;
 
+	if (gid == 1)
+	{
+		printf("f || %d/%d/%d\n", d_obj[i_mem[6] - 1].vf.x, d_obj[i_mem[6] - 1].vtf.x, d_obj[i_mem[6] - 1].vnf.x);
+	}
+
 	/*if (gid == 1)
 	{
 		printf("In Kernel - W_size = (%d %d) Antialias = %d obj_c = %d light_c = %d\n"
