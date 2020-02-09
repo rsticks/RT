@@ -54,7 +54,7 @@ void cheak_object(t_rt *rt)
 			kill_all("ERROR: You must set the object type");
 		else if (obj->check[1] == 0)
 			kill_all("ERROR: You must set the object position");
-		else if (obj->check[2] == 0)
+		else if (obj->type != SPHERE_ID && obj->check[2] == 0)
 			kill_all("ERROR: You must set the object direction");
 		else if (obj->check[5] == 0)
 			kill_all("ERROR: You must set the reflection level");
