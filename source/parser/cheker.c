@@ -25,7 +25,7 @@ void cheak_light(t_rt *rt)
 	t_light *light;
 
 	light = rt->lgh_head;
-	if (rt->scene.lgh_c != 0) {
+	if (rt->scene.lgh_c > 0) {
 		while (light->next) {
 			if (light->check[0] == 0)
 				kill_all("ERROR: You must set the light position");
@@ -49,7 +49,7 @@ void cheak_object(t_rt *rt)
 	t_obj *obj;
 
 	obj = rt->obj_head;
-	if (rt->scene.obj_c != 0)
+	if (rt->scene.obj_c > 0)
 	{
 		while (obj->next) {
 			if (obj->check[0] == 0)

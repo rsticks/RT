@@ -41,6 +41,16 @@ static void check_inti_radius(t_rt *rt, int str_c)
 		kill_error("Uncorrected radius" , str_c);
 }
 
+void check_inti_obj_rgb(t_rt *rt, int str_c)
+{
+	if (!(rt->obj_cur->rgb.r >= 0 && rt->obj_cur->rgb.r <= 255))
+		kill_error("Wrong red color component", str_c);
+	else if (!(rt->obj_cur->rgb.g >= 0 && rt->obj_cur->rgb.g <= 255))
+		kill_error("Wrong green color component", str_c);
+	else if (!(rt->obj_cur->rgb.b >= 0 && rt->obj_cur->rgb.b <= 255))
+		kill_error("Wrong blue color component", str_c);
+}
+
 static void check_inti_texture(t_rt *rt, int str_c)
 {
 	int fd;
@@ -101,7 +111,7 @@ void object_parser(t_rt *rt, char *line, int str_c)
 		}
 		else if (rt->read_b.str_c == 2 && (ft_strequ("rgb", rt->read_b.buff[1])) == 1 && *line == '{') {
 			line = take_rgb(line, &rt->obj_cur->rgb, str_c);
-			check_inti_rgb(rt, str_c);
+			check_inti_obj_rgb(rt, str_c);
 			rt->obj_cur->check[3] += 1;
 		}
 		else if (rt->read_b.str_c == 2 && (ft_strequ("radius", rt->read_b.buff[1])) == 1 && *line == '{') {

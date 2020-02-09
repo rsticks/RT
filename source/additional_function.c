@@ -15,8 +15,10 @@
 void			my_free(t_rt *rt)
 {
 
-	free(rt->obj_mas);
-	free(rt->lgh_mas);
+	if (rt->scene.obj_c > 0)
+		free(rt->obj_mas);
+	if (rt->scene.lgh_c > 0)
+		free(rt->lgh_mas);
 
 	SDL_DestroyRenderer(rt->window.render);
 	SDL_DestroyWindow(rt->window.window);
