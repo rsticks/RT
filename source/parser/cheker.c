@@ -6,7 +6,7 @@
 /*   By: daron <daron@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 15:47:14 by daron             #+#    #+#             */
-/*   Updated: 2020/02/09 12:38:33 by daron            ###   ########.fr       */
+/*   Updated: 2020/02/09 13:10:30 by daron            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,8 @@ void cheak_object(t_rt *rt)
 			kill_all("ERROR: You must set the rafraction level");
 		else if (obj->check[3] == 0)
 			kill_all("ERROR: You must set the object color");
-		else if ((obj->type == DISK_ID || obj->type == SPHERE_ID
-		) && obj->check[4] == 0)
-			kill_all("ERROR: You must set the sphere radius");
+		else if ((obj->type == DISK_ID || obj->type == SPHERE_ID || obj->type == PARABOLOID_ID) && obj->check[4] == 0)
+			kill_all("ERROR: You must set the figure radius");
 		obj = obj->next;
 	}
 }
