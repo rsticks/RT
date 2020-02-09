@@ -65,6 +65,8 @@ void check_inti_obj_type(t_rt *rt, int str_c)
 		rt->obj_cur->type = PLANE_ID;
 	else if ((ft_strnequ("object_f", rt->obj_cur->obj_name, 8)) == 1)
 		rt->obj_cur->type = OBJ_FILE_ID;
+	else if ((ft_strnequ("paraboloid", rt->obj_cur->obj_name, 8)) == 1)
+		rt->obj_cur->type = PARABOLOID_ID;
 	else
 		kill_error("uncorrected object type" , str_c);
 }

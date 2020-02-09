@@ -60,3 +60,14 @@
 	<spec> {on} </spec>
 	<refract> {off} </refract>
 </object>
+
+<object>
+	<type> {paraboloid} </type>
+	<pos> {x69.99, y59.99, z39.48} </pos>
+	<dir> {x0.0 y1.0 z0.0} </dir>
+	<radius> {15.00} </radius>
+	<rgb> {r139 g0 b0} </rgb>
+	<reflect> {on c0.9} </reflect>
+	<spec> {off} </spec>
+	<refract> {off} </refract>
+</object>

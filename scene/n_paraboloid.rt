@@ -1,6 +1,6 @@
 <scene>
 	<maxref> {0} </maxref>
-	<name> {Show simple object cone} </name>
+	<name> {Test scene_1} </name>
 	<res> {900 900} </res>
 	<antialias> {1} </antialias>
 	<ambiant> {0.15} </ambiant>
@@ -13,16 +13,21 @@
 
 <light>
 	<pos> {x-60.00 y30.00 z-60.00} </pos>
-	<rgb> {r255 g0 b255} </rgb>
+	<rgb> {r250 g250 b250} </rgb>
+</light>
+
+<light>
+	<pos> {x-60.00 y30.00 z60.00} </pos>
+	<rgb> {r250 g250 b250} </rgb>
 </light>
 
 <object>
-	<type> {cone} </type>
+	<type> {paraboloid} </type>
 	<pos> {x0.00 y0.00 z00.00} </pos>
 	<dir> {x0.0 y1.0 z0.0} </dir>
-	<radius> {60.00} </radius>
-	<rgb> {r250 g0 b250} </rgb>
-	<spec> {on} </spec>
+	<radius> {15.00} </radius>
+	<rgb> {r139 g0 b0} </rgb>
 	<reflect> {off} </reflect>
+	<spec> {off} </spec>
 	<refract> {off} </refract>
 </object>

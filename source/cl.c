@@ -82,8 +82,8 @@ void			init_cl(t_cl *cl, t_rt *rt)
 	cl->q = clCreateCommandQueue(cl->ct, cl->dev_id[0], 0, &cl->err);
 	printf("%-32s || %d\n", "CreateCommandQueue", cl->err);
 	cl->fd = open("kernel.cl", O_RDONLY);
-	cl->k_s = (char*)malloc(sizeof(char) * 17000);
-	cl->i = read(cl->fd, cl->k_s, 17000);
+	cl->k_s = (char*)malloc(sizeof(char) * 20000);
+	cl->i = read(cl->fd, cl->k_s, 20000);
 	cl->k_s[cl->i] = '\0';
 	cl->k_l = ft_strlen(cl->k_s);
 	ft_init_cl(cl, rt);

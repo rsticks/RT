@@ -40,7 +40,7 @@
 # define CYLINDER_ID	3
 # define CONE_ID		4
 # define OBJ_FILE_ID	5
-# define ELLIPSOID_ID	5
+# define PARABOLOID_ID	6
 
 /*
 ** Static parametrs

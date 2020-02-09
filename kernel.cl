@@ -20,11 +20,12 @@
 /*
 ** Object id
 */
-# define SPHERE_ID 1
-# define PLANE_ID 2
-# define CYLINDER_ID 3
-# define CONE_ID 4
+# define SPHERE_ID		1
+# define PLANE_ID		2
+# define CYLINDER_ID	3
+# define CONE_ID		4
 # define OBJ_FILE_ID	5
+# define PARABOLOID_ID	6
 
 /*
 ** Help
@@ -112,6 +113,7 @@ float 						get_sphere_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_r
 float 						get_plane_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_rt *rt);
 float 						get_cone_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_rt *rt);
 float 						get_cylinder_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_rt *rt);
+float get_paraboloid_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_rt *rt);
 int							intersection(t_rt *rt, float3 *ray_dir, float3 *cam_pos);
 float3 						object_norm(t_rt *rt, int i, float3 pos);
 int							shadow(t_rt *rt, int i_obj, int i_light, float3 pos);
@@ -279,6 +281,23 @@ float get_cylinder_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_rt *r
 	return (get_quadratic_solution(a, b, discriminant));
 }
 
+float get_paraboloid_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_rt *rt)
+{
+	float b;
+	float c;
+	float a;
+	float discriminant;
+
+	rt->dist = vec_sub(*cam_pos, rt->obj[i].pos);
+	a = vec_dot(*ray_dir, *ray_dir) - pow(vec_dot(*ray_dir, rt->obj[i].rot), 2);
+	b = 2 * (vec_dot(*ray_dir, rt->dist) - vec_dot(*ray_dir, rt->obj[i].rot) * (vec_dot(rt->dist, rt->obj[i].rot) + 2 * rt->obj[i].r));
+	c = vec_dot(rt->dist, rt->dist) - vec_dot(rt->dist, rt->obj[i].rot) * (vec_dot(rt->dist, rt->obj[i].rot) + 4 * rt->obj[i].r);
+	discriminant = pow(b, 2) - 4 * a * c;
+	if (discriminant < 0)
+		return (-1);
+	return (get_quadratic_solution(a, b , discriminant));
+}
+
 int			intersection(t_rt *rt, float3 *ray_dir, float3 *cam_pos)
 {
 	float dist;
@@ -299,6 +318,8 @@ int			intersection(t_rt *rt, float3 *ray_dir, float3 *cam_pos)
 			dist = get_cone_intersection(ray_dir, cam_pos, i, rt);
 		else if (rt->obj[i].name == PLANE_ID)
 			dist = get_plane_intersection(ray_dir, cam_pos, i, rt);
+		else if (rt->obj[i].name == PARABOLOID_ID)
+			dist = get_paraboloid_intersection(ray_dir, cam_pos, i, rt);
 		if (dist > EPS && dist < rt->t)
 		{
 			f = i;
@@ -327,6 +348,8 @@ float3 object_norm(t_rt *rt, int i, float3 pos)
 	}
 	else if (rt->obj[i].name == PLANE_ID)
 		norm = rt->obj[i].rot;
+	else if (rt->obj[i].name == PARABOLOID_ID)
+		norm = vec_sub( vec_sub(pos, rt->obj[i].pos), vec_scale(rt->obj[i].rot, (vec_dot(vec_sub(pos, rt->obj[i].pos), rt->obj[i].rot) + rt->obj[i].r)));
 	else if (rt->obj[i].name == SPHERE_ID)
 		norm = vec_sub(pos, rt->obj[i].pos);
 	return (vec_norm(norm));
@@ -364,6 +387,8 @@ int		shadow(t_rt *rt, int i_obj, int i_light, float3 pos)
 				d = get_cone_intersection(&dist, &pos, i, rt);
 			else if (rt->obj[i].name == PLANE_ID)
 				d = get_plane_intersection(&dist, &pos, i, rt);
+			else if (rt->obj[i].name == PARABOLOID_ID)
+				d = get_paraboloid_intersection(&dist, &pos, i, rt);
 			if (d > EPS && d < rt->t)
 				return (1);
 		}
@@ -416,6 +441,8 @@ int ref_inter(t_rt *rt, int i_cur_obj , float3 pos)
 				dist = get_cone_intersection(&rt->ref, &pos, i, rt);
 			else if (rt->obj[i].name == PLANE_ID)
 				dist = get_plane_intersection(&rt->ref, &pos, i, rt);
+			else if (rt->obj[i].name == PARABOLOID_ID)
+				dist = get_paraboloid_intersection(&rt->ref, &pos, i, rt);
 			if (dist > EPS && dist < rt->t)
 			{
 				f = i;
@@ -576,11 +603,7 @@ void ft_tracing(float x, float y, t_rt *rt, __global int *data, int gid)
 }
 
 
-__kernel void 		start(__global t_cl_object *obj,
-							__global t_cl_light *light,
-							__global int *out_data,
-							__global int *i_mem,
-							__global float *d_mem)
+__kernel void 		start(__global t_cl_object *obj, __global t_cl_light *light, __global int *out_data, __global int *i_mem, __global float *d_mem)
 {
 	int				gid, x, y;
 	t_rt			rt;
@@ -601,32 +624,6 @@ __kernel void 		start(__global t_cl_object *obj,
 	rt.obj = obj;
 	rt.light = light;
 
-	/*if (gid == 1)
-	{
-		printf("In Kernel - W_size = (%d %d) Antialias = %d obj_c = %d light_c = %d\n"
-				"cam_pos = (%g, %g, %g) cam_rot = (%g, %g, %g) ambient= %g\n\n",
-				rt.window.size[0], rt.window.size[1],
-				rt.window.anti_alias, rt.scene.obj_c, rt.scene.lgh_c,
-				rt.cam.pos.x,rt.cam.pos.y, rt.cam.pos.z,
-				rt.cam.rot.x, rt.cam.rot.y, rt.cam.rot.z, rt.scene.ambient);
-
-		int i ;
-		i = -1;
-		while (++i < rt.scene.obj_c)
-			printf("In Kernel Object type = %d\n pos = (%g, %g, %g)\n rot = (%g, %g, %g)\n color = (%g, %g, %g)\n radius = %g\nreflect = %d coef = %g\n",
-				rt.obj[i].name,
-				rt.obj[i].pos.x, rt.obj[i].pos.y, rt.obj[i].pos.z,
-				rt.obj[i].rot.x, rt.obj[i].rot.y, rt.obj[i].rot.z,
-				rt.obj[i].col.x, rt.obj[i].col.y, rt.obj[i].col.z,
-				rt.obj[i].r,
-				rt.obj[i].reflect, rt.obj[i].coef_refl);
-		i = -1;
-		while (++i < rt.scene.lgh_c)
-			printf("In Kernel Light pos = (%g, %g, %g)\n color = (%g, %g, %g)\n\n",
-				rt.light[i].pos.x, rt.light[i].pos.y, rt.light[i].pos.z,
-				rt.light[i].col.x, rt.light[i].col.y, rt.light[i].col.z);
-
-	}*/
 	x = gid % rt.window.size[0];
 	y = gid / rt.window.size[1];
 	ft_tracing(x, y, &rt, out_data, gid);
