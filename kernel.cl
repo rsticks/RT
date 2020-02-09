@@ -565,8 +565,8 @@ void create_ray(t_rt *rt, float x, float y)
 	float u, v;
 	float3 i, j, k;
 
-	u = (rt->window.size[0] - (float)x * 2.0) / rt->window.size[1];
-	v = (rt->window.size[1] - (float)y * 2.0) / rt->window.size[0];
+	u = (rt->window.size[0] - (float)x * FOV) / rt->window.size[1];
+	v = (rt->window.size[1] - (float)y * FOV) / rt->window.size[0];
 	k = vec_sub(rt->cam.rot, rt->cam.pos);
 	k = vec_norm(k);
 	i = vec_cross(k, (float3){0.0, 1.0, 0.0});

@@ -6,7 +6,7 @@
 /*   By: daron <daron@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/31 15:49:21 by daron             #+#    #+#             */
-/*   Updated: 2020/02/09 13:32:45 by daron            ###   ########.fr       */
+/*   Updated: 2020/02/09 15:32:12 by daron            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,14 +77,7 @@ void init_rt(t_rt *rt, char *filename, int str_c)
 	cheak_camera(rt);
 	cheak_scene(rt);
 	cheak_object(rt);
-	if (rt->lgh_head != NULL)
-		cheak_light(rt);
+	cheak_light(rt);
 	cheak_part(rt);
-
-
-
-
-
-
 	list_to_mas(rt);
 }
