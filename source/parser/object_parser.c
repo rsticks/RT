@@ -6,7 +6,7 @@
 /*   By: daron <daron@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/22 17:58:47 by daron             #+#    #+#             */
-/*   Updated: 2020/02/03 17:45:57 by daron            ###   ########.fr       */
+/*   Updated: 2020/02/09 12:38:33 by daron            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,6 @@ void check_inti_obj_type(t_rt *rt, int str_c)
 		rt->obj_cur->type = OBJ_FILE_ID;
 	else if ((ft_strnequ("disk", rt->obj_cur->obj_name, 4)) == 1)
 		rt->obj_cur->type = DISK_ID;
-	else if ((ft_strnequ("paraboloid", rt->obj_cur->obj_name, 10)) == 1)
-		rt->obj_cur->type = PARABOLOID_ID;
 	else
 		kill_error("uncorrected object type" , str_c);
 }

@@ -10,13 +10,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="66330fad-9510-48a7-bde9-2912ae5cd0de" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/RT_command.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/RT_command.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scene/n_scene_5.rt" beforeDir="false" afterPath="$PROJECT_DIR$/scene/n_scene_5.rt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/with_disk.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/without_disk.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RT" beforeDir="false" afterPath="$PROJECT_DIR$/RT" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/includes/rt.h" beforeDir="false" afterPath="$PROJECT_DIR$/includes/rt.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/objects/parser/parser_main_f.o" beforeDir="false" afterPath="$PROJECT_DIR$/objects/parser/parser_main_f.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/parser/parser_main_f.c" beforeDir="false" afterPath="$PROJECT_DIR$/source/parser/parser_main_f.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/parser/xml_tag.c" beforeDir="false" afterPath="$PROJECT_DIR$/source/parser/xml_tag.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/transform.c" beforeDir="false" afterPath="$PROJECT_DIR$/source/transform.c" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

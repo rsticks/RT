@@ -6,7 +6,7 @@
 #    By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/09 16:02:42 by daron             #+#    #+#              #
-#    Updated: 2020/01/30 15:07:37 by daron            ###   ########.fr        #
+#    Updated: 2020/02/09 12:38:32 by daron            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ LIBRARIES = -L$(LIBFT_DIRECTORY) \
 			-F./frameworks \
             -rpath ./frameworks \
             -framework OpenCl \
-            -framework SDL2 \a
+            -framework SDL2 \
             -framework SDL2_ttf \
             -framework SDL2_image \
             -framework SDL2_mixer

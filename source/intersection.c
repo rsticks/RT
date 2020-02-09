@@ -6,7 +6,7 @@
 /*   By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 15:00:42 by rsticks           #+#    #+#             */
-/*   Updated: 2020/02/03 18:04:18 by daron            ###   ########.fr       */
+/*   Updated: 2020/02/09 12:38:33 by daron            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,8 +146,6 @@ int		intersection(t_rt *rt, t_vector *ray_dir, t_vector *cam_pos)
 			dist = get_plane_intersection(ray_dir, cam_pos, i, rt);
 		else if (rt->obj_mas[i].type == DISK_ID)
 			dist = get_disk_intersection(ray_dir, cam_pos, i, rt);
-		else if (rt->obj_mas[i].type == PARABOLOID_ID)
-			dist = get_paraboloid_intersection(ray_dir, cam_pos, i, rt);
 		if (dist > EPS && dist < t && (t = dist) > -1)
 			obj = i;
 		i++;
