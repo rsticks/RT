@@ -6,58 +6,55 @@
 /*   By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 12:30:37 by daron             #+#    #+#             */
-/*   Updated: 2019/11/28 16:27:53 by rsticks          ###   ########.fr       */
+/*   Updated: 2020/02/09 15:36:22 by daron            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtv1.h"
+#include "rt.h"
 
-static void	create_guide_sides(t_move *move, t_sdl *sdl)
+static void	create_guide_sides(t_move *move, t_rt *rt)
 {
-	move->k = vec_sub(&SC.rot, &SC.pos);
+	move->k = vec_sub(&rt->cam.dir, &rt->cam.pos);
 	move->k = vec_norm(&move->k);
 	move->i = vec_cross(&move->k, &(t_vector){0.0, 1.0, 0.0});
 	move->i = vec_norm(&move->i);
 	move->j = vec_cross(&move->i, &move->k);
 }
 
-static void	event_2(t_sdl *sdl, t_move *move)
+static void	event_2(t_rt *rt, t_move *move)
 {
-	if (SDLK_e == SEKKS && sdl->event.type == SDL_KEYDOWN)
-		swithc_pref(sdl);
-	else if (sdl->event.type == SDL_KEYDOWN && SSO == NULL)
-		key_down(sdl, move);
-	else if (sdl->event.type == SDL_KEYDOWN && SSO != NULL)
-		key_down_for_object(sdl, move);
-	else if (sdl->event.type == SDL_MOUSEBUTTONDOWN)
-		mouse_down(sdl);
+	if (rt->window.event.type == SDL_KEYDOWN && rt->select_obj == -1)
+		key_down(rt, move);
+	else if (rt->window.event.type == SDL_KEYDOWN && rt->select_obj != -1)
+		key_down_for_object(rt, move);
+	else if (rt->window.event.type == SDL_MOUSEBUTTONDOWN)
+		mouse_down(rt);
 }
 
-void		events(t_sdl *sdl)
+void		events(t_rt *rt)
 {
 	t_move	move;
 
-	create_guide_sides(&move, sdl);
+	create_guide_sides(&move, rt);
 	while (1)
-		while (SDL_PollEvent(&sdl->event))
+		while (SDL_PollEvent(&rt->window.event))
 		{
-			if ((SDL_QUIT == sdl->event.type) ||
-				(SDL_SCANCODE_ESCAPE == sdl->event.key.keysym.scancode))
+			if ((SDL_QUIT == rt->window.event.type) ||
+				(SDL_SCANCODE_ESCAPE == rt->window.event.key.keysym.scancode))
 			{
-				my_free(sdl);
+				printf_scene_data(rt);
+				my_free(rt);
 				exit(0);
 			}
-			else if (SDLK_RETURN == SEKKS && sdl->event.type == SDL_KEYDOWN)
-				SSO = NULL;
-			else if ((SDLK_p == SEKKS || SDLK_o == SEKKS)
-						&& sdl->event.type == SDL_KEYDOWN)
-				detail_key(sdl);
-			else if (SDLK_g == SEKKS && sdl->event.type == SDL_KEYDOWN)
-				swithc_gloss(sdl);
-			else if ((SDLK_r == SEKKS || SDLK_f == SEKKS)
-						&& sdl->event.type == SDL_KEYDOWN)
-				reflection_key(sdl);
+			else if (SDLK_RETURN == rt->window.event.key.keysym.sym && rt->window.event.type == SDL_KEYDOWN)
+				rt->select_obj = -1;
+			else if ((SDLK_p == rt->window.event.key.keysym.sym || SDLK_o == rt->window.event.key.keysym.sym)
+						&& rt->window.event.type == SDL_KEYDOWN)
+				detail_key(rt);
+			else if ((SDLK_r == rt->window.event.key.keysym.sym || SDLK_f == rt->window.event.key.keysym.sym)
+						&& rt->window.event.type == SDL_KEYDOWN)
+				reflection_key(rt);
 			else
-				event_2(sdl, &move);
+				event_2(rt, &move);
 		}
 }

@@ -6,7 +6,7 @@
 #    By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/09 16:02:42 by daron             #+#    #+#              #
-#    Updated: 2020/01/25 17:05:32 by daron            ###   ########.fr        #
+#    Updated: 2020/02/09 15:36:22 by daron            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,8 +55,17 @@ SOURCES_LIST = main.c \
                     parser/object_parser.c \
                     parser/cheker.c \
                     parser/list_to_mas.c \
+                    parser/parser_main_f.c \
                     transform.c \
-                    cl.c
+                    cl.c \
+                    additional_function.c \
+                    additional_function_1.c \
+                    events/event.c \
+                    events/key_for_cam.c \
+                    events/key_for_object.c \
+                    events/key_for_other.c \
+                    events/mouse.c \
+                    intersection.c
 SOURCES = $(addprefix $(SOURCES_DIRECTORY), $(SOURCES_LIST))
 
 OBJECTS_DIRECTORY = objects/
@@ -81,6 +90,7 @@ $(NAME): $(LIBFT) $(FTVECTOR) $(OBJECTS_DIRECTORY) $(OBJECTS)
 $(OBJECTS_DIRECTORY):
 	@mkdir -p $(OBJECTS_DIRECTORY)
 	@mkdir -p $(OBJECTS_DIRECTORY)/parser
+	@mkdir -p $(OBJECTS_DIRECTORY)/events
 	@echo "$(NAME): $(GREEN)$(OBJECTS_DIRECTORY) was created$(RESET)"
 
 $(OBJECTS_DIRECTORY)%.o : $(SOURCES_DIRECTORY)%.c $(HEADERS)
