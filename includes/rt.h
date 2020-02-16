@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rtv1.h                                             :+:      :+:    :+:   */
+/*   rt.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kzina <kzina@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/17 16:20:37 by daron             #+#    #+#             */
-/*   Updated: 2020/01/31 15:48:34 by daron            ###   ########.fr       */
+/*   Updated: 2020/02/16 14:57:26 by kzina            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,30 @@
 # include "ftvector.h"
 # include "libft.h"
 # include <SDL2/SDL.h>
+# include "../frameworks/SDL2_image.framework/Headers/SDL_image.h"
+# include "../frameworks/SDL2_ttf.framework/Headers/SDL_ttf.h"
 
 # define CMRW			CL_MEM_READ_WRITE
 # define CDTG			CL_DEVICE_TYPE_GPU
+
+/*
+** Colors
+*/
+
+# define WHITE			255,255,255,255
+# define BLACK			0,0,0,255
+# define RED			255,0,0,255
+# define BLUE			67,91,112,255
+# define SILV			137,143,149,255
+
+/*
+** Menu size
+*/
+
+# define WIDTH_M		400
+# define HEIGHT_M		900
+# define STATE_W		0
+# define STATE_H		0
 
 /*
 ** Size configuration
@@ -190,11 +211,21 @@ typedef	struct			s_scene
 	int					check[4];
 } 						t_scene;
 
+typedef	struct			s_ui 
+{
+	SDL_Surface		*temp_surf[10];
+	SDL_Texture		*textur[10];
+	SDL_Rect		rect[10];
+	TTF_Font		*font[2];
+}						t_ui;
+
 typedef struct			s_rt
 {
 	t_read				read_b;
 	t_scene 			scene;
 	t_win 				window;
+	t_ui				ui;
+	t_win				win_menu;
 	t_cam 				cam;
 	t_obj 				*obj_head; // голова списка
 	t_light 			*lgh_head; // голова списка
@@ -203,11 +234,14 @@ typedef struct			s_rt
 	t_obj 				*obj_mas; // Текущий объект с которым работаем
 	t_light 			*lgh_mas; // Текущий объект с которым работаем
 	int					select_obj;
+	SDL_Cursor			*cursor;
+	SDL_Surface			*w_icon;
 	t_cl				*cl;
+	SDL_Surface			*s_back;
 
 }						t_rt;
 /*
-** ------------------Function Prototype--------------------------------
+** ------------------Function's Prototype--------------------------------
 */
 void					ft_init_cl(t_cl *cl, t_rt *rt);
 void					start_kernel(t_cl *cl, t_rt *rt);
@@ -230,8 +264,9 @@ void					swithc_gloss(t_rt *rt);
 void					reflection_key(t_rt *rt);
 void					printf_scene_data(t_rt *rt);
 int						intersection(t_rt *rt, t_vector *ray_dir, t_vector *cam_pos);
+void					free_o_l(t_cl *cl);
 /*
-** ------------------Function Parser--------------------------------
+** ------------------Function's Parser--------------------------------
 */
 void					init_rt(t_rt *rt, char *filename, int str_c);
 void					parse_line(t_rt *rt, char *line, int str_c);
@@ -265,4 +300,17 @@ void					cheak_light(t_rt *rt);
 void					cheak_scene(t_rt *rt);
 void					cheak_object(t_rt *rt);
 void					cheak_part(t_rt *rt);
+/*
+** ------------------Function's Menu_gui--------------------------------
+*/
+void        			sdl_init_menu(t_rt *rt);
+void        			sdl_refresh(t_rt *rt, t_cl *cl);
+void					my_free_ui(t_rt *sdl);
+void					draw_selected(t_rt *sdl);
+void					draw_essentil_menu(t_rt *sdl);
+void					draw_text(t_rt *rt, char *text, int t, int x, int y);
+void					refresh_menu(t_rt *rt);
+void					menu_button(t_rt *rt, int x, int y);
+t_obj					*new_sphere(void);
+
 #endif

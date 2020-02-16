@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kzina <kzina@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/17 16:08:56 by daron             #+#    #+#             */
-/*   Updated: 2020/01/30 17:02:50 by daron            ###   ########.fr       */
+/*   Updated: 2020/02/15 18:52:47 by kzina            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void			sdl_initialize(t_rt *rt)
 		kill_all("Can't initialize Window <sdl_initialize>");
 	if (!(rt->window.render = SDL_CreateRenderer(rt->window.window, -1, SDL_RENDERER_ACCELERATED)))
 		kill_all("Can't render Window <sdl_initialize>");
+	sdl_init_menu(rt);
 }
 
 void kill_error(char *message, int string_number)

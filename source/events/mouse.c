@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mouse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kzina <kzina@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 14:34:47 by daron             #+#    #+#             */
-/*   Updated: 2020/01/30 15:14:21 by daron            ###   ########.fr       */
+/*   Updated: 2020/02/16 14:11:30 by kzina            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ void			mouse_down(t_rt *rt)
 		u = (rt->window.size[0] - (double)x * 2.0) / rt->window.size[1];
 		v = (rt->window.size[1] - (double)y * 2.0) / rt->window.size[0];
 		pos = (t_vector){rt->cam.pos.x + u, rt->cam.pos.y + v, rt->cam.pos.z};
-		rt->select_obj = mouse_intersection(u, v, &pos, rt);
+		if ((rt->select_obj = mouse_intersection(u, v, &pos, rt)) == -1)
+		//	menu_button(rt, x, y);
+		refresh_menu(rt);
 	}
 }

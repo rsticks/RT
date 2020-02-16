@@ -3,20 +3,19 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+         #
+#    By: kzina <kzina@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/09 16:02:42 by daron             #+#    #+#              #
-#    Updated: 2020/01/30 15:07:37 by daron            ###   ########.fr        #
+#    Updated: 2020/02/16 17:01:06 by kzina            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = RT
-CC = gcc
+CC = gcc -g
 FLAGS = -Wall -Wextra -O3
 LIBRARIES = -L$(LIBFT_DIRECTORY) \
             -L$(FTVECTOR_DIRECTORY) \
 			-framework OpenGL \
-            -framework AppKit \
 			-F./frameworks \
             -rpath ./frameworks \
             -framework OpenCl \
@@ -65,7 +64,9 @@ SOURCES_LIST = main.c \
                     events/key_for_object.c \
                     events/key_for_other.c \
                     events/mouse.c \
-                    intersection.c
+					gui/menu.c \
+					gui/menu2.c \
+                    intersection.c 
 SOURCES = $(addprefix $(SOURCES_DIRECTORY), $(SOURCES_LIST))
 
 OBJECTS_DIRECTORY = objects/
@@ -91,6 +92,7 @@ $(OBJECTS_DIRECTORY):
 	@mkdir -p $(OBJECTS_DIRECTORY)
 	@mkdir -p $(OBJECTS_DIRECTORY)/parser
 	@mkdir -p $(OBJECTS_DIRECTORY)/events
+	@mkdir -p $(OBJECTS_DIRECTORY)/gui
 	@echo "$(NAME): $(GREEN)$(OBJECTS_DIRECTORY) was created$(RESET)"
 
 $(OBJECTS_DIRECTORY)%.o : $(SOURCES_DIRECTORY)%.c $(HEADERS)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_main_f.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daron <daron@student.42.fr>                +#+  +:+       +#+        */
+/*   By: kzina <kzina@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/31 15:49:21 by daron             #+#    #+#             */
-/*   Updated: 2020/01/31 15:50:08 by daron            ###   ########.fr       */
+/*   Updated: 2020/02/15 17:26:50 by kzina            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,11 +80,6 @@ void init_rt(t_rt *rt, char *filename, int str_c)
 	if (rt->lgh_head != NULL)
 		cheak_light(rt);
 	cheak_part(rt);
-
-
-
-
-
 
 	list_to_mas(rt);
 }

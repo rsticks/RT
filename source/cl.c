@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cl.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kzina <kzina@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 19:16:48 by rsticks           #+#    #+#             */
-/*   Updated: 2020/01/30 17:02:50 by daron            ###   ########.fr       */
+/*   Updated: 2020/02/16 15:16:16 by kzina            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,11 +127,6 @@ void			start_kernel(t_cl *cl, t_rt *rt)
 	cl->err = clEnqueueWriteBuffer(cl->q, cl->light_mem, CL_TRUE, 0, sizeof(t_cl_light) * rt->scene.lgh_c, cl->cl_light, 0, NULL, NULL);
 	cl->err = clEnqueueNDRangeKernel(cl->q, cl->kernel, 1, NULL, &gws, NULL, 0, NULL, NULL);
 	cl->err = clEnqueueReadBuffer(cl->q, cl->img, CL_TRUE, 0, sizeof(int) * gws, cl->data, 0, NULL, NULL);
-
-
-	SDL_RenderClear(rt->window.render);
-	SDL_UpdateTexture(rt->window.textur, NULL, cl->data, rt->window.size[0] * sizeof(int));
-	SDL_RenderCopy(rt->window.render, rt->window.textur, NULL, NULL);
-	SDL_RenderPresent(rt->window.render);
-	free_o_l(cl);
+	refresh_menu(rt);
+	sdl_refresh(rt, cl);
 }

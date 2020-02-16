@@ -1,7 +1,7 @@
 <scene>
 	<maxref> {0} </maxref>
 	<name> {Test scene_4} </name>
-	<res> {900 900} </res>
+	<res> {1280 900} </res>
 	<antialias> {1} </antialias>
 	<ambiant> {0.15} </ambiant>
 </scene>
@@ -77,7 +77,7 @@
 	<radius> {25.00} </radius>
 	<rgb> {r0 g200 b100} </rgb>
 	<reflect> {off} </reflect>
-	<spec> {off} </spec>
+	<spec> {on} </spec>
 	<refract> {off} </refract>
 </object>
 

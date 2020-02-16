@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   event.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kzina <kzina@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 12:30:37 by daron             #+#    #+#             */
-/*   Updated: 2020/01/30 15:07:14 by daron            ###   ########.fr       */
+/*   Updated: 2020/02/09 15:37:07 by kzina            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ static void	event_2(t_rt *rt, t_move *move)
 		key_down_for_object(rt, move);
 	else if (rt->window.event.type == SDL_MOUSEBUTTONDOWN)
 		mouse_down(rt);
+	//refresh_menu(rt);
 }
 
 void		events(t_rt *rt)
