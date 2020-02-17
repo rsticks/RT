@@ -6,7 +6,7 @@
 /*   By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/17 16:20:37 by daron             #+#    #+#             */
-/*   Updated: 2020/02/09 13:39:30 by daron            ###   ########.fr       */
+/*   Updated: 2020/02/11 13:15:10 by daron            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,13 @@ typedef struct			s_cl_object
 	cl_float			r;
 	cl_int				name;
 	cl_int				specular;
+
 	cl_int				reflect;
 	cl_float			coef_refl;
+
+	cl_int				refr; //если == 1 то этот объект будет преломлять свет
+	cl_float			ind_refr; // Коэффициент преломления
+	cl_float			coef_refr;
 	cl_float			limit;
 }						t_cl_object;
 
@@ -155,6 +160,7 @@ typedef struct			s_obj
 	int					text_on; //есль == 1 говорит что текстуры включены
 	char				*texture;//иня файла где храниться текстура
 	int					obj_on;//есль == 1 говорит это будет obj фаил
+	int                 texture_id;
 	char				*file_name; // имя obj файла
 	int					check[11];
 	struct s_obj		*next;

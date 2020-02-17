@@ -1,7 +1,7 @@
 <scene>
-	<maxref> {0} </maxref>
+	<maxref> {2} </maxref>
 	<name> {Test scene_1} </name>
-	<res> {700 700} </res>
+	<res> {800 800} </res>
 	<antialias> {1} </antialias>
 	<ambiant> {0.15} </ambiant>
 </scene>
@@ -16,12 +16,17 @@
 	<rgb> {r255 g255 b255} </rgb>
 </light>
 
+<light>
+	<pos> {x-60.00 y60.00 z-60.00} </pos>
+	<rgb> {r255 g255 b255} </rgb>
+</light>
+
 <object>
 	<type> {plane} </type>
 	<pos> {x0.00 y00.00 z20.00} </pos>
 	<dir> {x0.0 y0.0 z-1.0} </dir>
 	<reflect> {off} </reflect>
-	<rgb> {r255 g0 b0} </rgb>
+	<rgb> {r204 g102 b102} </rgb>
 	<refract> {off} </refract>
 </object>
 
@@ -29,8 +34,8 @@
 	<type> {sphere} </type>
 	<pos> {x40.00 y0.00 z-20.00} </pos>
 	<radius> {25.00} </radius>
-	<rgb> {r0 g0 b255} </rgb>
+	<rgb> {r153 g255 b255} </rgb>
 	<reflect> {off} </reflect>
-	<spec> {on} </spec>
-	<refract> {off} </refract>
+	<spec> {off} </spec>
+	<refract> {on r1.01 c0.5} </refract>
 </object>

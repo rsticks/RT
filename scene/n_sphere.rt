@@ -23,5 +23,5 @@
 	<rgb> {r0 g255 b255} </rgb>
 	<reflect> {off} </reflect>
 	<spec> {off} </spec>
-	<refract> {off} </refract>
+	<refract> {off r1.01 c0.5} </refract>
 </object>

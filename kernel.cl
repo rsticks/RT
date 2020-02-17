@@ -33,18 +33,23 @@
 */
 # define EPS 0.0001
 
-typedef struct				s_cl_object
+typedef struct			s_cl_object
 {
-	float3					pos;
-	float3					rot;
-	float3					col;
-	float					r;
-	int						name;
-	int						specular;
-	float					limit;
-	int						reflect;
-	float					coef_refl;
-}							t_cl_object;
+	float3			pos;
+	float3			rot;
+	float3			col;
+	float			r;
+	int				name;
+	int				specular;
+
+	int				reflect;
+	float			coef_refl;
+
+	int				refr; //если == 1 то этот объект будет преломлять свет
+	float			ind_refr; // Коэффициент преломления
+	float			coef_refr;
+	float			limit;
+}						t_cl_object;
 
 typedef	struct				s_cl_light
 {
@@ -95,9 +100,15 @@ typedef struct				s_rt
 	float3 					dist;
 	float3					norm;
 	float3					refpos;
+
 	float3					ref;
 	int 					pref;
 	int 					cpt;
+	int						prim;
+	float					n1;
+	float					n2;
+
+	int						intr_obj;
 }							t_rt;
 
 void						ft_fzero(float *s, int n);
@@ -116,6 +127,15 @@ float 						get_cone_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_rt 
 float 						get_cylinder_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_rt *rt);
 float get_paraboloid_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_rt *rt);
 float get_disk_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_rt *rt);
+
+void ft_tab_coef(float *tab, float coef, int size);
+void 	calculate_light(t_rt *rt, float *tab);
+void result_in_tab(t_rt *rt, int start_obj, float* tab, float* tab_refl, float* tab_refr);
+void main_light(t_rt *rt, int i_obj, float *tab, float3 *pos);
+
+int refr_init(t_rt *rt, int i_obj, float3 *pos);
+int refr_inter(t_rt *rt, float3 *pos);
+
 int							intersection(t_rt *rt, float3 *ray_dir, float3 *cam_pos);
 float3 						object_norm(t_rt *rt, int i, float3 pos);
 int							shadow(t_rt *rt, int i_obj, int i_light, float3 pos);
@@ -124,12 +144,22 @@ void 						gloss(t_rt *rt, int i_obj, float *tab, float3 *dist, float d);
 int 						ref_inter(t_rt *rt, int i_cur_obj , float3 pos);
 int 						ref_init(t_rt *rt, int i_obj, float3 *pos);
 int 						reflection(t_rt *rt, int i_obj, float3 *pos, float *tab);
-void 						calculate_light(t_rt *rt, int i_obj, float *tab);
+//void 						calculate_light(t_rt *rt, int i_obj, float *tab);
 void						ft_average(float *r, float *tab);
 void 						create_ray(t_rt *rt, float x, float y);
 void 						ft_tracing(float x, float y, t_rt *rt, __global int *data, int gid);
 
+void ft_tab_coef(float *tab, float coef, int size)
+{
+	int i;
 
+	i = 0;
+	while (i < size)
+	{
+		tab[i] *= coef;
+		i++;
+	}
+}
 
 float   ft_clamp(float value, float min, float max)
 {
@@ -140,6 +170,17 @@ float   ft_clamp(float value, float min, float max)
 	return (value);
 }
 
+void    ft_fzero(float *s, int n)
+{
+	int i;
+
+	i = 0;
+	while (i < n)
+	{
+		s[i] = 0.0f;
+		i++;
+	}
+}
 
 float3		vec_sum(float3 v1, float3 v2)
 {
@@ -206,13 +247,16 @@ float				get_quadratic_solution(float a, float b, float discriminant)
 
 	t1 = (-b - native_sqrt(discriminant)) / (2 * a);
 	t2 = (-b + native_sqrt(discriminant)) / (2 * a);
-	if ((t1 <= t2 && t1 >= 0) || (t1 >= 0 && t2 < 0))
+	/*if ((t1 <= t2 && t1 >= 0) || (t1 >= 0 && t2 < 0))
 		return (t1);
 	else if ((t2 <= t1 && t2 >= 0) || (t1 < 0 && t2 >= 0))
-		return (t2);
+		return (t2);*/
+	if (t1 > t2 && t2 > 0.)
+	    return (t2);
+	else
+	    return (t1);
 	return (-1);
 }
-
 
 float get_sphere_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_rt *rt)
 {
@@ -311,7 +355,7 @@ float get_disk_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_rt *rt)
 		return (-1);
 }
 
-int			intersection(t_rt *rt, float3 *ray_dir, float3 *cam_pos)
+int     intersection(t_rt *rt, float3 *ray_dir, float3 *cam_pos)
 {
 	float dist;
 	int i;
@@ -344,7 +388,6 @@ int			intersection(t_rt *rt, float3 *ray_dir, float3 *cam_pos)
 	}
 	return (f);
 }
-
 
 float3 object_norm(t_rt *rt, int i, float3 pos)
 {
@@ -407,7 +450,7 @@ int		shadow(t_rt *rt, int i_obj, int i_light, float3 pos)
 			else if (rt->obj[i].name == DISK_ID)
 				d = get_disk_intersection(&dist, &pos, i, rt);
 			if (d > EPS && d < rt->t)
-				return (1);
+				return (i);
 		}
 		i++;
 	}
@@ -437,7 +480,7 @@ void gloss(t_rt *rt, int i_obj, float *tab, float3 *dist, float d)
 	}
 }
 
-int ref_inter(t_rt *rt, int i_cur_obj , float3 pos)
+/*int ref_inter(t_rt *rt, int i_cur_obj , float3 pos)
 {
 	double	dist;
 	int i;
@@ -516,22 +559,238 @@ int reflection(t_rt *rt, int i_obj, float3 *pos, float *tab)
 		}
 	}
 	return (0);
+}*/
+
+int ref_inter(t_rt *rt, int i_cur_obj , float3 pos)
+{
+	double	dist;
+	int i;
+	char f;
+
+	i = 0;
+	f = -1;
+	while (i < rt->scene.obj_c)
+	{
+		if (i_cur_obj != i)
+		{
+			if (rt->obj[i].name == SPHERE_ID)
+				dist = get_sphere_intersection(&rt->ref, &pos, i, rt);
+			else if (rt->obj[i].name == CYLINDER_ID)
+				dist = get_cylinder_intersection(&rt->ref, &pos, i, rt);
+			else if (rt->obj[i].name == CONE_ID)
+				dist = get_cone_intersection(&rt->ref, &pos, i, rt);
+			else if (rt->obj[i].name == PLANE_ID)
+				dist = get_plane_intersection(&rt->ref, &pos, i, rt);
+			else if (rt->obj[i].name == PARABOLOID_ID)
+				dist = get_paraboloid_intersection(&rt->ref, &pos, i, rt);
+			else if (rt->obj[i].name == DISK_ID)
+				dist = get_disk_intersection(&rt->ref, &pos, i, rt);
+			if (dist > EPS && dist < rt->t)
+			{
+				f = i;
+				rt->t = dist;
+			}
+		}
+		i++;
+	}
+	return (f);
 }
 
+int ref_init(t_rt *rt, int i_obj, float3 *pos)
+{
+	int	new_inter;
+
+	rt->t = 8000.0;
+	rt->ref = vec_scale(rt->norm, (2 * vec_dot(rt->ray_dir, rt->norm)));
+	rt->ref = vec_sub(rt->ray_dir, rt->ref);
+	rt->ref = vec_norm(rt->ref);
+	if ((new_inter = ref_inter(rt, i_obj, *pos)) == -1)
+		return (-1);
+    if (rt->obj[new_inter].refr == 1.0)
+        rt->prim = 0;
+	*pos = (float3){pos->x + rt->t * rt->ref.x,
+					pos->y + rt->t * rt->ref.y,
+					pos->z + rt->t * rt->ref.z};
+	rt->ray_dir = (float3){rt->ref.x, rt->ref.y, rt->ref.z};
+	return (new_inter);
+}
+
+int refr_inter(t_rt *rt, float3 *pos)
+{
+	double	dist;
+	int i;
+	char f;
+
+	i = 0;
+	f = -1;
+	while (i < rt->scene.obj_c)
+	{
+		if (rt->obj[i].name == SPHERE_ID)
+			dist = get_sphere_intersection(&rt->ref, pos, i, rt);
+		else if (rt->obj[i].name == CYLINDER_ID)
+			dist = get_cylinder_intersection(&rt->ref, pos, i, rt);
+		else if (rt->obj[i].name == CONE_ID)
+			dist = get_cone_intersection(&rt->ref, pos, i, rt);
+		else if (rt->obj[i].name == PLANE_ID)
+			dist = get_plane_intersection(&rt->ref, pos, i, rt);
+		else if (rt->obj[i].name == PARABOLOID_ID)
+			dist = get_paraboloid_intersection(&rt->ref, pos, i, rt);
+		else if (rt->obj[i].name == DISK_ID)
+			dist = get_disk_intersection(&rt->ref, pos, i, rt);
+		if (dist > EPS && dist < rt->t)
+		{
+			f = i;
+			rt->t = dist;
+		}
+		i++;
+	}
+	return (f);
+}
+
+int refr_init(t_rt *rt, int i_obj, float3 *pos)
+{
+	int	new_inter;
+	float3 new_pos;
+	float3 new_pos_inter;
+	float d_dot;
+
+    new_inter = -1;
+	if (rt->cpt == 0 || rt->prim == 0)
+	{
+		rt->n1 = 1.0;
+		rt->n2 = rt->obj[rt->intr_obj].ind_refr;
+        //rt->norm = vec_scale(rt->norm, -1);
+	}
+	else
+	{
+		rt->n1 = rt->obj[rt->intr_obj].ind_refr;
+		rt->n2 = 1.0;
+        rt->norm = vec_scale(rt->norm, -1);
+		rt->prim = 0;
+	}
+
+	rt->t = 8000.0;
+	rt->ref = vec_sum(vec_scale(rt->ray_dir, rt->n1 / rt->n2), vec_scale(rt->norm, (rt->n1 / rt->n2) * vec_dot(rt->norm, rt->ray_dir) - native_sqrt(1 - (pow((rt->n1 / rt->n2), 2) * (1 - pow(vec_dot(rt->ray_dir, rt->norm), 2))))));
+    rt->ref = vec_norm(rt->ref);
+
+	//new_pos = vec_sub(*pos, rt->obj[rt->intr_obj].pos);
+	//d_dot = (1.0 / native_sqrt(native_sqrt(vec_dot(new_pos, new_pos)))) * 0.01;
+	//new_pos_inter = (float3){pos->x - d_dot * rt->ref.x, pos->y - d_dot * rt->ref.y, pos->z - d_dot * rt->ref.z};
+	if ((new_inter = refr_inter(rt, pos)) == -1)
+		return (-1);
+	if (rt->intr_obj == new_inter)
+		rt->prim = 1;
+	*pos = (float3){pos->x + rt->ref.x * rt->t, pos->y + rt->ref.y * rt->t, pos->z + rt->ref.z * rt->t};
+	rt->ray_dir = (float3){rt->ref.x, rt->ref.y, rt->ref.z};
+	return (new_inter);
+}
+
+void main_light(t_rt *rt, int i_obj, float *tab, float3 *pos)
+{
+	float3 dist;
+	float d;
+	int ind, obj_num;
+
+	ind = 0;
+	while (ind < rt->scene.lgh_c)
+	{
+		tab[3] = rt->scene.ambient;
+        //printf("tab[3] = %g", tab[3]);
+		dist = vec_sub(rt->light[ind].pos, *pos);
+		//printf("dist = %g %g %g", dist.x, dist.y, dist.z);
+		d = ft_clamp((1.0 / native_sqrt(native_sqrt(vec_dot(dist, dist)))), 0.0, 1.0);
+		//printf("d = %g", d);
+		dist = vec_norm(dist);
+        //printf("dist = %g %g %g", dist.x, dist.y, dist.z);
+		if ((obj_num = shadow(rt, i_obj, ind, *pos)) == 0)
+			tab[3] += ft_clamp(vec_dot(dist, rt->norm), 0.0, 1.0);
+		else if (rt->obj[obj_num].refr == 1.0)
+			tab[3] += rt->obj[obj_num].coef_refr * ft_clamp(vec_dot(dist, rt->norm), 0.0, 1.0);
+     //   printf("tab[3] = %g", tab[3]);
+		transfer_light(i_obj, ind, tab, d, rt);
+		gloss(rt, i_obj, tab, &dist , d);
+		ind++;
+	}
+}
+
+void result_in_tab(t_rt *rt, int start_obj, float* tab, float* tab_refl, float* tab_refr)
+{
+	int i;
+
+	ft_tab_coef(tab, 1 - (rt->obj[start_obj].coef_refl + rt->obj[start_obj].coef_refr), 3);
+	ft_tab_coef(tab_refl, rt->obj[start_obj].coef_refl, 3);
+	ft_tab_coef(tab_refr, rt->obj[start_obj].coef_refr, 3);
+	i = -1;
+	while(++i < 3)
+		tab[i] += tab_refl[i] + tab_refr[i];
+}
+
+void 	calculate_light(t_rt *rt, float *tab)
+{
+	float3 pos;
+	float	tab_refl[4];
+	float	tab_refr[4];
+	int start_obj;
+
+	pos = (float3){rt->cam.pos.x + rt->t * rt->ray_dir.x,
+                rt->cam.pos.y + rt->t * rt->ray_dir.y,
+                rt->cam.pos.z + rt->t * rt->ray_dir.z};
+	start_obj = rt->intr_obj;
+
+	ft_fzero(tab_refl, 4);
+	ft_fzero(tab_refr, 4);
+
+	rt->norm = object_norm(rt, rt->intr_obj, pos);
+	main_light(rt, rt->intr_obj, tab, &pos);
+    //printf("tab = (%g %g %g)\n", tab[0], tab[1], tab[2]);
+
+	//printf("rt->obj[rt->intr_obj].reflect = %d rt->cpt = %d rt->obj[rt->intr_obj].coef_refl = %g\n", rt->obj[rt->intr_obj].reflect, rt->cpt, rt->obj[rt->intr_obj].coef_refl);
+	while (rt->obj[rt->intr_obj].reflect && rt->cpt < rt->scene.maxref && rt->obj[rt->intr_obj].coef_refl > 0.0)
+	{
+		//printf("in11\n");
+		if ((rt->intr_obj = ref_init(rt, rt->intr_obj, &pos)) != -1)
+		{
+			//printf("in12\n");
+			rt->norm = object_norm(rt, rt->intr_obj, pos);
+			main_light(rt, rt->intr_obj, tab_refl, &pos);
+			rt->cpt += 1;
+		}
+		else
+			break ;
+	}
+
+	//printf("rt->obj[rt->intr_obj].refr = %d rt->cpt = %d rt->obj[rt->intr_obj].coef_refr = %g\n", rt->obj[rt->intr_obj].refr, rt->cpt, rt->obj[rt->intr_obj].coef_refr);
+	while (rt->obj[rt->intr_obj].refr && rt->cpt < rt->scene.maxref && rt->obj[rt->intr_obj].coef_refr > 0.0)
+	{
+		//printf("in21\n");
+		if ((rt->intr_obj = refr_init(rt, rt->intr_obj, &pos)) != -1)
+		{
+			//printf("in22\n");
+			rt->norm = object_norm(rt, rt->intr_obj, pos);
+			main_light(rt, rt->intr_obj, tab_refr, &pos);
+			rt->cpt += 1;
+		}
+		else
+			break;
+		//rt->cpt += 1;
+        //printf("tab_refr = (%g %g %g)\n", tab_refr[0], tab_refr[1], tab_refr[2]);
+	}
+	result_in_tab(rt, start_obj, tab, tab_refl, tab_refr);
+}
+
+/*
 void 	calculate_light(t_rt *rt, int i_obj, float *tab)
 {
 	float3 pos;
 	float3 dist;
 	float d;
-	int ind;
+	int ind, obj_num;
 
 	ind = 0;
 	pos = (float3){rt->cam.pos.x + rt->t * rt->ray_dir.x,
 				  rt->cam.pos.y + rt->t * rt->ray_dir.y,
 				  rt->cam.pos.z + rt->t * rt->ray_dir.z};
 	rt->norm = object_norm(rt, i_obj, pos);
-
-	//printf("pos = (%g %g %g)\n", pos.x, pos.y, pos.z);
 	while (ind < rt->scene.lgh_c)
 	{
 		tab[3] = rt->scene.ambient;
@@ -542,15 +801,20 @@ void 	calculate_light(t_rt *rt, int i_obj, float *tab)
 		//printf("d = %g\n", d);
 		dist = vec_norm(dist);
 		//printf("dist = (%g %g %g)\n", dist.x, dist.y, dist.z);
-		if (shadow(rt, i_obj, ind, pos) == 0)
+		if ((obj_num = shadow(rt, i_obj, ind, pos)) == 0)
 			tab[3] += ft_clamp(vec_dot(dist, rt->norm), 0.0, 1.0);
+		else if (rt->obj[obj_num].refr = 1.0)
+		{
+			//printf("rt->obj[obj_num].coef_refr = %g\n", rt->obj[obj_num].coef_refr);
+			tab[3] += rt->obj[obj_num].coef_refr * ft_clamp(vec_dot(dist, rt->norm), 0.0, 1.0);
+		}
 		transfer_light(i_obj, ind, tab, d, rt);
 		gloss(rt, i_obj, tab, &dist , d);
 		ind++;
 	}
 	rt->refpos = (float3){rt->ray_dir.x, rt->ray_dir.y, rt->ray_dir.z};
 	reflection(rt, i_obj, &pos, tab);
-}
+}*/
 
 
 void	ft_average(float *r, float *tab)
@@ -575,18 +839,7 @@ void create_ray(t_rt *rt, float x, float y)
 	rt->ray_dir = (float3){u * i.x + v * j.x + FOV * k.x, u * i.y + v * j.y + FOV * k.y, u * i.z + v * j.z + FOV * k.z};
 	rt->ray_dir = vec_norm(rt->ray_dir);
 	rt->cpt = 0;
-}
-
-void    ft_fzero(float *s, int n)
-{
-	int i;
-
-	i = 0;
-	while (i < n)
-	{
-		s[i] = 0.0f;
-		i++;
-	}
+	rt->prim = 0;
 }
 
 void ft_tracing(float x, float y, t_rt *rt, __global int *data, int gid)
@@ -595,7 +848,6 @@ void ft_tracing(float x, float y, t_rt *rt, __global int *data, int gid)
 	float	r[3];
 	int x_next = (int)x + 1, y_next = (int)y + 1; 
 	float p;
-	int i;
 
 	ft_fzero(r, 3);
 	p = 0.0;
@@ -606,21 +858,25 @@ void ft_tracing(float x, float y, t_rt *rt, __global int *data, int gid)
 			p += 1;
 			create_ray(rt, x, y);
 			ft_fzero(tab, 4);
-			i = intersection(rt, &rt->ray_dir, &rt->cam.pos);
-			//printf("x, y = %d, %d object = %d\n", (int)x, (int)y, i);
-			if(i >= 0)
-				calculate_light(rt, i, tab);
-			ft_average(r, tab);
+			if((rt->intr_obj = intersection(rt, &rt->ray_dir, &rt->cam.pos)) >= 0)
+				calculate_light(rt, tab);
+				// calculate_light(rt, rt->intr_obj, tab);
+            //printf("x, y = %d, %d object = %d\n", (int)x, (int)y, rt->intr_obj);
+            ft_average(r, tab);
 			x = x + (1.0 / rt->window.anti_alias);
 		}
 		y = y + (1.0 / rt->window.anti_alias);
 	}
 	//printf("%g, %g, %g\n", r[0], r[1], r[2]);
-	data[gid] = (((int)(r[0] / p * 255) & 0xff) << 16) + (((int)(r[1] / p * 255) & 0xff) << 8) + (((int)(r[2] / p * 255) & 0xff));
+	data[gid] = (((int)(r[0] / p * 255.0) & 0xff) << 16) + (((int)(r[1] / p * 255.0) & 0xff) << 8) + (((int)(r[2] / p * 255.0) & 0xff));
 }
 
 
-__kernel void 		start(__global t_cl_object *obj, __global t_cl_light *light, __global int *out_data, __global int *i_mem, __global float *d_mem)
+__kernel void 		start(__global t_cl_object *obj,
+							__global t_cl_light *light,
+							__global int *out_data,
+							__global int *i_mem,
+							__global float *d_mem)
 {
 	int				gid, x, y;
 	t_rt			rt;

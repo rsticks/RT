@@ -6,7 +6,7 @@
 /*   By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 14:34:47 by daron             #+#    #+#             */
-/*   Updated: 2020/02/09 13:32:45 by daron            ###   ########.fr       */
+/*   Updated: 2020/02/11 13:15:09 by daron            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,10 @@ void			mouse_down(t_rt *rt)
 	if (SDL_BUTTON_LEFT == rt->window.event.button.button)
 	{
 		SDL_GetMouseState(&x, &y);
-		u = (rt->window.size[0] - (double)x * 2.0) / rt->window.size[1];
-		v = (rt->window.size[1] - (double)y * 2.0) / rt->window.size[0];
+		u = (rt->window.size[0] - (double)x * FOV) / rt->window.size[1];
+		v = (rt->window.size[1] - (double)y * FOV) / rt->window.size[0];
 		pos = (t_vector){rt->cam.pos.x + u, rt->cam.pos.y + v, rt->cam.pos.z};
 		rt->select_obj = mouse_intersection(u, v, &pos, rt);
+		//printf("rt->select_obj = %d\n", rt->select_obj);
 	}
 }

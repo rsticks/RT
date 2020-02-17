@@ -6,7 +6,7 @@
 /*   By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/17 16:08:56 by daron             #+#    #+#             */
-/*   Updated: 2020/02/09 13:32:45 by daron            ###   ########.fr       */
+/*   Updated: 2020/02/11 16:57:52 by daron            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void printf_scene_data(t_rt *rt)
 		   rt->window.size[0], rt->window.size[1], rt->scene.maxref,
 		   rt->window.anti_alias, rt->scene.ambient, rt->window.effecr_name);
 	printf("\n");
-	printf("Camera pos = {%g, %g, %g}\n Camera dir = {%g, %g, %g}\n",
+	printf("Camera pos = {x%g, y%g, z%g}\n Camera dir = {x%g, y%g, z%g}\n",
 		   rt->cam.pos.x, rt->cam.pos.y, rt->cam.pos.z,
 		   rt->cam.dir.x, rt->cam.dir.y, rt->cam.dir.z);
 	printf("\n");
@@ -52,7 +52,7 @@ void printf_scene_data(t_rt *rt)
 	int i = 0;
 	while (i < rt->scene.lgh_c)
 	{
-		printf("Light pos = {%g, %g, %g}\nLight rgb = {%g, %g, %g}\n",
+		printf("Light pos = {x%g, y%g, z%g}\nLight rgb = {%g, %g, %g}\n",
 			   rt->lgh_mas[i].pos.x, rt->lgh_mas[i].pos.y, rt->lgh_mas[i].pos.z,
 			   rt->lgh_mas[i].rgb.r, rt->lgh_mas[i].rgb.g, rt->lgh_mas[i].rgb.b);
 		i++;
@@ -76,7 +76,7 @@ void printf_scene_data(t_rt *rt)
 			   "file_name = %s\n",
 			   rt->obj_mas[i].obj_name, rt->obj_mas[i].type,
 			   rt->obj_mas[i].reflect, rt->obj_mas[i].coef_refl,
-			   rt->obj_mas[i].refr, rt->obj_mas[i].ind_refr, rt->obj_mas[i].coef_refl,
+			   rt->obj_mas[i].refr, rt->obj_mas[i].ind_refr, rt->obj_mas[i].coef_refr,
 			   rt->obj_mas[i].dir.x, rt->obj_mas[i].dir.y, rt->obj_mas[i].dir.z,
 			   rt->obj_mas[i].pos.x, rt->obj_mas[i].pos.y, rt->obj_mas[i].pos.z,
 			   rt->obj_mas[i].rgb.r, rt->obj_mas[i].rgb.g, rt->obj_mas[i].rgb.b,
@@ -108,7 +108,7 @@ int				main(int argc, char **argv)
 	init_cl(cl, &rt);
 	start_kernel(cl, &rt);
 	rt.cl = cl;
-	printf_scene_data(&rt);
+	//printf_scene_data(&rt);
 	events(&rt);
 	return (0);
 }

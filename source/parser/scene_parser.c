@@ -6,7 +6,7 @@
 /*   By: daron <daron@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 14:22:01 by daron             #+#    #+#             */
-/*   Updated: 2020/02/09 13:32:45 by daron            ###   ########.fr       */
+/*   Updated: 2020/02/11 13:15:09 by daron            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,9 @@ static void check_inti_effect(t_rt *rt, int str_c)
 
 static void check_inti_res(t_rt *rt, int str_c)
 {
-	if (rt->window.size[0] <= 0 || rt->window.size[1] <= 0)
+	if (rt->window.size[0] <= 0 || rt->window.size[1] <= 0
+	|| rt->window.size[0] > 1500 || rt->window.size[1] > 1500
+	|| rt->window.size[0] != rt->window.size[1])
 		kill_error("Wrong format of window size" , str_c);
 }
 
