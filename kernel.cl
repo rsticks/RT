@@ -31,17 +31,17 @@
 */
 # define EPS 0.0001
 
-typedef struct			s_cl_data_obj
+typedef struct				s_cl_data_obj
 {
-	int					num;
-	float3				v;
-	float3				vn;
-	float				u1;
-	float				v1;
-	int3				vf;
-	int3				vnf;
-	int3				vtf;
-}						t_cl_data_obj;
+	int						num;
+	float3					v;
+	float3					vn;
+	float					u1;
+	float					v1;
+	int3					vf;
+	int3					vnf;
+	int3					vtf;
+}							t_cl_data_obj;
 
 typedef struct				s_cl_object
 {
@@ -99,6 +99,7 @@ typedef struct				s_rt
 
 	__global t_cl_object	*obj;
 	__global t_cl_light		*light;
+	__global t_cl_data_obj	*data_o;
 
 	float3					ray_dir;
 	float					t;
@@ -108,8 +109,11 @@ typedef struct				s_rt
 	float3					ref;
 	int 					pref;
 	int 					cpt;
+	int						f_count;
+	int						count_of_triangl;
 }							t_rt;
 
+float						get_triangle_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_rt *rt);
 void						ft_fzero(float *s, int n);
 float						ft_clamp(float value, float min, float max);
 float3						vec_sum(float3 v1, float3 v2);
@@ -222,7 +226,7 @@ float				get_quadratic_solution(float a, float b, float discriminant)
 }
 
 
-float get_sphere_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_rt *rt)
+float				get_sphere_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_rt *rt)
 {
 	float b;
 	float c;
@@ -244,8 +248,52 @@ float get_sphere_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_rt *rt)
 
 
 
+float get_triangle_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_rt *rt)
+{
+	float 	dist;
+	float 	g;
+	float3 	p;
+	float3 	temp;
+	float3 	v1;
+	float3 	v2;
+	float2 	c;
+	float2	t;
+	float	det;
 
-
+	temp = (float3){(*ray_dir).x * dist, (*ray_dir).y * dist, (*ray_dir).z * dist};
+	g = -1;
+	i = 0;
+	rt->count_of_triangl = rt->f_count;
+	while (i < rt->f_count)
+	{
+		dist = ((vec_dot(rt->data_o[rt->data_o[i].vnf.x].vn, rt->data_o[rt->data_o[i].vf.x].v) - 
+		vec_dot(rt->data_o[rt->data_o[i].vnf.x].vn, *cam_pos)) / vec_dot(rt->data_o[rt->data_o[i].vnf.x].vn, *ray_dir));
+		if (dist >= EPS)
+		{
+			v1 = vec_sub(rt->data_o[rt->data_o[i].vf.y].v ,rt->data_o[rt->data_o[i].vf.x].v);
+			v2 = vec_sub(rt->data_o[rt->data_o[i].vf.z].v ,rt->data_o[rt->data_o[i].vf.x].v);
+			p = vec_sum(*cam_pos, temp);
+			det = v1.x * v2.y - v2.x * v1.y;
+			if (det != 0)
+			{
+				t.x = p.x - c.x;
+				t.y = p.y - c.y;
+				c.x = t.x * (v2.y / det) + t.y * (((-1) * v2.x) / det);
+				c.y = t.x * (((-1) * v1.y) / det) + t.y * (v2.x / det);
+			}
+			if ((c.x + c.y) >= 0 && (c.x + c.y) <= 1)
+			{
+				if (dist <= g)
+				{
+					rt->count_of_triangl = i;
+					g = dist;
+				}
+			}
+		}
+		i++;
+	}
+	return (g);
+}
 
 
 
@@ -287,7 +335,7 @@ float get_cone_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_rt *rt)
 	float	b;
 	float	c;
 	float	a;
-	float discriminant;
+	float	discriminant;
 
 	rt->dist = vec_sub(*cam_pos, rt->obj[i].pos);
 	rt->obj[i].rot = vec_norm(rt->obj[i].rot);
@@ -343,6 +391,8 @@ int			intersection(t_rt *rt, float3 *ray_dir, float3 *cam_pos)
 			dist = get_cone_intersection(ray_dir, cam_pos, i, rt);
 		else if (rt->obj[i].name == PLANE_ID)
 			dist = get_plane_intersection(ray_dir, cam_pos, i, rt);
+		else if (rt->obj[i].name == OBJ_FILE_ID)
+			dist = get_triangle_intersection(ray_dir, cam_pos, i, rt);
 		if (dist > EPS && dist < rt->t)
 		{
 			f = i;
@@ -371,6 +421,8 @@ float3 object_norm(t_rt *rt, int i, float3 pos)
 	}
 	else if (rt->obj[i].name == PLANE_ID)
 		norm = rt->obj[i].rot;
+	else if (rt->obj[i].name == OBJ_FILE_ID)
+		norm = rt->data_o[rt->data_o[rt->count_of_triangl].vnf.x].vn;
 	else if (rt->obj[i].name == SPHERE_ID)
 		norm = vec_sub(pos, rt->obj[i].pos);
 	return (vec_norm(norm));
@@ -637,45 +689,17 @@ __kernel void 		start(__global t_cl_object *obj,
 	rt.scene.obj_c = i_mem[3];
 	rt.scene.lgh_c = i_mem[4];
 	rt.scene.maxref = i_mem[5];
-
+	rt.f_count = i_mem[6];
 	rt.cam.pos = (float3){d_mem[0], d_mem[1], d_mem[2]};
 	rt.scene.ambient = d_mem[3];
 	rt.cam.rot = (float3){d_mem[4], d_mem[5], d_mem[6]};
-
 	rt.obj = obj;
 	rt.light = light;
-
 	if (gid == 1)
 	{
 		printf("f || %d/%d/%d\n", d_obj[i_mem[6] - 1].vf.x, d_obj[i_mem[6] - 1].vtf.x, d_obj[i_mem[6] - 1].vnf.x);
 	}
 
-	/*if (gid == 1)
-	{
-		printf("In Kernel - W_size = (%d %d) Antialias = %d obj_c = %d light_c = %d\n"
-				"cam_pos = (%g, %g, %g) cam_rot = (%g, %g, %g) ambient= %g\n\n",
-				rt.window.size[0], rt.window.size[1],
-				rt.window.anti_alias, rt.scene.obj_c, rt.scene.lgh_c,
-				rt.cam.pos.x,rt.cam.pos.y, rt.cam.pos.z,
-				rt.cam.rot.x, rt.cam.rot.y, rt.cam.rot.z, rt.scene.ambient);
-
-		int i ;
-		i = -1;
-		while (++i < rt.scene.obj_c)
-			printf("In Kernel Object type = %d\n pos = (%g, %g, %g)\n rot = (%g, %g, %g)\n color = (%g, %g, %g)\n radius = %g\nreflect = %d coef = %g\n",
-				rt.obj[i].name,
-				rt.obj[i].pos.x, rt.obj[i].pos.y, rt.obj[i].pos.z,
-				rt.obj[i].rot.x, rt.obj[i].rot.y, rt.obj[i].rot.z,
-				rt.obj[i].col.x, rt.obj[i].col.y, rt.obj[i].col.z,
-				rt.obj[i].r,
-				rt.obj[i].reflect, rt.obj[i].coef_refl);
-		i = -1;
-		while (++i < rt.scene.lgh_c)
-			printf("In Kernel Light pos = (%g, %g, %g)\n color = (%g, %g, %g)\n\n",
-				rt.light[i].pos.x, rt.light[i].pos.y, rt.light[i].pos.z,
-				rt.light[i].col.x, rt.light[i].col.y, rt.light[i].col.z);
-
-	}*/
 	x = gid % rt.window.size[0];
 	y = gid / rt.window.size[1];
 	ft_tracing(x, y, &rt, out_data, gid);

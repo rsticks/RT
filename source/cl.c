@@ -6,7 +6,7 @@
 /*   By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 19:16:48 by rsticks           #+#    #+#             */
-/*   Updated: 2020/02/07 17:57:47 by rsticks          ###   ########.fr       */
+/*   Updated: 2020/02/13 18:19:55 by rsticks          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,8 @@ void			init_cl(t_cl *cl, t_rt *rt)
 	cl->q = clCreateCommandQueue(cl->ct, cl->dev_id[0], 0, &cl->err);
 	printf("%-32s || %d\n", "CreateCommandQueue", cl->err);
 	cl->fd = open("kernel.cl", O_RDONLY);
-	cl->k_s = (char*)malloc(sizeof(char) * 17000);
-	cl->i = read(cl->fd, cl->k_s, 17000);
+	cl->k_s = (char*)malloc(sizeof(char) * 25000);
+	cl->i = read(cl->fd, cl->k_s, 25000);
 	cl->k_s[cl->i] = '\0';
 	cl->k_l = ft_strlen(cl->k_s);
 	ft_init_cl(cl, rt);
