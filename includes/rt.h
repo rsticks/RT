@@ -6,7 +6,7 @@
 /*   By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/17 16:20:37 by daron             #+#    #+#             */
-/*   Updated: 2020/02/11 13:15:10 by daron            ###   ########.fr       */
+/*   Updated: 2020/02/18 13:40:34 by daron            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <unistd.h>
 # include <fcntl.h>
 # include <stdio.h>
+#include  <math.h>
 # include "ftvector.h"
 # include "libft.h"
 # include <SDL2/SDL.h>
@@ -28,7 +29,9 @@
 ** Size configuration
 */
 
-
+#define     EQN_EPS     1e-9
+#define	    IsZero(x)	((x) > -EQN_EPS && (x) < EQN_EPS)
+#define     cbrt(x)     ((x) > 0.0 ? pow((float)(x), 1.0/3.0) : ((x) < 0.0 ? -pow((float)-(x), 1.0/3.0) : 0.0))
 # define FOV			2.0
 
 /*
@@ -42,6 +45,7 @@
 # define OBJ_FILE_ID	5
 # define PARABOLOID_ID	6
 # define DISK_ID		7
+# define TORUS_ID		8
 
 /*
 ** Static parametrs
@@ -66,6 +70,7 @@ typedef struct			s_cl_object
 	cl_float3			rot;
 	cl_float3			col;
 	cl_float			r;
+    cl_float           torus_r;
 	cl_int				name;
 	cl_int				specular;
 
@@ -153,6 +158,7 @@ typedef struct			s_obj
 	float				coef_refl; // коэффициент отражения
 	int					spec; // блестящесть
 	float				radius;
+    float               torus_r;
 	float				limit; // ограничение объекта
 	int					refr; //если == 1 то этот объект будет преломлять свет
 	float				ind_refr; // Коэффициент преломления
