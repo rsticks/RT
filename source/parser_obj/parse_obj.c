@@ -6,7 +6,7 @@
 /*   By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 18:53:55 by rsticks           #+#    #+#             */
-/*   Updated: 2020/02/07 17:45:23 by rsticks          ###   ########.fr       */
+/*   Updated: 2020/02/24 17:21:51 by rsticks          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -320,13 +320,22 @@ t_parse_obj			*parsing_obj(char *path, int num)
 			final_parse(data);	
 	}
 	close(data->fd);
-	// for (size_t i = 0; i < data->count_f; i++)
-	// {
-	// 	printf("f || %d/%d/%d %d/%d/%d %d/%d/%d \n", 
-	// 	data->f[i].v.x, data->f[i].vn.x, data->f[i].vt.x,
-	// 	data->f[i].v.y, data->f[i].vn.y, data->f[i].vt.y,
-	// 	data->f[i].v.z, data->f[i].vn.z, data->f[i].vt.z);
-	// }
+
+	printf("Not in Kernel obj data\n");
+	for (size_t i = 0; i < data->count_v; i++)
+		printf("v %f %f %f\n", data->d_obj[i].v.x, data->d_obj[i].v.y, data->d_obj[i].v.z);
+	for (size_t i = 0; i < data->count_vn; i++)
+	{
+		printf("vn %f %f %f\n", data->d_obj[i].vn.x, data->d_obj[i].vn.y, data->d_obj[i].vn.z);
+	}
+	for (size_t i = 0; i < data->count_f; i++)
+	{
+		printf("f %d/%d/%d %d/%d/%d %d/%d/%d\n",
+		data->d_obj[i].vf.x, data->d_obj[i].vtf.x, data->d_obj[i].vnf.x,
+		data->d_obj[i].vf.y, data->d_obj[i].vtf.y, data->d_obj[i].vnf.y,
+		data->d_obj[i].vf.z, data->d_obj[i].vtf.z, data->d_obj[i].vnf.z);
+	}
+	
 	return (data);
 }
 

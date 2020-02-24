@@ -101,6 +101,7 @@ typedef struct				s_rt
 	__global t_cl_light		*light;
 	__global t_cl_data_obj	*data_o;
 
+	int						gid;
 	float3					ray_dir;
 	float					t;
 	float3 					dist;
@@ -248,10 +249,11 @@ float				get_sphere_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_rt *
 
 
 
-float get_triangle_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_rt *rt)
+float				get_triangle_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_rt *rt)
 {
 	float 	dist;
 	float 	g;
+	float	prev;
 	float3 	p;
 	float3 	temp;
 	float3 	v1;
@@ -260,44 +262,54 @@ float get_triangle_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_rt *r
 	float2	t;
 	float	det;
 
-	temp = (float3){(*ray_dir).x * dist, (*ray_dir).y * dist, (*ray_dir).z * dist};
 	g = -1;
 	i = 0;
+	prev = 8000;
 	rt->count_of_triangl = rt->f_count;
 	while (i < rt->f_count)
-	{
-		dist = ((vec_dot(rt->data_o[rt->data_o[i].vnf.x].vn, rt->data_o[rt->data_o[i].vf.x].v) - 
-		vec_dot(rt->data_o[rt->data_o[i].vnf.x].vn, *cam_pos)) / vec_dot(rt->data_o[rt->data_o[i].vnf.x].vn, *ray_dir));
+	{	
+		//if (rt->gid == 1)
+		//printf("Check %f %f %f\n ", rt->data_o[rt->data_o[i].vf.x - 1].v.x, rt->data_o[rt->data_o[i].vf.x - 1].v.y, rt->data_o[rt->data_o[i].vf.x - 1].v.z);
+		dist = ((vec_dot(rt->data_o[rt->data_o[i].vnf.x - 1].vn, rt->data_o[rt->data_o[i].vf.x - 1].v) -  vec_dot(rt->data_o[rt->data_o[i].vnf.x - 1].vn, *cam_pos)) / vec_dot(rt->data_o[rt->data_o[i].vnf.x - 1].vn, *ray_dir));
+		//if (dist >= EPS)
+		//printf("dist triangle = %g\n", dist);
 		if (dist >= EPS)
 		{
-			v1 = vec_sub(rt->data_o[rt->data_o[i].vf.y].v ,rt->data_o[rt->data_o[i].vf.x].v);
-			v2 = vec_sub(rt->data_o[rt->data_o[i].vf.z].v ,rt->data_o[rt->data_o[i].vf.x].v);
+			//printf("Check (%f %f %f) \n", rt->data_o[rt->data_o[i].vf.z - 1].v.x, rt->data_o[rt->data_o[i].vf.z - 1].v.y, rt->data_o[rt->data_o[i].vf.z - 1].v.z);
+			v1 = vec_sub(rt->data_o[rt->data_o[i].vf.y - 1].v ,rt->data_o[rt->data_o[i].vf.x - 1].v);
+			v2 = vec_sub(rt->data_o[rt->data_o[i].vf.z - 1].v ,rt->data_o[rt->data_o[i].vf.x - 1].v);
+			temp = vec_scale(*ray_dir, dist);
 			p = vec_sum(*cam_pos, temp);
 			det = v1.x * v2.y - v2.x * v1.y;
+			//printf("v2 = (%f, %f)\n", v2.x, v2.y);
 			if (det != 0)
 			{
-				t.x = p.x - c.x;
-				t.y = p.y - c.y;
+				//printf("det = %f\n", det);
+				t.x = p.x - rt->data_o[rt->data_o[i].vf.x - 1].v.x;
+				t.y = p.y - rt->data_o[rt->data_o[i].vf.x - 1].v.y;
 				c.x = t.x * (v2.y / det) + t.y * (((-1) * v2.x) / det);
 				c.y = t.x * (((-1) * v1.y) / det) + t.y * (v2.x / det);
+				//printf("c = (%f, %f)\n", c.x, c.y);
 			}
 			if ((c.x + c.y) >= 0 && (c.x + c.y) <= 1)
 			{
-				if (dist <= g)
+				//printf("dist = %f\n", dist);
+				if (dist > EPS && dist < 8000)
 				{
-					rt->count_of_triangl = i;
-					g = dist;
+					if (dist < prev)
+					{
+						rt->count_of_triangl = i;
+						g = dist;
+					}
 				}
 			}
 		}
 		i++;
 	}
+	if (g != -1)
+		//printf("g triangle = %g\n", g);
 	return (g);
 }
-
-
-
-
 
 
 
@@ -582,7 +594,7 @@ void 	calculate_light(t_rt *rt, int i_obj, float *tab)
 				  rt->cam.pos.y + rt->t * rt->ray_dir.y,
 				  rt->cam.pos.z + rt->t * rt->ray_dir.z};
 	rt->norm = object_norm(rt, i_obj, pos);
-
+ 	 
 	//printf("pos = (%g %g %g)\n", pos.x, pos.y, pos.z);
 	while (ind < rt->scene.lgh_c)
 	{
@@ -600,8 +612,8 @@ void 	calculate_light(t_rt *rt, int i_obj, float *tab)
 		gloss(rt, i_obj, tab, &dist , d);
 		ind++;
 	}
-	rt->refpos = (float3){rt->ray_dir.x, rt->ray_dir.y, rt->ray_dir.z};
-	reflection(rt, i_obj, &pos, tab);
+	//rt->refpos = (float3){rt->ray_dir.x, rt->ray_dir.y, rt->ray_dir.z};
+	//reflection(rt, i_obj, &pos, tab);
 }
 
 
@@ -649,6 +661,7 @@ void ft_tracing(float x, float y, t_rt *rt, __global int *data, int gid)
 	float p;
 	int i;
 
+
 	ft_fzero(r, 3);
 	p = 0.0;
 	while (y < y_next)
@@ -659,6 +672,8 @@ void ft_tracing(float x, float y, t_rt *rt, __global int *data, int gid)
 			create_ray(rt, x, y);
 			ft_fzero(tab, 4);
 			i = intersection(rt, &rt->ray_dir, &rt->cam.pos);
+			if (i == OBJ_FILE_ID)
+				printf("rt->t = %g\n", rt->t);
 			//printf("x, y = %d, %d object = %d\n", (int)x, (int)y, i);
 			if(i >= 0)
 				calculate_light(rt, i, tab);
@@ -695,10 +710,24 @@ __kernel void 		start(__global t_cl_object *obj,
 	rt.cam.rot = (float3){d_mem[4], d_mem[5], d_mem[6]};
 	rt.obj = obj;
 	rt.light = light;
-	if (gid == 1)
-	{
-		printf("f || %d/%d/%d\n", d_obj[i_mem[6] - 1].vf.x, d_obj[i_mem[6] - 1].vtf.x, d_obj[i_mem[6] - 1].vnf.x);
-	}
+	rt.gid = gid;
+	rt.data_o = d_obj;
+	int i = 0;
+	rt.obj[0].name = OBJ_FILE_ID;
+	// if (gid >= 1 && gid <= 3)
+	// {
+	// 	// printf("IN KERNEL\n");
+	// 	// printf("f || %d/%d/%d %d/%d/%d %d/%d/%d\n f_count = %d\n", 
+	// 	// d_obj[rt.f_count - 1].vf.x, d_obj[rt.f_count - 1].vtf.x, d_obj[rt.f_count - 1].vnf.x,
+	// 	// d_obj[rt.f_count - 1].vf.y, d_obj[rt.f_count - 1].vtf.y, d_obj[rt.f_count - 1].vnf.y,
+	// 	// d_obj[rt.f_count - 1].vf.z, d_obj[rt.f_count - 1].vtf.z, d_obj[rt.f_count - 1].vnf.z,
+	// 	// rt.f_count);
+	// 	//for (size_t i = 0; i < 3; i++)
+	// 	//{
+	// 		printf("v [%d] %f %f %f\n", (gid - 1), d_obj[gid - 1].v.x, d_obj[gid - 1].v.y, d_obj[gid - 1].v.z);
+	// 	//}
+	// 	//printf("vn %f %f %f\n", d_obj[i].vn.x, d_obj[i].vn.y, d_obj[i].vn.z);
+	// }
 
 	x = gid % rt.window.size[0];
 	y = gid / rt.window.size[1];

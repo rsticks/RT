@@ -3,7 +3,7 @@
 	<name> {Test scene_1} </name>
 	<res> {1920 1080} </res>
 	<antialias> {1} </antialias>
-	<ambiant> {0.15} </ambiant>
+	<ambiant> {0.5} </ambiant>
 </scene>
 
 <camera>

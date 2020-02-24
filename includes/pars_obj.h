@@ -6,7 +6,7 @@
 /*   By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/30 15:36:04 by rsticks           #+#    #+#             */
-/*   Updated: 2020/02/07 17:20:37 by rsticks          ###   ########.fr       */
+/*   Updated: 2020/02/24 15:36:27 by rsticks          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,10 @@ typedef struct 			s_list_vt
 	cl_float			u;
 	cl_float			v;
 }						t_list_vt;
+
+/*
+*
+*/
 
 typedef struct			s_cl_data_obj
 {
