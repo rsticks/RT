@@ -6,7 +6,7 @@
 /*   By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/17 16:20:37 by daron             #+#    #+#             */
-/*   Updated: 2020/02/18 13:40:34 by daron            ###   ########.fr       */
+/*   Updated: 2020/02/18 14:14:00 by daron            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,7 +168,7 @@ typedef struct			s_obj
 	int					obj_on;//есль == 1 говорит это будет obj фаил
 	int                 texture_id;
 	char				*file_name; // имя obj файла
-	int					check[11];
+	int					check[12];
 	struct s_obj		*next;
 }						t_obj;
 

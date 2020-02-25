@@ -6,7 +6,7 @@
 /*   By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/17 16:08:56 by daron             #+#    #+#             */
-/*   Updated: 2020/02/11 16:57:52 by daron            ###   ########.fr       */
+/*   Updated: 2020/02/18 15:53:31 by daron            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ void printf_scene_data(t_rt *rt)
 			   "Pos = {x%g, y%g, z%g}\n"
 			   "RGB = {%g, %g, %g}\n"
 			   "Radius = %g\n"
+               "Torus_r = %g\n"
 			   "Spec = %d\n"
 			   "Limit = %g\n"
 			   "Texture_on = %d texture_name = %s\n"
@@ -81,6 +82,7 @@ void printf_scene_data(t_rt *rt)
 			   rt->obj_mas[i].pos.x, rt->obj_mas[i].pos.y, rt->obj_mas[i].pos.z,
 			   rt->obj_mas[i].rgb.r, rt->obj_mas[i].rgb.g, rt->obj_mas[i].rgb.b,
 			   rt->obj_mas[i].radius,
+               rt->obj_mas[i].torus_r,
 			   rt->obj_mas[i].spec,
 			   rt->obj_mas[i].limit,
 			   rt->obj_mas[i].text_on, rt->obj_mas[i].texture,
@@ -108,7 +110,7 @@ int				main(int argc, char **argv)
 	init_cl(cl, &rt);
 	start_kernel(cl, &rt);
 	rt.cl = cl;
-	//printf_scene_data(&rt);
+	printf_scene_data(&rt);
 	events(&rt);
 	return (0);
 }

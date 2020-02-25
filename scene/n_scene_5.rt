@@ -71,3 +71,15 @@
 	<spec> {off} </spec>
 	<refract> {off r1.01 c0.5} </refract>
 </object>
+
+<object>
+	<type> {torus} </type>
+	<pos> {x-20.00 y1.00 z1.00} </pos>
+	<dir> {x0.0 y1.0 z0.0} </dir>
+	<radius> {11.0} </radius>
+	<torus_R> {30.00} </torus_R>
+	<rgb> {r250 g0 b0} </rgb>
+	<reflect> {off} </reflect>
+	<spec> {off} </spec>
+	<refract> {off r1.01 c0.5} </refract>
+</object>

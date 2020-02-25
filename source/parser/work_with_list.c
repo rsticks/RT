@@ -6,7 +6,7 @@
 /*   By: daron <daron@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/19 18:22:13 by daron             #+#    #+#             */
-/*   Updated: 2020/02/11 13:15:09 by daron            ###   ########.fr       */
+/*   Updated: 2020/02/19 14:54:15 by daron            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ static void initialize_object(t_obj *obj)
 	obj->coef_refr = 0.0;
 
 	obj->radius = 0;
+	obj->torus_r = 0;
 
 	obj->obj_on = 0;
 	obj->obj_name = NULL;

@@ -6,7 +6,7 @@
 /*   By: daron <daron@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 15:47:14 by daron             #+#    #+#             */
-/*   Updated: 2020/02/11 13:15:09 by daron            ###   ########.fr       */
+/*   Updated: 2020/02/18 14:14:00 by daron            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,13 @@ void cheak_light(t_rt *rt)
 	t_light *light;
 
 	light = rt->lgh_head;
-	if (rt->scene.lgh_c > 0) {
-		while (light->next) {
-			if (light->check[0] == 0)
-				kill_all("ERROR: You must set the light position");
-			else if (light->check[1] == 0)
-				kill_all("ERROR: You must set the light direction");
-			light = light->next;
-		}
+	while (light->next)
+	{
+		if (light->check[0] == 0)
+			kill_all("ERROR: You must set the light position");
+		else if (light->check[1] == 0)
+			kill_all("ERROR: You must set the light direction");
+		light = light->next;
 	}
 }
 
@@ -49,28 +48,24 @@ void cheak_object(t_rt *rt)
 	t_obj *obj;
 
 	obj = rt->obj_head;
-	if (rt->scene.obj_c > 0)
+	while (obj->next)
 	{
-		while (obj->next) {
-			if (obj->check[0] == 0)
-				kill_all("ERROR: You must set the object type");
-			else if (obj->check[1] == 0)
-				kill_all("ERROR: You must set the object position");
-			else if (obj->type != SPHERE_ID && obj->check[2] == 0)
-				kill_all("ERROR: You must set the object direction");
-			else if (obj->check[5] == 0)
-				kill_all("ERROR: You must set the reflection level");
-			else if (obj->check[6] == 0)
-				kill_all("ERROR: You must set the rafraction level");
-			else if (obj->check[3] == 0)
-				kill_all("ERROR: You must set the object color");
-			else if (obj->type == SPHERE_ID && obj->check[3] == 0)
-				kill_all("ERROR: You must set the sphere radius");
-			obj = obj->next;
-		}
+		if (obj->check[0] == 0)
+			kill_all("ERROR: You must set the object type");
+		else if (obj->check[1] == 0)
+			kill_all("ERROR: You must set the object position");
+		else if (obj->check[2] == 0)
+			kill_all("ERROR: You must set the object direction");
+		else if (obj->check[5] == 0)
+			kill_all("ERROR: You must set the reflection level");
+		else if (obj->check[6] == 0)
+			kill_all("ERROR: You must set the rafraction level");
+		else if (obj->check[3] == 0)
+			kill_all("ERROR: You must set the object color");
+		else if (obj->type == SPHERE_ID && obj->check[3] == 0)
+			kill_all("ERROR: You must set the sphere radius");
+		obj = obj->next;
 	}
-	else
-		kill_all("ERROR: Add object");
 }
 
 void cheak_part(t_rt *rt)

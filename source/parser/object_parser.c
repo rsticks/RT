@@ -6,7 +6,7 @@
 /*   By: daron <daron@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/22 17:58:47 by daron             #+#    #+#             */
-/*   Updated: 2020/02/11 13:15:09 by daron            ###   ########.fr       */
+/*   Updated: 2020/02/24 14:39:34 by daron            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void test_object(t_rt *rt, int str_c)
 			&& (ft_strequ("limit", rt->read_b.buff[1])) == 0
 			&& (ft_strequ("pos", rt->read_b.buff[1])) == 0
 			&& (ft_strequ("file_addr", rt->read_b.buff[1])) == 0
+			&& (ft_strequ("torus_R", rt->read_b.buff[1])) == 0
 			&& (ft_strequ("radius", rt->read_b.buff[1])) == 0))
 		kill_error("Invalid tag fot object", str_c);
 }
@@ -39,16 +40,8 @@ static void check_inti_radius(t_rt *rt, int str_c)
 {
 	if (!(rt->obj_cur->radius >= 0.1 && rt->obj_cur->radius <= 100.0))
 		kill_error("Uncorrected radius" , str_c);
-}
-
-void check_inti_obj_rgb(t_rt *rt, int str_c)
-{
-	if (!(rt->obj_cur->rgb.r >= 0 && rt->obj_cur->rgb.r <= 255))
-		kill_error("Wrong red color component", str_c);
-	else if (!(rt->obj_cur->rgb.g >= 0 && rt->obj_cur->rgb.g <= 255))
-		kill_error("Wrong green color component", str_c);
-	else if (!(rt->obj_cur->rgb.b >= 0 && rt->obj_cur->rgb.b <= 255))
-		kill_error("Wrong blue color component", str_c);
+    if (rt->obj_cur->type == TORUS_ID && rt->obj_cur->torus_r < 0.1 && rt->obj_cur->torus_r > 100.0)
+        kill_error("Uncorrected torus radius" , str_c);
 }
 
 static void check_inti_texture(t_rt *rt, int str_c)
@@ -56,11 +49,18 @@ static void check_inti_texture(t_rt *rt, int str_c)
 	int fd;
 
 	fd = 0;
-	//if (rt->obj_cur->text_on == 1 && (fd = open(rt->obj_cur->texture , O_RDWR)) < 0)
-//		kill_error(ft_strjoin("Can't open file ", rt->obj_cur->texture), str_c);
+	if (rt->obj_cur->text_on == 1 && (fd = open(rt->obj_cur->texture , O_RDWR)) < 0)
+		kill_error(ft_strjoin("Can't open file ", rt->obj_cur->texture), str_c);
 	//else if (rt->obj_cur->obj_on && (fd = open(rt->obj_cur->obj_name , O_RDWR)) < 0)
 	//	kill_error(ft_strjoin("Can't open file ", rt->obj_cur->file_name), str_c);
 	close(fd);
+}
+
+static void check_inti_dir(t_rt *rt, int str_c)
+{
+    if (rt->obj_cur->type != SPHERE_ID && rt->obj_cur->dir.x == 0.
+    && rt->obj_cur->dir.y == 0. && rt->obj_cur->dir.z == 0.)
+        kill_error("Set the direction vector", str_c);
 }
 
 void check_inti_obj_type(t_rt *rt, int str_c)
@@ -75,10 +75,12 @@ void check_inti_obj_type(t_rt *rt, int str_c)
 		rt->obj_cur->type = PLANE_ID;
 	else if ((ft_strnequ("object_f", rt->obj_cur->obj_name, 8)) == 1)
 		rt->obj_cur->type = OBJ_FILE_ID;
-	else if ((ft_strnequ("paraboloid", rt->obj_cur->obj_name, 8)) == 1)
-		rt->obj_cur->type = PARABOLOID_ID;
-	else if ((ft_strnequ("disk", rt->obj_cur->obj_name, 8)) == 1)
-		rt->obj_cur->type = DISK_ID;
+    else if ((ft_strnequ("paraboloid", rt->obj_cur->obj_name, 8)) == 1)
+        rt->obj_cur->type = PARABOLOID_ID;
+    else if ((ft_strnequ("disk", rt->obj_cur->obj_name, 8)) == 1)
+        rt->obj_cur->type = DISK_ID;
+    else if ((ft_strnequ("torus", rt->obj_cur->obj_name, 8)) == 1)
+        rt->obj_cur->type = TORUS_ID;
 	else
 		kill_error("uncorrected object type" , str_c);
 }
@@ -103,6 +105,7 @@ void object_parser(t_rt *rt, char *line, int str_c)
 		}
 		else if (rt->read_b.str_c == 2 && (ft_strequ("dir", rt->read_b.buff[1])) == 1 && *line == '{') {
 			line = take_vector(line, &rt->obj_cur->dir, str_c);
+            check_inti_dir(rt, str_c);
 			rt->obj_cur->check[2] += 1;
 		}
 		else if (rt->read_b.str_c == 2 && (ft_strequ("pos", rt->read_b.buff[1])) == 1 && *line == '{') {
@@ -111,7 +114,7 @@ void object_parser(t_rt *rt, char *line, int str_c)
 		}
 		else if (rt->read_b.str_c == 2 && (ft_strequ("rgb", rt->read_b.buff[1])) == 1 && *line == '{') {
 			line = take_rgb(line, &rt->obj_cur->rgb, str_c);
-			check_inti_obj_rgb(rt, str_c);
+			check_inti_rgb(rt, str_c);
 			rt->obj_cur->check[3] += 1;
 		}
 		else if (rt->read_b.str_c == 2 && (ft_strequ("radius", rt->read_b.buff[1])) == 1 && *line == '{') {
@@ -119,6 +122,11 @@ void object_parser(t_rt *rt, char *line, int str_c)
 			check_inti_radius(rt, str_c);
 			rt->obj_cur->check[4] += 1;
 		}
+        else if (rt->read_b.str_c == 2 && (ft_strequ("torus_R", rt->read_b.buff[1])) == 1 && *line == '{') {
+            line = take_double(line, &rt->obj_cur->torus_r, str_c);
+            check_inti_radius(rt, str_c);
+            rt->obj_cur->check[11] += 1;
+        }
 		else if (rt->read_b.str_c == 2 && (ft_strequ("spec", rt->read_b.buff[1])) == 1 && *line == '{') {
 			line = take_on_off(line, &rt->obj_cur->spec, str_c);
 			rt->obj_cur->check[7] += 1;

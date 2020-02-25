@@ -149,6 +149,7 @@ int refr_inter(t_rt *rt, float3 *pos);
 int SolveQuartic(float *c, float *s);
 int SolveCubic(float *c, float *s);
 int SolveQuadric(float *c, float *s);
+float analize_root(float *root, int root_c);
 
 int							intersection(t_rt *rt, float3 *ray_dir, float3 *cam_pos);
 float3 						object_norm(t_rt *rt, int i, float3 pos);
@@ -517,14 +518,61 @@ float get_disk_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_rt *rt)
 		return (-1);
 }
 
-float get_torus_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_rt *rt)
+float analize_root(float *root, int root_c)
 {
-    //float c[5];
-    //float s[4];
-    return (12.2);
+    int i;
+    float min_root;
+
+    i = -1;
+    while (++i < root_c)
+        if (root[i] >= 0.)
+            min_root = root[i];
+    if (i == root_c)
+        return (-1);
+    while (++i < root_c)
+        if (root[i] < min_root)
+            min_root = root[i];
+    return (min_root);
 }
 
+float get_torus_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_rt *rt)
+{
+    float c[5];
+    float root[4];
+    int count_root;
+    float m, n, o, p, q;
+    float g, h, ii, j, k, l;
 
+    rt->dist = vec_sub(*cam_pos, rt->obj[i].pos);
+
+    c[4] = pow(vec_dot(*ray_dir, *ray_dir),2);
+    c[3] = 4 * vec_dot(*ray_dir, *ray_dir) * vec_dot(*cam_pos, *ray_dir);
+    c[2] = 2 * vec_dot(*ray_dir, *ray_dir) * (vec_dot(*cam_pos, *cam_pos) - (pow(rt->obj[i].r,2) + pow(rt->obj[i].torus_r,2))) + 4 * pow(vec_dot(*cam_pos, *ray_dir),2) + 4*pow(rt->obj[i].torus_r,2) * pow(ray_dir->y, 2);
+    c[1] = 4 * (vec_dot(*cam_pos, *cam_pos) - (pow(rt->obj[i].r,2) + pow(rt->obj[i].torus_r,2))) * vec_dot(*cam_pos, *ray_dir) + 8*pow(rt->obj[i].torus_r,2) * ray_dir->y * cam_pos->y;
+    c[0] =  pow((vec_dot(*cam_pos, *cam_pos) - (pow(rt->obj[i].r,2) + pow(rt->obj[i].torus_r,2))),2) - 4 * pow(rt->obj[i].torus_r,2) * (pow(rt->obj[i].r,2) - pow(cam_pos->y,2));
+
+    count_root = SolveQuartic(c, root);
+
+    int ind;
+    float min_root;
+
+    if (count_root == 0)
+        return (-1);
+    ind = -1;
+    while (++ind < count_root)
+        if (root[ind] >= 0.) {
+            min_root = root[ind];
+            break;
+        }
+    if (ind == count_root)
+        return (-1);
+    while (++ind < count_root)
+        if (root[ind] < min_root)
+            min_root = root[ind];
+    return (min_root);
+
+    //return (analize_root(&root, count_root));
+}
 //------------------------End Intersrction Module-------------------------------
 
 int     intersection(t_rt *rt, float3 *ray_dir, float3 *cam_pos)
@@ -551,7 +599,11 @@ int     intersection(t_rt *rt, float3 *ray_dir, float3 *cam_pos)
 			dist = get_paraboloid_intersection(ray_dir, cam_pos, i, rt);
 		else if (rt->obj[i].name == DISK_ID)
 			dist = get_disk_intersection(ray_dir, cam_pos, i, rt);
-		if (dist > EPS && dist < rt->t)
+        else if (rt->obj[i].name == TORUS_ID) {
+            dist = get_torus_intersection(ray_dir, cam_pos, i, rt);
+            //printf("dist = %g\n", dist);
+        }
+        if (dist > EPS && dist < rt->t)
 		{
 			f = i;
 			rt->t = dist;
@@ -566,6 +618,7 @@ float3 object_norm(t_rt *rt, int i, float3 pos)
 	float3 norm;
 	float3 tmp;
 	float3 tmp2;
+	float m, k;
 
 	if (rt->obj[i].name == CONE_ID || rt->obj[i].name == CYLINDER_ID)
 	{
@@ -576,6 +629,17 @@ float3 object_norm(t_rt *rt, int i, float3 pos)
 		tmp2 = vec_sub(pos, rt->obj[i].pos);
 		norm = vec_sub(tmp2, tmp);
 	}
+    else if (rt->obj[i].name == TORUS_ID)
+    {
+        k = vec_dot(vec_sub(pos, rt->obj[i].pos), rt->obj[i].rot);
+        //printf("k = %g\n", k);
+        tmp = vec_sub(pos, vec_scale(rt->obj[i].rot,k));
+        // printf("tmp = %g %g %g\n", tmp.x, tmp.y, tmp.z);
+        m = native_sqrt(pow(rt->obj[i].r, 2) - pow(k, 2));
+        //printf("m = %g\n", m);
+        norm = vec_sub(pos, vec_sub(tmp, vec_scale(vec_sub(rt->obj[i].pos, tmp), (m / (m + rt->obj[i].torus_r)))));
+        //printf("norm = %g %g %g\n", norm.x, norm.y, norm.z);
+    }
 	else if (rt->obj[i].name == PLANE_ID || rt->obj[i].name == DISK_ID)
 		norm = rt->obj[i].rot;
 	else if (rt->obj[i].name == PARABOLOID_ID)
@@ -594,13 +658,12 @@ void	transfer_light(int i_obj, int i_light, float *tab, float d, t_rt *rt)
 	tab[2] += tab[3] * (rt->obj[i_obj].col.z / 255) * (rt->light[i_light].col.z / 255);
 }
 
-int		shadow(t_rt *rt, int i_obj, int i_light, float3 pos)
+int shadow(t_rt *rt, int i_obj, int i_light, float3 pos)
 {
 	float3	dist;
 	float 	d;
 	int 	i;
 
-	
 	i = 0;
 	dist = vec_sub(rt->light[i_light].pos, pos);
 	rt->t = native_sqrt(vec_dot(dist, dist));
@@ -797,7 +860,7 @@ void main_light(t_rt *rt, int i_obj, float *tab, float3 *pos)
 			tab[3] += ft_clamp(vec_dot(dist, rt->norm), 0.0, 1.0);
 		else if (rt->obj[obj_num].refr == 1.0)
 			tab[3] += rt->obj[obj_num].coef_refr * ft_clamp(vec_dot(dist, rt->norm), 0.0, 1.0);
-     //   printf("tab[3] = %g", tab[3]);
+     // printf("tab[3] = %g", tab[3]);
 		transfer_light(i_obj, ind, tab, d, rt);
 		gloss(rt, i_obj, tab, &dist , d);
 		ind++;
@@ -832,6 +895,8 @@ void 	calculate_light(t_rt *rt, float *tab)
 	ft_fzero(tab_refr, 4);
 
 	rt->norm = object_norm(rt, rt->intr_obj, pos);
+	//if (rt->obj[rt->intr_obj].name == TORUS_ID)
+	  //  printf("norm = %g %g %g\n", rt->norm.x, rt->norm.y, rt->norm.z);
 	main_light(rt, rt->intr_obj, tab, &pos);
     //printf("tab = (%g %g %g)\n", tab[0], tab[1], tab[2]);
 
@@ -849,7 +914,6 @@ void 	calculate_light(t_rt *rt, float *tab)
 		else
 			break ;
 	}
-
 	rt->cpt = 0;
 	//printf("rt->obj[rt->intr_obj].refr = %d rt->cpt = %d rt->obj[rt->intr_obj].coef_refr = %g\n", rt->obj[rt->intr_obj].refr, rt->cpt, rt->obj[rt->intr_obj].coef_refr);
 	while (rt->obj[rt->intr_obj].refr && rt->cpt < rt->scene.maxref && rt->obj[rt->intr_obj].coef_refr > 0.0)

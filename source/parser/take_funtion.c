@@ -6,7 +6,7 @@
 /*   By: daron <daron@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 14:33:30 by daron             #+#    #+#             */
-/*   Updated: 2020/02/11 13:15:09 by daron            ###   ########.fr       */
+/*   Updated: 2020/02/18 14:14:00 by daron            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -272,12 +272,10 @@ char *take_refraction(char *line, t_obj *obj, int str_c)
 	}
 	else
 		kill_error("You can use only off/on parameter", str_c);
-	if (obj->refr == 1)
+	if (obj->reflect == 1)
 	{
 		obj->ind_refr = take_coef(tmp, str_c, 'r');
-		//printf("obj->ind_refr = %g\n", obj->ind_refr);
 		obj->coef_refr = take_coef(tmp, str_c, 'c');
-		//printf("obj->coef_refr = %g\n", obj->coef_refr);
 	}
 	free(tmp);
 	return (ft_strchr(line, '}'));

@@ -6,7 +6,7 @@
 /*   By: daron <daron@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/31 15:49:21 by daron             #+#    #+#             */
-/*   Updated: 2020/02/18 13:47:51 by daron            ###   ########.fr       */
+/*   Updated: 2020/02/19 17:14:40 by daron            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,16 +80,15 @@ void init_rt(t_rt *rt, char *filename, int str_c)
 	cheak_light(rt);
 	cheak_part(rt);
 
-    create_list(rt, "object");
+	/*char *type = ft_strdup("object");
+	printf("type = %s\n", type);
+    create_list(rt, type);
     rt->obj_cur->type = TORUS_ID;
-    rt->obj_cur->dir = (t_vector){1.0, 0.0, 0.0};
-    rt->obj_cur->pos = (t_vector){1.0, 1.0, 1.0};
+    rt->obj_cur->dir = (t_vector){1, 0, 0};
+    rt->obj_cur->pos = (t_vector){0, 0, 0};
     rt->obj_cur->rgb = (t_rgb2){75, 0, 130};
-    rt->obj_cur->radius = 10;
-    rt->obj_cur->torus_r = 15;
-
-
-
+    rt->obj_cur->radius = 1;
+    rt->obj_cur->torus_r = 2;*/
 
 	list_to_mas(rt);
 }

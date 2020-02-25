@@ -6,7 +6,7 @@
 /*   By: daron <daron@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 16:42:56 by daron             #+#    #+#             */
-/*   Updated: 2020/02/11 13:15:09 by daron            ###   ########.fr       */
+/*   Updated: 2020/02/18 14:14:00 by daron            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ void copy_obj(t_rt *rt)
 		rt->obj_mas[i].coef_refl = obj->coef_refl;
 		rt->obj_mas[i].spec = obj->spec;
 		rt->obj_mas[i].radius = obj->radius;
+        rt->obj_mas[i].torus_r = obj->torus_r;
 		rt->obj_mas[i].limit = obj->limit;
 		rt->obj_mas[i].refr = obj->refr;
 		rt->obj_mas[i].ind_refr = obj->ind_refr;
