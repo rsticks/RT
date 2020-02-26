@@ -78,7 +78,7 @@
 	<rgb> {r0 g200 b100} </rgb>
 	<reflect> {off} </reflect>
 	<spec> {off} </spec>
-	<refract> {off r1.01 c0.5} </refract>
+	<refract> {off r1.05 c0.7} </refract>
 </object>
 
 <object>
@@ -88,5 +88,5 @@
 	<rgb> {r10 g120 b180} </rgb>
 	<reflect> {off} </reflect>
 	<spec> {off} </spec>
-	<refract> {off} </refract>
+	<refract> {on r1.01 c0.5} </refract>
 </object>

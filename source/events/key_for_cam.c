@@ -6,7 +6,7 @@
 /*   By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 15:00:12 by daron             #+#    #+#             */
-/*   Updated: 2020/02/18 14:14:00 by daron            ###   ########.fr       */
+/*   Updated: 2020/02/26 18:10:42 by daron            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,13 @@ static void	dirate_key(t_rt *rt)
 	rt->window.anti_alias = 1;
 	if (SDLK_LEFT == rt->window.event.key.keysym.sym && (tmp = rt->cam.pos.x) < 20000)
 	{
-		rt->cam.pos.x = rt->cam.pos.x * cosf(ALPHA) + rt->cam.pos.z * (sinf(ALPHA));
-		rt->cam.pos.z = tmp * (-sinf(ALPHA)) + rt->cam.pos.z * cosf(ALPHA);
+		rt->cam.pos.x = rt->cam.pos.x * cosf(ALPHA) + rt->cam.pos.z * (-sinf(ALPHA));
+		rt->cam.pos.z = tmp * (sinf(ALPHA)) + rt->cam.pos.z * cosf(ALPHA);
 	}
 	else if (SDLK_RIGHT == rt->window.event.key.keysym.sym && (tmp = rt->cam.pos.x) > -20000)
 	{
-		rt->cam.pos.x = rt->cam.pos.x * cosf(-ALPHA) + rt->cam.pos.z * sinf(-ALPHA);
-		rt->cam.pos.z = tmp * (-sinf(-ALPHA)) + rt->cam.pos.z * cosf(-ALPHA);
+		rt->cam.pos.x = rt->cam.pos.x * cosf(-ALPHA) + rt->cam.pos.z * (-sinf(-ALPHA));
+		rt->cam.pos.z = tmp * (sinf(-ALPHA)) + rt->cam.pos.z * cosf(-ALPHA);
 	}
 	else if (SDLK_DOWN == rt->window.event.key.keysym.sym && (tmp = rt->cam.pos.y) > -20000)
 	{

@@ -37,6 +37,26 @@
 	<rgb> {r153 g255 b255} </rgb>
 	<reflect> {off} </reflect>
 	<spec> {off} </spec>
-	<refract> {off r1.01 c0.9} </refract>
+	<refract> {on r1.5 c0.9} </refract>
+</object>
+
+<object>
+	<type> {sphere} </type>
+	<pos> {x-30.00 y0.00 z-20.00} </pos>
+	<radius> {25.00} </radius>
+	<rgb> {r153 g255 b255} </rgb>
+	<reflect> {off} </reflect>
+	<spec> {off} </spec>
+	<refract> {on r1.01 c0.7} </refract>
+</object>
+
+<object>
+	<type> {sphere} </type>
+	<pos> {x0.00, y70.00, z-20.00} </pos>
+	<radius> {25.00} </radius>
+	<rgb> {r153 g255 b255} </rgb>
+	<reflect> {off} </reflect>
+	<spec> {off} </spec>
+	<refract> {on r1.01 c0.5} </refract>
 </object>
 

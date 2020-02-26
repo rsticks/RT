@@ -42,7 +42,7 @@ void		events(t_rt *rt)
 			if ((SDL_QUIT == rt->window.event.type) ||
 				(SDL_SCANCODE_ESCAPE == rt->window.event.key.keysym.scancode))
 			{
-				//printf_scene_data(rt);
+				printf_scene_data(rt);
 				my_free(rt);
 				exit(0);
 			}

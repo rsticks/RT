@@ -41,24 +41,24 @@
 */
 # define EPS 0.0001
 
-typedef struct			s_cl_object
+typedef struct			    s_cl_object
 {
-	float3			pos;
-	float3			rot;
-	float3			col;
-	float			r;
-	float           torus_r;
-	int				name;
-	int				specular;
+	float3			        pos;
+	float3			        rot;
+	float3		    	    col;
+	float			        r;
+	float                   torus_r;
+	int				        name;
+	int				        specular;
 
-	int				reflect;
-	float			coef_refl;
+	int				        reflect;
+	float			        coef_refl;
 
-	int				refr; //если == 1 то этот объект будет преломлять свет
-	float			ind_refr; // Коэффициент преломления
-	float			coef_refr;
-	float			limit;
-}						t_cl_object;
+	int				        refr; //если == 1 то этот объект будет преломлять свет
+	float			        ind_refr; // Коэффициент преломления
+	float			        coef_refr;
+	float			        limit;
+}						    t_cl_object;
 
 typedef	struct				s_cl_light
 {
@@ -134,22 +134,22 @@ float 						get_sphere_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_r
 float 						get_plane_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_rt *rt);
 float 						get_cone_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_rt *rt);
 float 						get_cylinder_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_rt *rt);
-float get_paraboloid_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_rt *rt);
-float get_torus_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_rt *rt);
-float get_disk_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_rt *rt);
+float                       get_paraboloid_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_rt *rt);
+float                       get_torus_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_rt *rt);
+float                       get_disk_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_rt *rt);
 
-void ft_tab_coef(float *tab, float coef, int size);
-void 	calculate_light(t_rt *rt, float *tab);
-void result_in_tab(t_rt *rt, int start_obj, float* tab, float* tab_refl, float* tab_refr);
-void main_light(t_rt *rt, int i_obj, float *tab, float3 *pos);
+void                        ft_tab_coef(float *tab, float coef, int size);
+void 	                    calculate_light(t_rt *rt, float *tab);
+void                        result_in_tab(t_rt *rt, int start_obj, float* tab, float* tab_refl, float* tab_refr);
+void                        main_light(t_rt *rt, int i_obj, float *tab, float3 *pos);
 
-int refr_init(t_rt *rt, int i_obj, float3 *pos);
-int refr_inter(t_rt *rt, float3 *pos);
+int                         refr_init(t_rt *rt, int i_obj, float3 *pos);
+int                         refr_inter(t_rt *rt, float3 *pos);
 
-int SolveQuartic(float *c, float *s);
-int SolveCubic(float *c, float *s);
-int SolveQuadric(float *c, float *s);
-float analize_root(float *root, int root_c);
+int                         SolveQuartic(float *c, float *s);
+int                         SolveCubic(float *c, float *s);
+int                         SolveQuadric(float *c, float *s);
+float                       analize_root(float *root, int root_c);
 
 int							intersection(t_rt *rt, float3 *ray_dir, float3 *cam_pos);
 float3 						object_norm(t_rt *rt, int i, float3 pos);
@@ -261,15 +261,10 @@ float				get_quadratic_solution(float a, float b, float discriminant)
 
 	t1 = (-b - native_sqrt(discriminant)) / (2 * a);
 	t2 = (-b + native_sqrt(discriminant)) / (2 * a);
-	/*if ((t1 <= t2 && t1 >= 0) || (t1 >= 0 && t2 < 0))
-		return (t1);
-	else if ((t2 <= t1 && t2 >= 0) || (t1 < 0 && t2 >= 0))
-		return (t2);*/
 	if (t1 > t2 && t2 > 0.)
 	    return (t2);
 	else
 	    return (t1);
-	return (-1);
 }
 
 int SolveQuadric(float *c, float *s)
@@ -599,10 +594,8 @@ int     intersection(t_rt *rt, float3 *ray_dir, float3 *cam_pos)
 			dist = get_paraboloid_intersection(ray_dir, cam_pos, i, rt);
 		else if (rt->obj[i].name == DISK_ID)
 			dist = get_disk_intersection(ray_dir, cam_pos, i, rt);
-        else if (rt->obj[i].name == TORUS_ID) {
+        else if (rt->obj[i].name == TORUS_ID)
             dist = get_torus_intersection(ray_dir, cam_pos, i, rt);
-            //printf("dist = %g\n", dist);
-        }
         if (dist > EPS && dist < rt->t)
 		{
 			f = i;
@@ -632,13 +625,9 @@ float3 object_norm(t_rt *rt, int i, float3 pos)
     else if (rt->obj[i].name == TORUS_ID)
     {
         k = vec_dot(vec_sub(pos, rt->obj[i].pos), rt->obj[i].rot);
-        //printf("k = %g\n", k);
         tmp = vec_sub(pos, vec_scale(rt->obj[i].rot,k));
-        // printf("tmp = %g %g %g\n", tmp.x, tmp.y, tmp.z);
         m = native_sqrt(pow(rt->obj[i].r, 2) - pow(k, 2));
-        //printf("m = %g\n", m);
         norm = vec_sub(pos, vec_sub(tmp, vec_scale(vec_sub(rt->obj[i].pos, tmp), (m / (m + rt->obj[i].torus_r)))));
-        //printf("norm = %g %g %g\n", norm.x, norm.y, norm.z);
     }
 	else if (rt->obj[i].name == PLANE_ID || rt->obj[i].name == DISK_ID)
 		norm = rt->obj[i].rot;
@@ -684,6 +673,8 @@ int shadow(t_rt *rt, int i_obj, int i_light, float3 pos)
 				d = get_paraboloid_intersection(&dist, &pos, i, rt);
 			else if (rt->obj[i].name == DISK_ID)
 				d = get_disk_intersection(&dist, &pos, i, rt);
+            else if (rt->obj[i].name == TORUS_ID)
+                d = get_torus_intersection(&dist, &pos, i, rt);
 			if (d > EPS && d < rt->t)
 				return (i);
 		}
@@ -739,6 +730,8 @@ int ref_inter(t_rt *rt, int i_cur_obj , float3 pos)
 				dist = get_paraboloid_intersection(&rt->ref, &pos, i, rt);
 			else if (rt->obj[i].name == DISK_ID)
 				dist = get_disk_intersection(&rt->ref, &pos, i, rt);
+            else if (rt->obj[i].name == TORUS_ID)
+                dist = get_torus_intersection(&rt->ref, &pos, i, rt);
 			if (dist > EPS && dist < rt->t)
 			{
 				f = i;
@@ -779,18 +772,20 @@ int refr_inter(t_rt *rt, float3 *pos)
 	f = -1;
 	while (i < rt->scene.obj_c)
 	{
-		if (rt->obj[i].name == SPHERE_ID)
-			dist = get_sphere_intersection(&rt->ref, pos, i, rt);
-		else if (rt->obj[i].name == CYLINDER_ID)
-			dist = get_cylinder_intersection(&rt->ref, pos, i, rt);
-		else if (rt->obj[i].name == CONE_ID)
-			dist = get_cone_intersection(&rt->ref, pos, i, rt);
-		else if (rt->obj[i].name == PLANE_ID)
-			dist = get_plane_intersection(&rt->ref, pos, i, rt);
-		else if (rt->obj[i].name == PARABOLOID_ID)
-			dist = get_paraboloid_intersection(&rt->ref, pos, i, rt);
-		else if (rt->obj[i].name == DISK_ID)
-			dist = get_disk_intersection(&rt->ref, pos, i, rt);
+        if (rt->obj[i].name == SPHERE_ID)
+            dist = get_sphere_intersection(&rt->ref, pos, i, rt);
+        else if (rt->obj[i].name == CYLINDER_ID)
+            dist = get_cylinder_intersection(&rt->ref, pos, i, rt);
+        else if (rt->obj[i].name == CONE_ID)
+            dist = get_cone_intersection(&rt->ref, pos, i, rt);
+        else if (rt->obj[i].name == PLANE_ID)
+            dist = get_plane_intersection(&rt->ref, pos, i, rt);
+        else if (rt->obj[i].name == PARABOLOID_ID)
+            dist = get_paraboloid_intersection(&rt->ref, pos, i, rt);
+        else if (rt->obj[i].name == DISK_ID)
+            dist = get_disk_intersection(&rt->ref, pos, i, rt);
+        else if (rt->obj[i].name == TORUS_ID)
+            dist = get_torus_intersection(&rt->ref, pos, i, rt);
 		if (dist > EPS && dist < rt->t)
 		{
 			f = i;
@@ -812,7 +807,6 @@ int refr_init(t_rt *rt, int i_obj, float3 *pos)
 	{
 		rt->n1 = 1.0;
 		rt->n2 = rt->obj[rt->intr_obj].ind_refr;
-        //rt->norm = vec_scale(rt->norm, -1);
 	}
 	else
 	{
@@ -828,7 +822,9 @@ int refr_init(t_rt *rt, int i_obj, float3 *pos)
 
 	//new_pos = vec_sub(*pos, rt->obj[rt->intr_obj].pos);
 	//d_dot = (1.0 / native_sqrt(native_sqrt(vec_dot(new_pos, new_pos)))) * 0.01;
-	new_pos_inter = (float3){pos->x - d_dot * rt->ref.x, pos->y - d_dot * rt->ref.y, pos->z - d_dot * rt->ref.z};
+	new_pos_inter = (float3){pos->x + d_dot * rt->ref.x, pos->y + d_dot * rt->ref.y, pos->z + d_dot * rt->ref.z};
+
+    //new_pos_inter = (float3){pos->x - d_dot * rt->ref.x, pos->y - d_dot * rt->ref.y, pos->z - d_dot * rt->ref.z};
 
 	if ((new_inter = refr_inter(rt, &new_pos_inter)) == -1)
 		return (-1);
