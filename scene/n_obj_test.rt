@@ -1,0 +1,24 @@
+<scene>
+	<maxref> {0} </maxref>
+	<name> {Test scene_1} </name>
+	<res> {1080 1080} </res>
+	<antialias> {1} </antialias>
+	<ambiant> {0.5} </ambiant>
+</scene>
+
+<camera>
+	<pos> {x00.00 y00.00 z100.00} </pos>
+	<dir> {x0.0 y0.00 z1.00} </dir>
+</camera>
+
+<light>
+	<pos> {x-60.00 y30.00 z-60.00} </pos>
+	<rgb> {r255 g255 b255} </rgb>
+</light>
+
+<object>
+	<type> {object_f} </type>
+	<rgb> {r255 g255 b255} </rgb>
+	<file_addr>{obj "objs/plane.obj"}</file_addr>
+</object>
+

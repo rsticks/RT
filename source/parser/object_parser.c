@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   object_parser.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daron <daron@student.42.fr>                +#+  +:+       +#+        */
+/*   By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/22 17:58:47 by daron             #+#    #+#             */
-/*   Updated: 2020/01/25 16:24:40 by daron            ###   ########.fr       */
+/*   Updated: 2020/02/26 16:12:09 by rsticks          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ static void check_inti_texture(t_rt *rt, int str_c)
 	int fd;
 
 	fd = 0;
-	if (rt->obj_cur->text_on == 1 && (fd = open(rt->obj_cur->texture , O_RDWR)) < 0)
-		kill_error(ft_strjoin("Can't open file ", rt->obj_cur->texture), str_c);
+	//if (rt->obj_cur->text_on == 1 && (fd = open(rt->obj_cur->texture , O_RDWR)) < 0)
+	//	kill_error(ft_strjoin("Can't open file ", rt->obj_cur->texture), str_c);
 	//else if (rt->obj_cur->obj_on && (fd = open(rt->obj_cur->obj_name , O_RDWR)) < 0)
 	//	kill_error(ft_strjoin("Can't open file ", rt->obj_cur->file_name), str_c);
 	close(fd);

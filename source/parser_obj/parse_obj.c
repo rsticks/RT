@@ -6,7 +6,7 @@
 /*   By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 18:53:55 by rsticks           #+#    #+#             */
-/*   Updated: 2020/02/24 17:21:51 by rsticks          ###   ########.fr       */
+/*   Updated: 2020/02/26 17:57:43 by rsticks          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -287,7 +287,8 @@ t_parse_obj			*parsing_obj(char *path, int num)
 		kill_all("Can't initialize obj_data\n");
 	init_data(data, num);
 	data->name = path;
-	if (!(data->fd = open(path, O_RDONLY)))
+
+	if (0 > (data->fd = open(path, O_RDWR)))
 		kill_all("Can't open obj file\n");
 	data->gnl = get_next_line(data->fd, &data->line);
 	while (data->gnl)

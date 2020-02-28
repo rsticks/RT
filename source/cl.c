@@ -6,7 +6,7 @@
 /*   By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 19:16:48 by rsticks           #+#    #+#             */
-/*   Updated: 2020/02/24 17:30:11 by rsticks          ###   ########.fr       */
+/*   Updated: 2020/02/28 17:34:41 by rsticks          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,12 @@ void			ft_init_cl(t_cl *cl, t_rt *rt)
 	cl->i_m = clCreateBuffer(cl->ct, CMRW, sizeof(int) * 7, NULL, &cl->err);
 	cl->d_m = clCreateBuffer(cl->ct, CMRW, sizeof(float) * 7, NULL, &cl->err);
 	cl->obj = clCreateBuffer(cl->ct, CMRW, sizeof(t_cl_data_obj) * rt->data_obj->max_c, NULL, &cl->err);
-	
 	cl->err = clSetKernelArg(cl->kernel, 0, sizeof(cl_mem), &cl->obj_mem);
 	cl->err = clSetKernelArg(cl->kernel, 1, sizeof(cl_mem), &cl->light_mem);
 	cl->err = clSetKernelArg(cl->kernel, 2, sizeof(cl_mem), &cl->img);
 	cl->err = clSetKernelArg(cl->kernel, 3, sizeof(cl_mem), &cl->i_m);
 	cl->err = clSetKernelArg(cl->kernel, 4, sizeof(cl_mem), &cl->d_m);
 	cl->err = clSetKernelArg(cl->kernel, 5, sizeof(cl_mem), &cl->obj);
-
 	printf("%-32s || %d\n", "clSetKernelArg", cl->err);
 }
 

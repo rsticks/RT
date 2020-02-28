@@ -1,13 +1,13 @@
 <scene>
 	<maxref> {0} </maxref>
 	<name> {Test scene_1} </name>
-	<res> {1920 1080} </res>
+	<res> {1080 1080} </res>
 	<antialias> {1} </antialias>
 	<ambiant> {0.5} </ambiant>
 </scene>
 
 <camera>
-	<pos> {x0.00 y00.00 z-250.00} </pos>
+	<pos> {x00.00 y00.00 z-250.00} </pos>
 	<dir> {x0.0 y0.00 z1.00} </dir>
 </camera>
 

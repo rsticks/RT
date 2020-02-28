@@ -6,7 +6,7 @@
 /*   By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/17 16:08:56 by daron             #+#    #+#             */
-/*   Updated: 2020/02/24 17:09:07 by rsticks          ###   ########.fr       */
+/*   Updated: 2020/02/28 17:21:10 by rsticks          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,12 @@ int				main(int argc, char **argv)
 	if (!(cl = (t_cl*)malloc(sizeof(t_cl))))
 		kill_all("Can't initialize CL <main>");
 	init_rt(&rt, argv[1], 1);
-	rt.data_obj = parsing_obj("objs/t_cube copy.obj", num_obj++);
+
+	
+//	rt.data_obj = parsing_obj("objs/t_cube.obj", num_obj++);	
+//	rt.data_obj = parsing_obj(rt.obj_mas[0].file_name, num_obj++);
+	check_objs(&rt);
+	printf("1START\n");
 	sdl_initialize(&rt);
 	if(!(cl->data = (int*)malloc(sizeof(int) * rt.window.size[0] * rt.window.size[1])))
 		kill_all("Can't initialize CL_data <main>");

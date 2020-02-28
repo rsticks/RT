@@ -6,7 +6,7 @@
 #    By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/09 16:02:42 by daron             #+#    #+#              #
-#    Updated: 2020/02/04 18:20:50 by rsticks          ###   ########.fr        #
+#    Updated: 2020/02/26 17:36:17 by rsticks          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,6 +68,7 @@ SOURCES_LIST = main.c \
                     events/mouse.c \
                     intersection.c \
 					parser_obj/parse_obj.c \
+					check_objs.c \
 
 SOURCES = $(addprefix $(SOURCES_DIRECTORY), $(SOURCES_LIST))
 

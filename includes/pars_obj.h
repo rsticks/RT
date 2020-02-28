@@ -6,12 +6,15 @@
 /*   By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/30 15:36:04 by rsticks           #+#    #+#             */
-/*   Updated: 2020/02/24 15:36:27 by rsticks          ###   ########.fr       */
+/*   Updated: 2020/02/26 17:35:42 by rsticks          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+
 #ifndef PARS_OBJ
 # define PARS_OBJ
+# include "rt.h"
+
 
 typedef struct 			s_int_vec
 {
@@ -25,10 +28,6 @@ typedef struct 			s_list_vt
 	cl_float			u;
 	cl_float			v;
 }						t_list_vt;
-
-/*
-*
-*/
 
 typedef struct			s_cl_data_obj
 {
@@ -67,6 +66,7 @@ typedef struct 			s_parse_obj
 	int					gnl;
 	t_cl_data_obj		*d_obj;
 }						t_parse_obj;
+
 
 t_parse_obj				*parsing_obj(char *path, int num);
 void					parse_v(t_parse_obj *data);

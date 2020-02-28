@@ -6,7 +6,7 @@
 /*   By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/17 16:20:37 by daron             #+#    #+#             */
-/*   Updated: 2020/02/07 16:41:13 by rsticks          ###   ########.fr       */
+/*   Updated: 2020/02/26 18:13:09 by rsticks          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -211,6 +211,7 @@ typedef struct			s_rt
 /*
 ** ------------------Function Prototype--------------------------------
 */
+void					check_objs(t_rt *rt);
 void					ft_init_cl(t_cl *cl, t_rt *rt);
 void					start_kernel(t_cl *cl, t_rt *rt);
 void					init_cl(t_cl *cl, t_rt *rt);
