@@ -535,8 +535,6 @@ float get_torus_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_rt *rt)
     float c[5];
     float root[4];
     int count_root;
-    float m, n, o, p, q;
-    float g, h, ii, j, k, l;
 
     rt->dist = vec_sub(*cam_pos, rt->obj[i].pos);
 
@@ -856,7 +854,7 @@ void main_light(t_rt *rt, int i_obj, float *tab, float3 *pos)
 			tab[3] += ft_clamp(vec_dot(dist, rt->norm), 0.0, 1.0);
 		else if (rt->obj[obj_num].refr == 1.0)
 			tab[3] += rt->obj[obj_num].coef_refr * ft_clamp(vec_dot(dist, rt->norm), 0.0, 1.0);
-     // printf("tab[3] = %g", tab[3]);
+        // printf("tab[3] = %g", tab[3]);
 		transfer_light(i_obj, ind, tab, d, rt);
 		gloss(rt, i_obj, tab, &dist , d);
 		ind++;
@@ -891,18 +889,11 @@ void 	calculate_light(t_rt *rt, float *tab)
 	ft_fzero(tab_refr, 4);
 
 	rt->norm = object_norm(rt, rt->intr_obj, pos);
-	//if (rt->obj[rt->intr_obj].name == TORUS_ID)
-	  //  printf("norm = %g %g %g\n", rt->norm.x, rt->norm.y, rt->norm.z);
 	main_light(rt, rt->intr_obj, tab, &pos);
-    //printf("tab = (%g %g %g)\n", tab[0], tab[1], tab[2]);
-
-	//printf("rt->obj[rt->intr_obj].reflect = %d rt->cpt = %d rt->obj[rt->intr_obj].coef_refl = %g\n", rt->obj[rt->intr_obj].reflect, rt->cpt, rt->obj[rt->intr_obj].coef_refl);
 	while (rt->obj[rt->intr_obj].reflect && rt->cpt < rt->scene.maxref && rt->obj[rt->intr_obj].coef_refl > 0.0)
 	{
-		//printf("in11\n");
 		if ((rt->intr_obj = ref_init(rt, rt->intr_obj, &pos)) != -1)
 		{
-			//printf("in12\n");
 			rt->norm = object_norm(rt, rt->intr_obj, pos);
 			main_light(rt, rt->intr_obj, tab_refl, &pos);
 			rt->cpt += 1;
@@ -911,21 +902,16 @@ void 	calculate_light(t_rt *rt, float *tab)
 			break ;
 	}
 	rt->cpt = 0;
-	//printf("rt->obj[rt->intr_obj].refr = %d rt->cpt = %d rt->obj[rt->intr_obj].coef_refr = %g\n", rt->obj[rt->intr_obj].refr, rt->cpt, rt->obj[rt->intr_obj].coef_refr);
 	while (rt->obj[rt->intr_obj].refr && rt->cpt < rt->scene.maxref && rt->obj[rt->intr_obj].coef_refr > 0.0)
 	{
-		//printf("in21\n");
 		if ((rt->intr_obj = refr_init(rt, rt->intr_obj, &pos)) != -1)
 		{
-			//printf("in22\n");
 			rt->norm = object_norm(rt, rt->intr_obj, pos);
 			main_light(rt, rt->intr_obj, tab_refr, &pos);
 			rt->cpt += 1;
 		}
 		else
 			break;
-		//rt->cpt += 1;
-        //printf("tab_refr = (%g %g %g)\n", tab_refr[0], tab_refr[1], tab_refr[2]);
 	}
 	result_in_tab(rt, start_obj, tab, tab_refl, tab_refr);
 }
