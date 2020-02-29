@@ -6,7 +6,7 @@
 /*   By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/17 16:08:56 by daron             #+#    #+#             */
-/*   Updated: 2020/02/28 11:59:10 by daron            ###   ########.fr       */
+/*   Updated: 2020/02/29 13:59:10 by daron            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,8 @@ void printf_scene_data(t_rt *rt)
 			   "Limit = %g\n"
 			   "Texture_on = %d texture_name = %s\n"
 			   "Obj_on = %d "
-			   "file_name = %s\n",
+			   "file_name = %s\n"
+               "contruction_id = %d\n",
 			   rt->obj_mas[i].obj_name, rt->obj_mas[i].type,
 			   rt->obj_mas[i].reflect, rt->obj_mas[i].coef_refl,
 			   rt->obj_mas[i].refr, rt->obj_mas[i].ind_refr, rt->obj_mas[i].coef_refr,
@@ -86,7 +87,8 @@ void printf_scene_data(t_rt *rt)
 			   rt->obj_mas[i].spec,
 			   rt->obj_mas[i].limit,
 			   rt->obj_mas[i].text_on, rt->obj_mas[i].texture,
-			   rt->obj_mas[i].obj_on, rt->obj_mas[i].file_name);
+			   rt->obj_mas[i].obj_on, rt->obj_mas[i].file_name,
+		       rt->obj_mas[i].contruction_id);
 		i++;
 		printf("\n");
 	}

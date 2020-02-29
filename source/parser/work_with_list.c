@@ -58,10 +58,8 @@ static void initialize_object(t_obj *obj)
 	obj->texture = NULL;
 	obj->obj_on = 0;
 	obj->file_name = NULL;
-    ft_memset_int(obj->check, 0, 12);
-
-	printf("Create obj -> obj->cheak[4] = %d\n", obj->check[4]);
-
+	obj->contruction_id = -1;
+    ft_memset_int(obj->check, 0, 13);
 }
 
 static void create_obj_list(t_rt *rt)

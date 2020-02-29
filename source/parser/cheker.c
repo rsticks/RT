@@ -48,7 +48,6 @@ void cheak_object(t_rt *rt)
 	t_obj *obj;
 
 	obj = rt->obj_head;
-	printf("obj->check[1] = %d, obj->type = %d\n", obj->check[1], obj->type);
 	while (obj)
 	{
 		if (obj->check[0] == 0)

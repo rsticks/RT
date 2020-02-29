@@ -39,6 +39,7 @@ t_cl_object			*transform_obj_data(t_rt *rt)
 		cl_obj[i].coef_refr = rt->obj_mas[i].coef_refr;
 
         cl_obj[i].torus_r = rt->obj_mas[i].torus_r;
+        cl_obj[i].torus_r = rt->obj_mas[i].torus_r;
 
 		/*printf("Not Kernel - type = %d\npos = (%g, %g, %g)\nrot = (%g, %g, %g)\n"
 		 "col = (%g, %g, %g)\nradius = %g\nreflect = %d coef = %g\n"

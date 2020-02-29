@@ -16,13 +16,18 @@
 	<rgb> {r250 g250 b250} </rgb>
 </light>
 
+<light>
+	<pos> {x-60.00 y-30.00 z-60.00} </pos>
+	<rgb> {r250 g250 b250} </rgb>
+</light>
+
 <object>
 	<type> {sphere} </type>
 	<pos> {x0.00 y0.00 z00.00} </pos>
 	<radius> {25.00} </radius>
 	<rgb> {r0 g255 b255} </rgb>
 	<reflect> {off} </reflect>
-	<spec> {off} </spec>
+	<spec> {on} </spec>
 	<refract> {off r1.01 c0.5} </refract>
 </object>
 

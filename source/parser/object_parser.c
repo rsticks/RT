@@ -6,7 +6,7 @@
 /*   By: daron <daron@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/22 17:58:47 by daron             #+#    #+#             */
-/*   Updated: 2020/02/28 12:39:18 by daron            ###   ########.fr       */
+/*   Updated: 2020/02/29 14:09:08 by daron            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void test_object(t_rt *rt, int str_c)
 			&& (ft_strequ("limit", rt->read_b.buff[1])) == 0
 			&& (ft_strequ("pos", rt->read_b.buff[1])) == 0
 			&& (ft_strequ("file_addr", rt->read_b.buff[1])) == 0
+			&& (ft_strequ("contruction", rt->read_b.buff[1])) == 0
 			&& (ft_strequ("torus_R", rt->read_b.buff[1])) == 0
 			&& (ft_strequ("radius", rt->read_b.buff[1])) == 0))
 		kill_error("Invalid tag fot object", str_c);
@@ -148,6 +149,12 @@ void object_parser(t_rt *rt, char *line, int str_c)
 			line = take_texture(line, rt->obj_cur, "obj", str_c);
 			rt->obj_cur->check[10] += 1;
 		}
+        else if (rt->read_b.str_c == 2 && (ft_strequ("contruction", rt->read_b.buff[1])) == 1 && *line == '{') {
+            //printf("rt->obj_cur->contruction_id = %d\n", rt->obj_cur->contruction_id);
+            line = take_construction(line, &rt->obj_cur->contruction_id, str_c);
+            //printf("rt->obj_cur->contruction_id = %d\n", rt->obj_cur->contruction_id);
+            rt->obj_cur->check[12] += 1;
+        }
 		test_object(rt, str_c);
 		line++;
 	}

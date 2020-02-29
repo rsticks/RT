@@ -85,6 +85,7 @@ void copy_obj(t_rt *rt)
 		rt->obj_mas[i].texture = obj->texture;
 		rt->obj_mas[i].obj_on = obj->obj_on;
 		rt->obj_mas[i].file_name = obj->file_name;
+        rt->obj_mas[i].contruction_id = obj->contruction_id;
 		obj = obj->next;
 		i++;
 	}

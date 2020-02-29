@@ -36,6 +36,8 @@
 # define DISK_ID		7
 # define TORUS_ID		8
 
+# define WAVES_ID		1
+# define CHECH_BEARD_ID 2
 /*
 ** Help
 */
@@ -50,10 +52,9 @@ typedef struct			    s_cl_object
 	float                   torus_r;
 	int				        name;
 	int				        specular;
-
+    int                     contruction_id;
 	int				        reflect;
 	float			        coef_refl;
-
 	int				        refr; //если == 1 то этот объект будет преломлять свет
 	float			        ind_refr; // Коэффициент преломления
 	float			        coef_refr;
@@ -149,7 +150,6 @@ int                         refr_inter(t_rt *rt, float3 *pos);
 int                         SolveQuartic(float *c, float *s);
 int                         SolveCubic(float *c, float *s);
 int                         SolveQuadric(float *c, float *s);
-float                       analize_root(float *root, int root_c);
 
 int							intersection(t_rt *rt, float3 *ray_dir, float3 *cam_pos);
 float3 						object_norm(t_rt *rt, int i, float3 pos);
@@ -513,23 +513,6 @@ float get_disk_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_rt *rt)
 		return (-1);
 }
 
-float analize_root(float *root, int root_c)
-{
-    int i;
-    float min_root;
-
-    i = -1;
-    while (++i < root_c)
-        if (root[i] >= 0.)
-            min_root = root[i];
-    if (i == root_c)
-        return (-1);
-    while (++i < root_c)
-        if (root[i] < min_root)
-            min_root = root[i];
-    return (min_root);
-}
-
 float get_torus_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_rt *rt)
 {
     float c[5];
@@ -563,8 +546,6 @@ float get_torus_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_rt *rt)
         if (root[ind] < min_root)
             min_root = root[ind];
     return (min_root);
-
-    //return (analize_root(&root, count_root));
 }
 //------------------------End Intersrction Module-------------------------------
 
@@ -813,17 +794,10 @@ int refr_init(t_rt *rt, int i_obj, float3 *pos)
         rt->norm = vec_scale(rt->norm, -1);
 		rt->prim = 0;
 	}
-
 	rt->t = 8000.0;
 	rt->ref = vec_sum(vec_scale(rt->ray_dir, rt->n1 / rt->n2), vec_scale(rt->norm, (rt->n1 / rt->n2) * vec_dot(rt->norm, rt->ray_dir) - native_sqrt(1 - (pow((rt->n1 / rt->n2), 2) * (1 - pow(vec_dot(rt->ray_dir, rt->norm), 2))))));
     rt->ref = vec_norm(rt->ref);
-
-	//new_pos = vec_sub(*pos, rt->obj[rt->intr_obj].pos);
-	//d_dot = (1.0 / native_sqrt(native_sqrt(vec_dot(new_pos, new_pos)))) * 0.01;
 	new_pos_inter = (float3){pos->x + d_dot * rt->ref.x, pos->y + d_dot * rt->ref.y, pos->z + d_dot * rt->ref.z};
-
-    //new_pos_inter = (float3){pos->x - d_dot * rt->ref.x, pos->y - d_dot * rt->ref.y, pos->z - d_dot * rt->ref.z};
-
 	if ((new_inter = refr_inter(rt, &new_pos_inter)) == -1)
 		return (-1);
 	if (rt->intr_obj == new_inter)
@@ -959,14 +933,11 @@ void ft_tracing(float x, float y, t_rt *rt, __global int *data, int gid)
 			ft_fzero(tab, 4);
 			if((rt->intr_obj = intersection(rt, &rt->ray_dir, &rt->cam.pos)) >= 0)
 				calculate_light(rt, tab);
-				// calculate_light(rt, rt->intr_obj, tab);
-            //printf("x, y = %d, %d object = %d\n", (int)x, (int)y, rt->intr_obj);
             ft_average(r, tab);
 			x = x + (1.0 / rt->window.anti_alias);
 		}
 		y = y + (1.0 / rt->window.anti_alias);
 	}
-	//printf("%g, %g, %g\n", r[0], r[1], r[2]);
 	data[gid] = (((int)(r[0] / p * 255.0) & 0xff) << 16) + (((int)(r[1] / p * 255.0) & 0xff) << 8) + (((int)(r[2] / p * 255.0) & 0xff));
 }
 
@@ -981,21 +952,17 @@ __kernel void 		start(__global t_cl_object *obj,
 	t_rt			rt;
 
 	gid = get_global_id(0);
-
 	rt.window.size[0] = i_mem[0];
 	rt.window.size[1] = i_mem[1];
 	rt.window.anti_alias = i_mem[2];
 	rt.scene.obj_c = i_mem[3];
 	rt.scene.lgh_c = i_mem[4];
 	rt.scene.maxref = i_mem[5];
-
 	rt.cam.pos = (float3){d_mem[0], d_mem[1], d_mem[2]};
 	rt.scene.ambient = d_mem[3];
 	rt.cam.rot = (float3){d_mem[4], d_mem[5], d_mem[6]};
-
 	rt.obj = obj;
 	rt.light = light;
-
 	x = gid % rt.window.size[0];
 	y = gid / rt.window.size[1];
 	ft_tracing(x, y, &rt, out_data, gid);

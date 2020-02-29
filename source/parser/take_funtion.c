@@ -6,7 +6,7 @@
 /*   By: daron <daron@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 14:33:30 by daron             #+#    #+#             */
-/*   Updated: 2020/02/28 11:59:10 by daron            ###   ########.fr       */
+/*   Updated: 2020/02/29 14:01:12 by daron            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -352,3 +352,18 @@ char *take_texture(char *line, t_obj *obj, char *type,int str_c)
 	return (ft_strchr(line, '}'));
 }
 
+char *take_construction(char *line, int *construction_id, int str_c)
+{
+    if (!(line = ft_strchr(line, '{')))
+        kill_error("Not found '{'", str_c);
+    if (ft_strchr(line, '}') == NULL)
+        kill_error("Not found '}'", str_c);
+    line++;
+    if (ft_strnequ(line, "waves", 5))
+        *construction_id = WAVES_ID;
+    else if (ft_strnequ(line, "chech beard", 11))
+        *construction_id = CHECH_BEARD_ID;
+    else
+        kill_error("You can't use this type of construction", str_c);
+    return (ft_strchr(line, '}'));
+}

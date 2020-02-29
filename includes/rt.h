@@ -6,7 +6,7 @@
 /*   By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/17 16:20:37 by daron             #+#    #+#             */
-/*   Updated: 2020/02/28 11:59:10 by daron            ###   ########.fr       */
+/*   Updated: 2020/02/29 13:57:33 by daron            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,9 @@
 # define DISK_ID		7
 # define TORUS_ID		8
 
+# define WAVES_ID		1
+# define CHECH_BEARD_ID 2
+
 /*
 ** Static parametrs
 */
@@ -70,10 +73,10 @@ typedef struct			s_cl_object
 	cl_float3			rot;
 	cl_float3			col;
 	cl_float			r;
-    cl_float           torus_r;
+    cl_float            torus_r;
 	cl_int				name;
 	cl_int				specular;
-
+    cl_int              contruction_id;
 	cl_int				reflect;
 	cl_float			coef_refl;
 
@@ -168,7 +171,8 @@ typedef struct			s_obj
 	int					obj_on;//есль == 1 говорит это будет obj фаил
 	int                 texture_id;
 	char				*file_name; // имя obj файла
-	int					check[12];
+	int                 contruction_id;
+	int					check[13];
 	struct s_obj		*next;
 }						t_obj;
 
@@ -264,6 +268,7 @@ char					*take_int(char *line, int *put_s, int str_c);
 char					*take_double(char *line, float *put_s, int str_c);
 char					*take_word(char *line, char **put_s, int str_c);
 char					*take_res(char *line, int *put_s, int str_c);
+char                    *take_construction(char *line, int *construction_id, int str_c);
 t_vector				get_vector_value_d(char *str, int str_c);
 char					*take_vector(char *line, t_vector *put_s, int str_c);
 t_rgb2					get_vector_value_rgb(char *str, int str_c);
