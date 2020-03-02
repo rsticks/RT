@@ -6,7 +6,7 @@
 /*   By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/17 16:20:37 by daron             #+#    #+#             */
-/*   Updated: 2020/01/31 15:48:34 by daron            ###   ########.fr       */
+/*   Updated: 2020/03/02 14:55:12 by daron            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <unistd.h>
 # include <fcntl.h>
 # include <stdio.h>
+#include  <math.h>
 # include "ftvector.h"
 # include "libft.h"
 # include <SDL2/SDL.h>
@@ -28,7 +29,9 @@
 ** Size configuration
 */
 
-
+#define     EQN_EPS     1e-9
+#define	    IsZero(x)	((x) > -EQN_EPS && (x) < EQN_EPS)
+#define     cbrt(x)     ((x) > 0.0 ? pow((float)(x), 1.0/3.0) : ((x) < 0.0 ? -pow((float)-(x), 1.0/3.0) : 0.0))
 # define FOV			2.0
 
 /*
@@ -40,7 +43,12 @@
 # define CYLINDER_ID	3
 # define CONE_ID		4
 # define OBJ_FILE_ID	5
-# define ELLIPSOID_ID	5
+# define PARABOLOID_ID	6
+# define DISK_ID		7
+# define TORUS_ID		8
+
+# define WAVES_ID		1
+# define CHECH_BEARD_ID 2
 
 /*
 ** Static parametrs
@@ -65,10 +73,16 @@ typedef struct			s_cl_object
 	cl_float3			rot;
 	cl_float3			col;
 	cl_float			r;
+    cl_float            torus_r;
 	cl_int				name;
 	cl_int				specular;
+    cl_int              contruction_id;
 	cl_int				reflect;
 	cl_float			coef_refl;
+
+	cl_int				refr; //если == 1 то этот объект будет преломлять свет
+	cl_float			ind_refr; // Коэффициент преломления
+	cl_float			coef_refr;
 	cl_float			limit;
 }						t_cl_object;
 
@@ -147,6 +161,7 @@ typedef struct			s_obj
 	float				coef_refl; // коэффициент отражения
 	int					spec; // блестящесть
 	float				radius;
+    float               torus_r;
 	float				limit; // ограничение объекта
 	int					refr; //если == 1 то этот объект будет преломлять свет
 	float				ind_refr; // Коэффициент преломления
@@ -154,8 +169,10 @@ typedef struct			s_obj
 	int					text_on; //есль == 1 говорит что текстуры включены
 	char				*texture;//иня файла где храниться текстура
 	int					obj_on;//есль == 1 говорит это будет obj фаил
+	int                 texture_id;
 	char				*file_name; // имя obj файла
-	int					check[11];
+	int                 contruction_id;
+	int					check[13];
 	struct s_obj		*next;
 }						t_obj;
 
@@ -251,6 +268,7 @@ char					*take_int(char *line, int *put_s, int str_c);
 char					*take_double(char *line, float *put_s, int str_c);
 char					*take_word(char *line, char **put_s, int str_c);
 char					*take_res(char *line, int *put_s, int str_c);
+char                    *take_construction(char *line, int *construction_id, int str_c);
 t_vector				get_vector_value_d(char *str, int str_c);
 char					*take_vector(char *line, t_vector *put_s, int str_c);
 t_rgb2					get_vector_value_rgb(char *str, int str_c);

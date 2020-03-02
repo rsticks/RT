@@ -6,7 +6,7 @@
 /*   By: daron <daron@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 14:33:30 by daron             #+#    #+#             */
-/*   Updated: 2020/01/27 14:07:05 by daron            ###   ########.fr       */
+/*   Updated: 2020/03/02 14:55:12 by daron            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -272,10 +272,11 @@ char *take_refraction(char *line, t_obj *obj, int str_c)
 	}
 	else
 		kill_error("You can use only off/on parameter", str_c);
-	if (obj->reflect == 1)
+	if (obj->refr == 1)
 	{
 		obj->ind_refr = take_coef(tmp, str_c, 'r');
 		obj->coef_refr = take_coef(tmp, str_c, 'c');
+		//printf("obj->ind_refr = %g obj->coef_refr = %g", obj->ind_refr, obj->coef_refr);
 	}
 	free(tmp);
 	return (ft_strchr(line, '}'));
@@ -351,3 +352,18 @@ char *take_texture(char *line, t_obj *obj, char *type,int str_c)
 	return (ft_strchr(line, '}'));
 }
 
+char *take_construction(char *line, int *construction_id, int str_c)
+{
+    if (!(line = ft_strchr(line, '{')))
+        kill_error("Not found '{'", str_c);
+    if (ft_strchr(line, '}') == NULL)
+        kill_error("Not found '}'", str_c);
+    line++;
+    if (ft_strnequ(line, "waves", 5))
+        *construction_id = WAVES_ID;
+    else if (ft_strnequ(line, "chech beard", 11))
+        *construction_id = CHECH_BEARD_ID;
+    else
+        kill_error("You can't use this type of construction", str_c);
+    return (ft_strchr(line, '}'));
+}

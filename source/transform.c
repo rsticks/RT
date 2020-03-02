@@ -6,7 +6,7 @@
 /*   By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 15:32:59 by rsticks           #+#    #+#             */
-/*   Updated: 2020/01/30 12:49:37 by daron            ###   ########.fr       */
+/*   Updated: 2020/03/02 14:55:12 by daron            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,16 +30,27 @@ t_cl_object			*transform_obj_data(t_rt *rt)
 		cl_obj[i].specular = rt->obj_mas[i].spec;
 		cl_obj[i].coef_refl = rt->obj_mas[i].coef_refl;
 		cl_obj[i].limit = rt->obj_mas[i].limit;
+
 		cl_obj[i].reflect = rt->obj_mas[i].reflect;
 		cl_obj[i].coef_refl = rt->obj_mas[i].coef_refl;
 
-		/*printf("Not Kernel - type = %d\npos = (%g, %g, %g)\nrot = (%g, %g, %g)\ncol = (%g, %g, %g)\nradius = %g\nreflect = %d coef = %g\n\n",
+		cl_obj[i].refr = rt->obj_mas[i].refr;
+		cl_obj[i].ind_refr = rt->obj_mas[i].ind_refr;
+		cl_obj[i].coef_refr = rt->obj_mas[i].coef_refr;
+
+        cl_obj[i].torus_r = rt->obj_mas[i].torus_r;
+        cl_obj[i].torus_r = rt->obj_mas[i].torus_r;
+
+		/*printf("Not Kernel - type = %d\npos = (%g, %g, %g)\nrot = (%g, %g, %g)\n"
+		 "col = (%g, %g, %g)\nradius = %g\nreflect = %d coef = %g\n"
+         "cl_obj[i].refr = %d, rt->obj_mas[i].ind_refr = %g, rt->obj_mas[i].coef_refr = %g\n\n",
 			   cl_obj[i].name,
 			   cl_obj[i].pos.x, cl_obj[i].pos.y, cl_obj[i].pos.z,
 			   cl_obj[i].rot.x, cl_obj[i].rot.y, cl_obj[i].rot.z,
 			   cl_obj[i].col.x, cl_obj[i].col.y, cl_obj[i].col.z,
 			   cl_obj[i].r,
-			   cl_obj[i].reflect, cl_obj[i].coef_refl);*/
+			   cl_obj[i].reflect, cl_obj[i].coef_refl,
+			   cl_obj[i].refr, cl_obj[i].ind_refr, cl_obj[i].coef_refr);*/
 		i++;
 	}
 	

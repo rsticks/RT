@@ -1,0 +1,63 @@
+<scene>
+	<maxref> {2} </maxref>
+	<name> {Test scene_4} </name>
+	<res> {900 900} </res>
+	<antialias> {4} </antialias>
+	<ambiant> {0.15} </ambiant>
+</scene>
+
+<camera>
+	<pos> {x-63.03, y99.66, z-248.76} </pos>
+	<dir> {x-19.00, y50.99, z0.88} </dir>
+</camera>
+
+<light>
+	<pos> {x-40.00 y60.00 z-20.00} </pos>
+	<rgb> {r250 g250 b250} </rgb>
+</light>
+
+<light>
+	<pos> {x100.00 y70.00 z70.00} </pos>
+	<rgb> {r250 g250 b250} </rgb>
+</light>
+
+<object>
+	<type> {plane} </type>
+	<pos> {x0.00 y-26.00 z0.00} </pos>
+	<dir> {x0.0 y1.0 z0.0} </dir>
+	<reflect> {off} </reflect>
+	<rgb> {r255 g255 b255} </rgb>
+	<refract> {off} </refract>
+</object>
+
+<object>
+	<type> {disk} </type>
+	<pos> {x-61.84, y95.15, z44.91} </pos>
+	<dir> {x0.31, y0.02, z0.94} </dir>
+	<radius> {25.00} </radius>
+	<rgb> {r0 g250 b250} </rgb>
+	<reflect> {off} </reflect>
+	<spec> {off} </spec>
+	<refract> {off} </refract>
+</object>
+
+<object>
+	<type> {disk} </type>
+	<pos> {x36.03, y95.03, z14.51} </pos>
+	<dir> {x0.31, y0.02, z0.94} </dir>
+	<radius> {25.00} </radius>
+	<rgb> {r127 g255 b212} </rgb>
+	<reflect> {off} </reflect>
+	<spec> {off} </spec>
+	<refract> {off} </refract>
+</object>
+
+<object>
+	<type> {sphere} </type>
+	<pos> {x-10.00, y89.98, z39.67} </pos>
+	<radius> {50.00} </radius>
+	<rgb> {r139 g0 b0} </rgb>
+	<reflect> {off} </reflect>
+	<spec> {off} </spec>
+	<refract> {off c0.6 r0.8} </refract>
+</object>

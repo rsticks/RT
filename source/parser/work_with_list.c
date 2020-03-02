@@ -6,7 +6,7 @@
 /*   By: daron <daron@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/19 18:22:13 by daron             #+#    #+#             */
-/*   Updated: 2020/01/23 18:07:51 by daron            ###   ########.fr       */
+/*   Updated: 2020/03/02 14:55:12 by daron            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ static void create_light_list(t_rt *rt)
 
 	if (!(new = (t_light*)malloc(sizeof(t_light))))
 		kill_all("ERROR: Can't create list for light <create_light_list>");
-	ft_memset(new->check, 0, 2);
+    ft_memset_int(new->check, 0, 2);
+    new->rgb = (t_rgb2){0., 0., 0.};
 	new->next = NULL;
 	if (rt->lgh_head == NULL)
 		rt->lgh_head = new;
@@ -42,7 +43,6 @@ static void initialize_object(t_obj *obj)
 	obj->pos = (t_vector){0.0, 0.0, 0.0};
 	obj->dir = (t_vector){0.0, 0.0, 0.0};
 	obj->rgb = (t_rgb2){0, 0, 0};
-
 	obj->reflect = 0;
 	obj->coef_refl = 0.0;
 	obj->spec = 0;
@@ -50,20 +50,16 @@ static void initialize_object(t_obj *obj)
 	obj->refr = 0;
 	obj->ind_refr = 0.0;
 	obj->coef_refr = 0.0;
-
 	obj->radius = 0;
-
+	obj->torus_r = 0;
 	obj->obj_on = 0;
 	obj->obj_name = NULL;
-
 	obj->text_on = 0;
 	obj->texture = NULL;
-
 	obj->obj_on = 0;
 	obj->file_name = NULL;
-
-	ft_memset(obj->check, 0, 10);
-
+	obj->contruction_id = -1;
+    ft_memset_int(obj->check, 0, 13);
 }
 
 static void create_obj_list(t_rt *rt)

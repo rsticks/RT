@@ -6,7 +6,7 @@
 /*   By: daron <daron@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/31 15:49:21 by daron             #+#    #+#             */
-/*   Updated: 2020/01/31 15:50:08 by daron            ###   ########.fr       */
+/*   Updated: 2020/03/02 14:55:12 by daron            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,14 @@ void init_struct(t_rt *rt)
 	rt->scene.spec = 0.0;
 	rt->scene.obj_c = 0;
 	rt->scene.lgh_c = 0;
+    rt->scene.maxref = 0;
 	rt->select_obj = -1;
-
 	rt->obj_head = NULL;
 	rt->lgh_head = NULL;
-
 	rt->window.windname = NULL;
+    rt->window.anti_alias = 1;
 	rt->window.effecr_name = NULL;
 	rt->window.effect_on = 0;
-
 	ft_memset_int(rt->scene.check, 0, 4);
 	ft_memset_int(rt->window.check, 0, 6);
 	ft_memset_int(rt->cam.check, 0, 2);
@@ -77,14 +76,7 @@ void init_rt(t_rt *rt, char *filename, int str_c)
 	cheak_camera(rt);
 	cheak_scene(rt);
 	cheak_object(rt);
-	if (rt->lgh_head != NULL)
-		cheak_light(rt);
+	cheak_light(rt);
 	cheak_part(rt);
-
-
-
-
-
-
 	list_to_mas(rt);
 }

@@ -1,4 +1,4 @@
-<scene>
+0<scene>
 	<maxref> {0} </maxref>
 	<name> {Test scene_4} </name>
 	<res> {900 900} </res>
@@ -86,7 +86,7 @@
 	<rgb> {r180 g250 b150} </rgb>
 	<reflect> {off} </reflect>
 	<spec> {off} </spec>
-	<refract> {off} </refract>
+	<refract> {off r1.01 c0.5} </refract>
 </object>
 
 <object>
@@ -97,5 +97,5 @@
 	<rgb> {r10 g150 b240} </rgb>
 	<reflect> {off} </reflect>
 	<spec> {off} </spec>
-	<refract> {off} </refract>
+	<refract> {off r1.01 c0.5} </refract>
 </object>
