@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rt.h"
+	#include "rt.h"
 
 static double	get_cone_intersection(t_vector *ray_dir, t_vector *cam_pos,
 		int i, t_rt *rt)

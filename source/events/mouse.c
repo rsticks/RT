@@ -6,13 +6,13 @@
 /*   By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 14:34:47 by daron             #+#    #+#             */
-/*   Updated: 2020/03/02 14:55:12 by daron            ###   ########.fr       */
+/*   Updated: 2020/03/02 16:50:29 by daron            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-static int	mouse_intersection(double u, double v,
+static int		mouse_intersection(double u, double v,
 		t_vector *pos, t_rt *rt)
 {
 	t_vector	i;
@@ -47,6 +47,5 @@ void			mouse_down(t_rt *rt)
 		v = (rt->window.size[1] - (double)y * FOV) / rt->window.size[0];
 		pos = (t_vector){rt->cam.pos.x + u, rt->cam.pos.y + v, rt->cam.pos.z};
 		rt->select_obj = mouse_intersection(u, v, &pos, rt);
-		//printf("rt->select_obj = %d\n", rt->select_obj);
 	}
 }

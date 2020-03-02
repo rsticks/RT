@@ -6,27 +6,26 @@
 /*   By: daron <daron@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/31 15:49:21 by daron             #+#    #+#             */
-/*   Updated: 2020/03/02 14:55:12 by daron            ###   ########.fr       */
+/*   Updated: 2020/03/02 15:53:40 by daron            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-void init_struct(t_rt *rt)
+void		init_struct(t_rt *rt)
 {
 	if (!(rt->read_b.buff = (char**)malloc(sizeof(char*) * 2)))
 		kill_all("ERROR can't create buffer for reading file <init_struct>");
 	rt->read_b.str_c = 0;
-
 	rt->scene.spec = 0.0;
 	rt->scene.obj_c = 0;
 	rt->scene.lgh_c = 0;
-    rt->scene.maxref = 0;
+	rt->scene.maxref = 0;
 	rt->select_obj = -1;
 	rt->obj_head = NULL;
 	rt->lgh_head = NULL;
 	rt->window.windname = NULL;
-    rt->window.anti_alias = 1;
+	rt->window.anti_alias = 1;
 	rt->window.effecr_name = NULL;
 	rt->window.effect_on = 0;
 	ft_memset_int(rt->scene.check, 0, 4);
@@ -34,33 +33,37 @@ void init_struct(t_rt *rt)
 	ft_memset_int(rt->cam.check, 0, 2);
 }
 
-void parse_line(t_rt *rt, char *line, int str_c)
+void		parse_line(t_rt *rt, char *line, int str_c)
 {
 	if (*line)
 	{
 		if (rt->read_b.str_c >= 1)
 		{
-			if (rt->read_b.str_c >= 1 && (ft_strequ(rt->read_b.buff[0], "scene")) > 0)
+			if (rt->read_b.str_c >= 1 && (ft_strequ(rt->read_b.buff[0],
+					"scene")) > 0)
 				scene_parser(rt, line, str_c);
-			else if (rt->read_b.str_c >= 1 && (ft_strequ(rt->read_b.buff[0], "camera")) > 0)
+			else if (rt->read_b.str_c >= 1 && (ft_strequ(rt->read_b.buff[0],
+					"camera")) > 0)
 				camera_parser(rt, line, str_c);
-			else if (rt->read_b.str_c >= 1 && (ft_strequ(rt->read_b.buff[0], "light")) > 0)
+			else if (rt->read_b.str_c >= 1 && (ft_strequ(rt->read_b.buff[0],
+					"light")) > 0)
 				light_parser(rt, line, str_c);
-			else if (rt->read_b.str_c >= 1 && (ft_strequ(rt->read_b.buff[0], "object")) > 0)
+			else if (rt->read_b.str_c >= 1 && (ft_strequ(rt->read_b.buff[0],
+					"object")) > 0)
 				object_parser(rt, line, str_c);
 			else
-				kill_error("Uncorrected object tag" , str_c - 1);
+				kill_error("Uncorrected object tag", str_c - 1);
 		}
 		else
 			check_tag(rt, line, str_c);
 	}
 }
 
-void init_rt(t_rt *rt, char *filename, int str_c)
+void		init_rt(t_rt *rt, char *filename, int str_c)
 {
-	int fd;
-	int read_count;
-	char *line;
+	int		fd;
+	int		read_count;
+	char	*line;
 
 	if ((fd = open(filename, O_RDWR)) < 0)
 		kill_all(ft_strjoin("ERROR: Can't open file ", filename));

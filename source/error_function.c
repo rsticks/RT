@@ -1,23 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   additional_function.c                              :+:      :+:    :+:   */
+/*   error_function.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+        */
+/*   By: daron <daron@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/21 15:54:57 by daron             #+#    #+#             */
-/*   Updated: 2020/03/02 16:37:44 by daron            ###   ########.fr       */
+/*   Created: 2020/03/02 17:01:52 by daron             #+#    #+#             */
+/*   Updated: 2020/03/02 17:02:16 by daron            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-void			my_free(t_rt *rt)
+int		kill_all(char *message)
 {
-	free(rt->obj_mas);
-	free(rt->lgh_mas);
-	SDL_DestroyRenderer(rt->window.render);
-	SDL_DestroyWindow(rt->window.window);
-	SDL_Quit();
-	exit(0);
+	perror(message);
+	exit(1);
+}
+
+void	kill_error(char *message, int string_number)
+{
+	kill_all(ft_strjoin_del(ft_strjoin(ft_strjoin("ERROR: ", message),
+			" String number "), ft_itoa(string_number), 'R'));
 }

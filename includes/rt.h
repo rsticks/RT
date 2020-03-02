@@ -6,7 +6,7 @@
 /*   By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/17 16:20:37 by daron             #+#    #+#             */
-/*   Updated: 2020/03/02 14:55:12 by daron            ###   ########.fr       */
+/*   Updated: 2020/03/02 16:57:15 by daron            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,7 @@
 ** Size configuration
 */
 
-#define     EQN_EPS     1e-9
-#define	    IsZero(x)	((x) > -EQN_EPS && (x) < EQN_EPS)
-#define     cbrt(x)     ((x) > 0.0 ? pow((float)(x), 1.0/3.0) : ((x) < 0.0 ? -pow((float)-(x), 1.0/3.0) : 0.0))
+# define     EQN_EPS     1e-9
 # define FOV			2.0
 
 /*
@@ -79,7 +77,6 @@ typedef struct			s_cl_object
     cl_int              contruction_id;
 	cl_int				reflect;
 	cl_float			coef_refl;
-
 	cl_int				refr; //если == 1 то этот объект будет преломлять свет
 	cl_float			ind_refr; // Коэффициент преломления
 	cl_float			coef_refr;
@@ -250,12 +247,18 @@ int						intersection(t_rt *rt, t_vector *ray_dir, t_vector *cam_pos);
 /*
 ** ------------------Function Parser--------------------------------
 */
+void printf_scene_data(t_rt *rt);
 void					init_rt(t_rt *rt, char *filename, int str_c);
 void					parse_line(t_rt *rt, char *line, int str_c);
 void					init_struct(t_rt *rt);
 void					check_tag(t_rt *rt, char *line, int str_c);
 void					create_list(t_rt *rt, char *type);
 void					scene_parser(t_rt *rt, char *line, int str_c);
+void check_inti_alias(int anti_alias, int str_c);
+void check_inti_maxref(int maxref, int str_c);
+void check_inti_ambiant(float ambiant, int str_c);
+void check_inti_effect(t_rt *rt, int str_c);
+void check_inti_res(t_rt *rt, int str_c);
 void					test_scene(t_rt *rt, int str_c);
 void					camera_parser(t_rt *rt, char *line, int str_c);
 void					test_camera(t_rt *rt, int str_c);
@@ -263,15 +266,27 @@ void					light_parser(t_rt *rt, char *line, int str_c);
 void					test_light(t_rt *rt, int str_c);
 void					check_inti_rgb(t_rt *rt, int str_c);
 void					object_parser(t_rt *rt, char *line, int str_c);
+void test_object(t_rt *rt, int str_c);
+void check_inti_obj_type(t_rt *rt, int str_c);
+void check_inti_reflection(t_rt *rt, int str_c);
+void check_inti_refraction(t_rt *rt, int str_c);
+void check_inti_radius(t_rt *rt, int str_c);
+void check_inti_dir_obj(t_rt *rt, int str_c);
+void check_inti_obj_rgb(t_rt *rt, int str_c);
 void					list_to_mas(t_rt *rt);
+void		copy_obj(t_rt *rt);
+void		delete_obj_list(t_rt *rt);
+void		copy_light(t_rt *rt);
+void		delete_light_list(t_rt *rt);
 char					*take_int(char *line, int *put_s, int str_c);
 char					*take_double(char *line, float *put_s, int str_c);
 char					*take_word(char *line, char **put_s, int str_c);
 char					*take_res(char *line, int *put_s, int str_c);
 char                    *take_construction(char *line, int *construction_id, int str_c);
-t_vector				get_vector_value_d(char *str, int str_c);
+double cheak_double(char *line, int str_c);
+//t_vector				get_vector_value_d(char *str, int str_c);
 char					*take_vector(char *line, t_vector *put_s, int str_c);
-t_rgb2					get_vector_value_rgb(char *str, int str_c);
+//t_rgb2					get_vector_value_rgb(char *str, int str_c);
 char					*take_rgb(char *line, t_rgb2 *put_s, int str_c);
 char					*take_refl(char *line, t_obj *obj, int str_c);
 float					take_coef(char *line, int str_c, char let);

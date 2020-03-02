@@ -6,7 +6,7 @@
 #    By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/09 16:02:42 by daron             #+#    #+#              #
-#    Updated: 2020/03/02 14:55:12 by daron            ###   ########.fr        #
+#    Updated: 2020/03/02 17:03:07 by daron            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,14 +49,23 @@ SOURCES_LIST = main.c \
                     parser/work_with_list.c \
                     parser/xml_tag.c \
                     parser/scene_parser.c \
+                    parser/scene_parser_cheker.c \
                     parser/take_funtion.c \
+                    parser/take_funtion_1.c \
+                    parser/take_function_2.c \
+                    parser/take_function_3.c \
                     parser/camera_parser.c \
                     parser/light_parser.c \
                     parser/object_parser.c \
+                    parser/object_parser_1.c \
+                    parser/object_parser_cheaker.c \
                     parser/cheker.c \
                     parser/list_to_mas.c \
+                    parser/list_to_mas_1.c \
                     parser/parser_main_f.c \
                     transform.c \
+                    printf_data.c \
+                    error_function.c \
                     cl.c \
                     additional_function.c \
                     additional_function_1.c \

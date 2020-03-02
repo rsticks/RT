@@ -16,7 +16,8 @@ void	detail_key(t_rt *rt)
 {
 	if (SDLK_p == rt->window.event.key.keysym.sym && rt->window.anti_alias < 64)
 		rt->window.anti_alias *= 2;
-	else if (SDLK_o == rt->window.event.key.keysym.sym && rt->window.anti_alias > 1)
+	else if (SDLK_o == rt->window.event.key.keysym.sym
+	&& rt->window.anti_alias > 1)
 		rt->window.anti_alias /= 2;
 	start_kernel(rt->cl, rt);
 }
