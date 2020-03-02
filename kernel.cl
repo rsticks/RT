@@ -676,7 +676,7 @@ void gloss(t_rt *rt, int i_obj, float *tab, float3 *dist, float d)
 		tmp = vec_dot(ref, rt->ray_dir);
 		if (tmp > 0.0 && tab[3] > rt->scene.ambient)
 		{
-			spec = native_powr(tmp, 200) * 4 * d;
+			spec = native_powr(tmp, 20) * 4 * d;
 			spec = ft_clamp(spec, 0.0, 1.0);
 		}
 		tab[1] += spec;

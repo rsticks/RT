@@ -100,15 +100,12 @@ void			mem_to_kernel(t_rt *rt, float *d_m, int *i_m)
 	d_m[4] = rt->cam.dir.x;
 	d_m[5] = rt->cam.dir.y;
 	d_m[6] = rt->cam.dir.z;
-
 	i_m[0] = rt->window.size[0];
 	i_m[1] = rt->window.size[1];
 	i_m[2] = rt->window.anti_alias;
 	i_m[3] = rt->scene.obj_c;
 	i_m[4] = rt->scene.lgh_c;
 	i_m[5] = rt->scene.maxref;
-
-
 }
 
 void			start_kernel(t_cl *cl, t_rt *rt)

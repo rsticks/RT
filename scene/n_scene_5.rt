@@ -28,7 +28,6 @@
 	<reflect> {off} </reflect>
 	<rgb> {r255 g255 b255} </rgb>
 	<refract> {off} </refract>
-	<contruction> {chech beard} </contruction>
 </object>
 
 <object>

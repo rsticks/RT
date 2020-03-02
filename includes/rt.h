@@ -6,7 +6,7 @@
 /*   By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/17 16:20:37 by daron             #+#    #+#             */
-/*   Updated: 2020/03/02 16:57:15 by daron            ###   ########.fr       */
+/*   Updated: 2020/03/02 18:17:16 by daron            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -234,7 +234,6 @@ void					sdl_initialize(t_rt *rt);
 double					get_quadratic_solution(double a, double b, double discriminant);
 void					my_free(t_rt *rt);
 float					ft_clamp(float value, float min, float max);
-
 void					events(t_rt *rt);
 void					mouse_down(t_rt *rt);
 void					key_down(t_rt *rt, t_move *move);
@@ -244,21 +243,24 @@ void					swithc_gloss(t_rt *rt);
 void					reflection_key(t_rt *rt);
 void					printf_scene_data(t_rt *rt);
 int						intersection(t_rt *rt, t_vector *ray_dir, t_vector *cam_pos);
+float					get_paraboloid_intersection(t_vector *ray_dir, t_vector *cam_pos, int i, t_rt *rt);
+float					get_disk_intersection(t_vector *ray_dir, t_vector *cam_pos, int i, t_rt *rt);
+float					get_cylinder_intersection(t_vector *ray_dir, t_vector *cam_pos, int i, t_rt *rt);
 /*
 ** ------------------Function Parser--------------------------------
 */
-void printf_scene_data(t_rt *rt);
+void					printf_scene_data(t_rt *rt);
 void					init_rt(t_rt *rt, char *filename, int str_c);
 void					parse_line(t_rt *rt, char *line, int str_c);
 void					init_struct(t_rt *rt);
 void					check_tag(t_rt *rt, char *line, int str_c);
 void					create_list(t_rt *rt, char *type);
 void					scene_parser(t_rt *rt, char *line, int str_c);
-void check_inti_alias(int anti_alias, int str_c);
-void check_inti_maxref(int maxref, int str_c);
-void check_inti_ambiant(float ambiant, int str_c);
-void check_inti_effect(t_rt *rt, int str_c);
-void check_inti_res(t_rt *rt, int str_c);
+void					check_inti_alias(int anti_alias, int str_c);
+void					check_inti_maxref(int maxref, int str_c);
+void					check_inti_ambiant(float ambiant, int str_c);
+void					check_inti_effect(t_rt *rt, int str_c);
+void					check_inti_res(t_rt *rt, int str_c);
 void					test_scene(t_rt *rt, int str_c);
 void					camera_parser(t_rt *rt, char *line, int str_c);
 void					test_camera(t_rt *rt, int str_c);
@@ -266,27 +268,25 @@ void					light_parser(t_rt *rt, char *line, int str_c);
 void					test_light(t_rt *rt, int str_c);
 void					check_inti_rgb(t_rt *rt, int str_c);
 void					object_parser(t_rt *rt, char *line, int str_c);
-void test_object(t_rt *rt, int str_c);
-void check_inti_obj_type(t_rt *rt, int str_c);
-void check_inti_reflection(t_rt *rt, int str_c);
-void check_inti_refraction(t_rt *rt, int str_c);
-void check_inti_radius(t_rt *rt, int str_c);
-void check_inti_dir_obj(t_rt *rt, int str_c);
-void check_inti_obj_rgb(t_rt *rt, int str_c);
+void					test_object(t_rt *rt, int str_c);
+void					check_inti_obj_type(t_rt *rt, int str_c);
+void					check_inti_reflection(t_rt *rt, int str_c);
+void					check_inti_refraction(t_rt *rt, int str_c);
+void					check_inti_radius(t_rt *rt, int str_c);
+void					check_inti_dir_obj(t_rt *rt, int str_c);
+void					check_inti_obj_rgb(t_rt *rt, int str_c);
 void					list_to_mas(t_rt *rt);
-void		copy_obj(t_rt *rt);
-void		delete_obj_list(t_rt *rt);
-void		copy_light(t_rt *rt);
-void		delete_light_list(t_rt *rt);
+void					copy_obj(t_rt *rt);
+void					delete_obj_list(t_rt *rt);
+void					copy_light(t_rt *rt);
+void					delete_light_list(t_rt *rt);
 char					*take_int(char *line, int *put_s, int str_c);
 char					*take_double(char *line, float *put_s, int str_c);
 char					*take_word(char *line, char **put_s, int str_c);
 char					*take_res(char *line, int *put_s, int str_c);
 char                    *take_construction(char *line, int *construction_id, int str_c);
-double cheak_double(char *line, int str_c);
-//t_vector				get_vector_value_d(char *str, int str_c);
+double					cheak_double(char *line, int str_c);
 char					*take_vector(char *line, t_vector *put_s, int str_c);
-//t_rgb2					get_vector_value_rgb(char *str, int str_c);
 char					*take_rgb(char *line, t_rgb2 *put_s, int str_c);
 char					*take_refl(char *line, t_obj *obj, int str_c);
 float					take_coef(char *line, int str_c, char let);

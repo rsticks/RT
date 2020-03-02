@@ -6,7 +6,7 @@
 #    By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/09 16:02:42 by daron             #+#    #+#              #
-#    Updated: 2020/03/02 17:03:07 by daron            ###   ########.fr        #
+#    Updated: 2020/03/02 18:08:48 by daron            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -74,7 +74,8 @@ SOURCES_LIST = main.c \
                     events/key_for_object.c \
                     events/key_for_other.c \
                     events/mouse.c \
-                    intersection.c
+                    intersection/intersection.c \
+                    intersection/intersection_1.c
 SOURCES = $(addprefix $(SOURCES_DIRECTORY), $(SOURCES_LIST))
 
 OBJECTS_DIRECTORY = objects/
@@ -100,6 +101,7 @@ $(OBJECTS_DIRECTORY):
 	@mkdir -p $(OBJECTS_DIRECTORY)
 	@mkdir -p $(OBJECTS_DIRECTORY)/parser
 	@mkdir -p $(OBJECTS_DIRECTORY)/events
+	@mkdir -p $(OBJECTS_DIRECTORY)/intersection
 	@echo "$(NAME): $(GREEN)$(OBJECTS_DIRECTORY) was created$(RESET)"
 
 $(OBJECTS_DIRECTORY)%.o : $(SOURCES_DIRECTORY)%.c $(HEADERS)

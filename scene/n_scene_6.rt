@@ -1,5 +1,5 @@
 0<scene>
-	<maxref> {0} </maxref>
+	<maxref> {3} </maxref>
 	<name> {Test scene_4} </name>
 	<res> {900 900} </res>
 	<antialias> {1} </antialias>
@@ -25,9 +25,9 @@
 	<type> {plane} </type>
 	<pos> {x0.00 y0.00 z200.00} </pos>
 	<dir> {x0.0 y0.0 z-1.0} </dir>
-	<reflect> {off} </reflect>
+	<reflect> {off c0.3} </reflect>
 	<rgb> {r130 g130 b130} </rgb>
-	<refract> {off} </refract>
+ 	<refract> {on r1.01 c0.5} </refract>
 </object>
 
 <object>
@@ -44,9 +44,9 @@
 	<pos> {x-12.00 y25.00 z5.00} </pos>
 	<radius> {25.00} </radius>
 	<rgb> {r0 g250 b250} </rgb>
-	<reflect> {off} </reflect>
+	<reflect> {off c0.3} </reflect>
 	<spec> {off} </spec>
-	<refract> {off} </refract>
+	<refract> {on r1.01 c0.5} </refract>
 </object>
 
 <object>
@@ -65,7 +65,7 @@
 	<radius> {10.00} </radius>
 	<rgb> {r200 g10 b100} </rgb>
 	<reflect> {off} </reflect>
-	<spec> {off} </spec>
+	<spec> {on} </spec>
 	<refract> {off} </refract>
 </object>
 
@@ -75,7 +75,7 @@
 	<radius> {20.00} </radius>
 	<rgb> {r200 g10 b200} </rgb>
 	<reflect> {off} </reflect>
-	<spec> {off} </spec>
+	<spec> {on} </spec>
 	<refract> {off} </refract>
 </object>
 
@@ -84,7 +84,7 @@
 	<pos> {x-40.00 y134.00 z101.00} </pos>
 	<radius> {25.00} </radius>
 	<rgb> {r180 g250 b150} </rgb>
-	<reflect> {off} </reflect>
+	<reflect> {on c0.3} </reflect>
 	<spec> {off} </spec>
 	<refract> {off r1.01 c0.5} </refract>
 </object>
