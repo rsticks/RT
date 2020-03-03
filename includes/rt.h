@@ -6,7 +6,7 @@
 /*   By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/17 16:20:37 by daron             #+#    #+#             */
-/*   Updated: 2020/03/02 18:17:16 by daron            ###   ########.fr       */
+/*   Updated: 2020/03/03 17:18:38 by daron            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,20 @@
 # define DISK_ID		7
 # define TORUS_ID		8
 
+
+/*
+** Texture ID
+*/
+
 # define WAVES_ID		1
 # define CHECH_BEARD_ID 2
+
+/*
+** SkyBox ID
+*/
+
+# define SB_BRICK_ID	1
+# define SB_HERNIA_1_ID 2
 
 /*
 ** Static parametrs
@@ -201,7 +213,8 @@ typedef	struct			s_scene
 	int					lgh_c; // Количество источников света
 	int					maxref;
 	float				ambient;
-	int					check[4];
+	int					skybox_id;
+	int					check[5];
 } 						t_scene;
 
 typedef struct			s_rt
@@ -281,6 +294,7 @@ void					delete_obj_list(t_rt *rt);
 void					copy_light(t_rt *rt);
 void					delete_light_list(t_rt *rt);
 char					*take_int(char *line, int *put_s, int str_c);
+char					*take_skybox(char *line, int *skybox_id, int str_c);
 char					*take_double(char *line, float *put_s, int str_c);
 char					*take_word(char *line, char **put_s, int str_c);
 char					*take_res(char *line, int *put_s, int str_c);

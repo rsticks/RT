@@ -6,7 +6,7 @@
 /*   By: daron <daron@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 14:22:01 by daron             #+#    #+#             */
-/*   Updated: 2020/03/02 15:31:22 by daron            ###   ########.fr       */
+/*   Updated: 2020/03/03 17:16:03 by daron            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void		test_scene(t_rt *rt, int str_c)
 	&& ((ft_strequ("antialias", rt->read_b.buff[1])) == 0)
 	&& (ft_strequ("maxref", rt->read_b.buff[1])) == 0
 	&& (ft_strequ("ambiant", rt->read_b.buff[1])) == 0
+	&& (ft_strequ("skybox", rt->read_b.buff[1])) == 0
 	&& (ft_strequ("effect", rt->read_b.buff[1])) == 0))
 		kill_error("Invalid tag fot scene", str_c);
 }
@@ -31,6 +32,12 @@ static char	*scene_parser_2(t_rt *rt, char *line, int str_c)
 		line = take_double(line, &rt->scene.ambient, str_c);
 		check_inti_ambiant(rt->scene.ambient, str_c);
 		rt->window.check[4] += 1;
+	}
+	if (rt->read_b.str_c == 2 && (ft_strequ("skybox",
+			rt->read_b.buff[1])) == 1 && *line == '{')
+	{
+		line = take_skybox(line, &rt->scene.skybox_id, str_c);
+		rt->scene.check[4] += 1;
 	}
 	return (line);
 }

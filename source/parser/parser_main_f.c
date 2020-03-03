@@ -21,6 +21,7 @@ void		init_struct(t_rt *rt)
 	rt->scene.obj_c = 0;
 	rt->scene.lgh_c = 0;
 	rt->scene.maxref = 0;
+	rt->scene.skybox_id = -1;
 	rt->select_obj = -1;
 	rt->obj_head = NULL;
 	rt->lgh_head = NULL;
@@ -28,7 +29,7 @@ void		init_struct(t_rt *rt)
 	rt->window.anti_alias = 1;
 	rt->window.effecr_name = NULL;
 	rt->window.effect_on = 0;
-	ft_memset_int(rt->scene.check, 0, 4);
+	ft_memset_int(rt->scene.check, 0, 5);
 	ft_memset_int(rt->window.check, 0, 6);
 	ft_memset_int(rt->cam.check, 0, 2);
 }

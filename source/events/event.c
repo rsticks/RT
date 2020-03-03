@@ -40,8 +40,10 @@ void		events(t_rt *rt)
 		while (SDL_PollEvent(&rt->window.event))
 		{
 			if ((SDL_QUIT == rt->window.event.type) ||
-				(SDL_SCANCODE_ESCAPE == rt->window.event.key.keysym.scancode))
+				(SDL_SCANCODE_ESCAPE == rt->window.event.key.keysym.scancode)) {
+				printf_scene_data(rt);
 				my_free(rt);
+			}
 			else if (SDLK_RETURN == rt->window.event.key.keysym.sym
 			&& rt->window.event.type == SDL_KEYDOWN)
 				rt->select_obj = -1;

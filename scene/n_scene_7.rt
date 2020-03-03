@@ -3,6 +3,7 @@
 	<name> {Test scene_4} </name>
 	<res> {900 900} </res>
 	<antialias> {1} </antialias>
+	<skybox>{brick}</skybox>
 	<ambiant> {0.15} </ambiant>
 </scene>
 

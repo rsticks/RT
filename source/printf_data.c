@@ -78,9 +78,10 @@ void		printf_scene_data(t_rt *rt)
 {
 	printf("---------------------------------------------------------------\n");
 	printf("Window name = %s\nWindow size = {%d, %d}\n maxref = %d \n"
-		"antialias = %d\n ambient = %g\n effect = %s\n", rt->window.windname,
-		rt->window.size[0], rt->window.size[1], rt->scene.maxref,
-		rt->window.anti_alias, rt->scene.ambient, rt->window.effecr_name);
+		"antialias = %d\n ambient = %g\n effect = %s\n skybox_id = %d",
+		rt->window.windname, rt->window.size[0], rt->window.size[1],
+		rt->scene.maxref, rt->window.anti_alias, rt->scene.ambient,
+		rt->window.effecr_name, rt->scene.skybox_id);
 	printf("\n");
 	printf("Camera pos = {x%g, y%g, z%g}\n Camera dir = {x%g, y%g, z%g}\n",
 			rt->cam.pos.x, rt->cam.pos.y, rt->cam.pos.z,

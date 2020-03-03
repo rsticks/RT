@@ -6,7 +6,7 @@
 /*   By: daron <daron@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/02 16:31:24 by daron             #+#    #+#             */
-/*   Updated: 2020/03/02 16:33:44 by daron            ###   ########.fr       */
+/*   Updated: 2020/03/03 17:18:38 by daron            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,5 +85,21 @@ char		*take_on_off(char *line, int *put_s, int str_c)
 		*put_s = 0;
 	else
 		kill_error("You can use only off/on parameter", str_c);
+	return (ft_strchr(line, '}'));
+}
+
+char		*take_skybox(char *line, int *skybox_id, int str_c)
+{
+	if (!(line = ft_strchr(line, '{')))
+		kill_error("Not found '{'", str_c);
+	if (ft_strchr(line, '}') == NULL)
+		kill_error("Not found '}'", str_c);
+	line++;
+	if (ft_strnequ(line, "brick", 5) == 1)
+		*skybox_id = SB_BRICK_ID;
+	else if ((ft_strnequ(line, "hernis_1", 8)) == 1)
+		*skybox_id = SB_HERNIA_1_ID;
+	else
+		kill_error("You can use tis type of skybox", str_c);
 	return (ft_strchr(line, '}'));
 }
