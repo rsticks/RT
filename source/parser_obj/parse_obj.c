@@ -6,7 +6,7 @@
 /*   By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 18:53:55 by rsticks           #+#    #+#             */
-/*   Updated: 2020/02/26 17:57:43 by rsticks          ###   ########.fr       */
+/*   Updated: 2020/03/02 16:45:26 by rsticks          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -331,7 +331,7 @@ t_parse_obj			*parsing_obj(char *path, int num)
 	}
 	for (size_t i = 0; i < data->count_f; i++)
 	{
-		printf("f %d/%d/%d %d/%d/%d %d/%d/%d\n",
+		printf("f[%d] %d/%d/%d %d/%d/%d %d/%d/%d\n", i,
 		data->d_obj[i].vf.x, data->d_obj[i].vtf.x, data->d_obj[i].vnf.x,
 		data->d_obj[i].vf.y, data->d_obj[i].vtf.y, data->d_obj[i].vnf.y,
 		data->d_obj[i].vf.z, data->d_obj[i].vtf.z, data->d_obj[i].vnf.z);

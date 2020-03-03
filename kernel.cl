@@ -260,6 +260,7 @@ float				get_triangle_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_rt
 	float2	t;
 	float	det;
 	float3	v0, v1, v2;
+	float3	norm;
 
 	g = -1;
 	i = 0;
@@ -267,10 +268,14 @@ float				get_triangle_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_rt
 	rt->count_of_triangl = rt->f_count;
 	while (i < rt->f_count)
 	{	
+		norm = vec_sum(rt->data_o[rt->data_o[i].vnf.x - 1].vn, rt->data_o[rt->data_o[i].vnf.y - 1].vn);
+		norm = (vec_sum(norm, rt->data_o[rt->data_o[i].vnf.z - 1].vn));
+		//norm = vec_scale(norm, 1/3);
+		//norm = rt->data_o[rt->data_o[i].vnf.x - 1].vn;
 		//if (rt->gid == 1)
 		//printf("Check %f %f %f\n ", rt->data_o[rt->data_o[i].vf.x - 1].v.x, rt->data_o[rt->data_o[i].vf.x - 1].v.y, rt->data_o[rt->data_o[i].vf.x - 1].v.z);
 		//dist = ((vec_dot(rt->data_o[rt->data_o[i].vnf.x - 1].vn, rt->data_o[rt->data_o[i].vf.x - 1].v) -  vec_dot(rt->data_o[rt->data_o[i].vnf.x - 1].vn, *cam_pos)) / vec_dot(rt->data_o[rt->data_o[i].vnf.x - 1].vn, *ray_dir));
-		dist = ((vec_dot(rt->data_o[rt->data_o[i].vnf.x - 1].vn, rt->data_o[rt->data_o[i].vf.x - 1].v) -  vec_dot(rt->data_o[rt->data_o[i].vnf.x - 1].vn, *cam_pos)) / vec_dot(rt->data_o[rt->data_o[i].vnf.x - 1].vn, *ray_dir));
+		dist = ((vec_dot(norm, rt->data_o[rt->data_o[i].vf.x - 1].v) -  vec_dot(norm, *cam_pos)) / vec_dot(norm, *ray_dir));
 		// dist.y = ((vec_dot(rt->data_o[rt->data_o[i].vnf.y - 1].vn, rt->data_o[rt->data_o[i].vf.y - 1].v) -  vec_dot(rt->data_o[rt->data_o[i].vnf.y - 1].vn, *cam_pos)) / vec_dot(rt->data_o[rt->data_o[i].vnf.y - 1].vn, *ray_dir));
 		// dist.z = ((vec_dot(rt->data_o[rt->data_o[i].vnf.z - 1].vn, rt->data_o[rt->data_o[i].vf.z - 1].v) -  vec_dot(rt->data_o[rt->data_o[i].vnf.z - 1].vn, *cam_pos)) / vec_dot(rt->data_o[rt->data_o[i].vnf.z - 1].vn, *ray_dir));
 		// if (dist >= EPS)
@@ -285,9 +290,9 @@ float				get_triangle_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_rt
 			v2 = rt->data_o[rt->data_o[i].vf.z - 1].v;
 			//printf("v0 = %g %g %g\nv1 = %g %g %g\nv2 = %g %g %g\n\n", v0.x,v0.y,v0.z, v1.x,v1.y,v1.z, v2.x,v2.y,v2.z);
 			//printf("%g, %g, %g\n", vec_dot(vec_cross(vec_sub(v1, v0), vec_sub(p, v0)), rt->data_o[rt->data_o[i].vnf.x - 1].vn), vec_dot(vec_cross(vec_sub(v2, v1), vec_sub(p, v1)), rt->data_o[rt->data_o[i].vnf.x - 1].vn), vec_dot(vec_cross(vec_sub(v0, v2), vec_sub(p, v2)), rt->data_o[rt->data_o[i].vnf.x - 1].vn));
-			if (!((vec_dot(vec_cross(vec_sub(v1, v0), vec_sub(p, v0)), rt->data_o[rt->data_o[i].vnf.x - 1].vn) < 0) ||
-				(vec_dot(vec_cross(vec_sub(v2, v1), vec_sub(p, v1)), rt->data_o[rt->data_o[i].vnf.x - 1].vn) < 0) ||
-				(vec_dot(vec_cross(vec_sub(v0, v2), vec_sub(p, v2)), rt->data_o[rt->data_o[i].vnf.x - 1].vn) < 0)))
+			if (!((vec_dot(vec_cross(vec_sub(v1, v0), vec_sub(p, v0)), norm) < 0) ||
+				(vec_dot(vec_cross(vec_sub(v2, v1), vec_sub(p, v1)), norm) < 0) ||
+				(vec_dot(vec_cross(vec_sub(v0, v2), vec_sub(p, v2)), norm) < 0)))
 			{
 				if (dist < prev)
 				{
@@ -333,10 +338,6 @@ float				get_triangle_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_rt
 	// 	printf("g triangle = %g\n", g);
 	return (g);
 }
-
-
-
-
 
 
 
