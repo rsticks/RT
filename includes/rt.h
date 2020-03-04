@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rtv1.h                                             :+:      :+:    :+:   */
+/*   rt.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mtruman <mtruman@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/17 16:20:37 by daron             #+#    #+#             */
-/*   Updated: 2020/03/02 14:55:12 by daron            ###   ########.fr       */
+/*   Updated: 2020/03/04 14:32:29 by mtruman          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ typedef struct			s_cl_object
 	cl_int				specular;
     cl_int              contruction_id;
 	cl_int				reflect;
+	cl_int				texture_id;
 	cl_float			coef_refl;
 
 	cl_int				refr; //если == 1 то этот объект будет преломлять свет
@@ -93,6 +94,18 @@ typedef	struct			s_cl_light
 	cl_float3			col;
 }						t_cl_light;
 
+typedef struct		s_cl_txdata
+{
+	cl_uint			width;
+	cl_uint			height;
+	cl_uint			start;
+}					t_cl_txdata;
+typedef union		s_cl_txt_rgb
+{
+	cl_uint			c;
+	cl_uchar		bgra[4];
+}					t_cl_txt_rgb;
+
 typedef struct			s_cl
 {
 	cl_context			ct;
@@ -104,12 +117,16 @@ typedef struct			s_cl
 	cl_kernel			kernel;
 	cl_program			prog;
 	cl_mem				obj_mem;
+	cl_mem				txt_data_mem;
+	cl_mem				txt_rgb_mem;
 	cl_mem				light_mem;
 	cl_mem				img;
 	cl_mem				d_m;
 	cl_mem				i_m;
 	t_cl_object			*cl_obj;
 	t_cl_light			*cl_light;
+	t_cl_txdata			*cl_txdata;
+	t_cl_txt_rgb		*cl_txt_rgb;
 	int					*data;
 	int					o_c;
 	int					l_c;
@@ -122,6 +139,27 @@ typedef struct			s_cl
 /*
 ** ------------------Structures Fot main program--------------------------------
 */
+
+typedef union		u_rgb
+{
+	cl_int			c;
+}					t_rgb;
+
+typedef struct		s_txdata
+{
+	cl_uint			width;
+	cl_uint			height;
+	cl_uint			start;
+}					t_txdata;
+
+typedef struct		s_txgpu
+{
+	t_txdata		*txdata;
+	int				*tx;
+	int				tx_count;
+	int				total_size;
+}					t_txgpu;
+
 typedef struct			s_rgb2
 {
 	float				r;
@@ -219,6 +257,7 @@ typedef struct			s_rt
 	t_light 			*lgh_cur; // Текущий объект с которым работаем
 	t_obj 				*obj_mas; // Текущий объект с которым работаем
 	t_light 			*lgh_mas; // Текущий объект с которым работаем
+	t_txgpu				txt_gpu;
 	int					select_obj;
 	t_cl				*cl;
 
@@ -283,4 +322,5 @@ void					cheak_light(t_rt *rt);
 void					cheak_scene(t_rt *rt);
 void					cheak_object(t_rt *rt);
 void					cheak_part(t_rt *rt);
+void 					texture_init(t_rt *rt);
 #endif

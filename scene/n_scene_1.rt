@@ -3,6 +3,7 @@
 	<name> {Test scene_1} </name>
 	<res> {800 800} </res>
 	<antialias> {1} </antialias>
+
 	<ambiant> {0.15} </ambiant>
 </scene>
 
@@ -21,14 +22,7 @@
 	<rgb> {r255 g255 b255} </rgb>
 </light>
 
-<object>
-	<type> {plane} </type>
-	<pos> {x0.00 y00.00 z20.00} </pos>
-	<dir> {x0.0 y0.0 z-1.0} </dir>
-	<reflect> {off} </reflect>
-	<rgb> {r204 g102 b102} </rgb>
-	<refract> {off} </refract>
-</object>
+
 
 <object>
 	<type> {sphere} </type>

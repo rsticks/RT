@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   transform.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mtruman <mtruman@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 15:32:59 by rsticks           #+#    #+#             */
-/*   Updated: 2020/03/02 14:55:12 by daron            ###   ########.fr       */
+/*   Updated: 2020/03/04 14:42:32 by mtruman          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ t_cl_object			*transform_obj_data(t_rt *rt)
 
         cl_obj[i].torus_r = rt->obj_mas[i].torus_r;
         cl_obj[i].torus_r = rt->obj_mas[i].torus_r;
+		 cl_obj[i].texture_id= rt->obj_mas[i].texture_id;
 
 		/*printf("Not Kernel - type = %d\npos = (%g, %g, %g)\nrot = (%g, %g, %g)\n"
 		 "col = (%g, %g, %g)\nradius = %g\nreflect = %d coef = %g\n"

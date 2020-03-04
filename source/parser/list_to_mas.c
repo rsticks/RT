@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_to_mas.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daron <daron@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mtruman <mtruman@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 16:42:56 by daron             #+#    #+#             */
-/*   Updated: 2020/03/02 14:55:12 by daron            ###   ########.fr       */
+/*   Updated: 2020/03/04 14:36:33 by mtruman          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ void copy_obj(t_rt *rt)
 		rt->obj_mas[i].obj_on = obj->obj_on;
 		rt->obj_mas[i].file_name = obj->file_name;
         rt->obj_mas[i].contruction_id = obj->contruction_id;
+		rt->obj_mas[i].texture_id = obj->texture_id;
 		obj = obj->next;
 		i++;
 	}
