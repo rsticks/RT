@@ -6,7 +6,7 @@
 #    By: mtruman <mtruman@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/09 16:02:42 by daron             #+#    #+#              #
-#    Updated: 2020/03/04 15:29:28 by mtruman          ###   ########.fr        #
+#    Updated: 2020/03/04 15:45:38 by mtruman          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -75,9 +75,8 @@ SOURCES_LIST = main.c \
                     events/key_for_other.c \
                     events/mouse.c \
                     intersection/intersection.c \
-                    intersection/intersection_1.c
-					load_texture.c \
-                    intersection.c
+                    intersection/intersection_1.c \
+					load_texture.c 
 SOURCES = $(addprefix $(SOURCES_DIRECTORY), $(SOURCES_LIST))
 
 OBJECTS_DIRECTORY = objects/
