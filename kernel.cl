@@ -191,7 +191,7 @@ float 						get_cylinder_intersection(float3 *ray_dir, float3 *cam_pos, int i, t
 float                       get_paraboloid_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_rt *rt);
 float                       get_torus_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_rt *rt);
 float                       get_disk_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_rt *rt);
-
+void						normalize_coord_for_texture(float2 uv, float *color,  t_rt *rt,  int texture_id);
 void                        ft_tab_coef(float *tab, float coef, int size);
 void 	                    calculate_light(t_rt *rt, float *tab);
 void                        result_in_tab(t_rt *rt, int start_obj, float* tab, float* tab_refl, float* tab_refr);
@@ -215,6 +215,12 @@ int 						reflection(t_rt *rt, int i_obj, float3 *pos, float *tab);
 void						ft_average(float *r, float *tab);
 void 						create_ray(t_rt *rt, float x, float y);
 void 						ft_tracing(float x, float y, t_rt *rt, __global int *data, int gid);
+float2						uv_mapping_for_sphere(t_rt *rt, float3 *pos);
+float2						uv_mapping_for_plane(t_rt *rt, float3 *pos);
+float2 						uv_mapping_for_cone(t_rt *rt, float3 *pos,int i);
+float2						uv_mapping_for_cylinder(t_rt *rt, float3 *pos, int i);
+void						uv_mapping_for_skybox(t_rt *rt, float *tab);
+
 static float3			vec_change(float3 n, float3 vec)
 {
     float	cos_x,		cos_z;
@@ -376,6 +382,8 @@ void    ft_fzero(float *s, int n)
 		s[i] = 0.0f;
 		i++;
 	}
+}
+
 float3		vec_cross(float3 v1, float3 v2)
 {
 	float3	v;
@@ -625,9 +633,6 @@ float				get_triangle_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_rt
 	float	prev;
 	float3 	p;
 	float3 	temp;
-	float2 	c;
-	float2	t;
-	float	det;
 	float3	v0, v1, v2;
 	float3	norm;
 
@@ -639,17 +644,7 @@ float				get_triangle_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_rt
 	{	
 		norm = vec_sum(rt->data_o[rt->data_o[i].vnf.x - 1].vn, rt->data_o[rt->data_o[i].vnf.y - 1].vn);
 		norm = (vec_sum(norm, rt->data_o[rt->data_o[i].vnf.z - 1].vn));
-		//norm = vec_scale(norm, 1/3);
-		//norm = rt->data_o[rt->data_o[i].vnf.x - 1].vn;
-		//if (rt->gid == 1)
-		//printf("Check %f %f %f\n ", rt->data_o[rt->data_o[i].vf.x - 1].v.x, rt->data_o[rt->data_o[i].vf.x - 1].v.y, rt->data_o[rt->data_o[i].vf.x - 1].v.z);
-		//dist = ((vec_dot(rt->data_o[rt->data_o[i].vnf.x - 1].vn, rt->data_o[rt->data_o[i].vf.x - 1].v) -  vec_dot(rt->data_o[rt->data_o[i].vnf.x - 1].vn, *cam_pos)) / vec_dot(rt->data_o[rt->data_o[i].vnf.x - 1].vn, *ray_dir));
 		dist = ((vec_dot(norm, rt->data_o[rt->data_o[i].vf.x - 1].v) -  vec_dot(norm, *cam_pos)) / vec_dot(norm, *ray_dir));
-		// dist.y = ((vec_dot(rt->data_o[rt->data_o[i].vnf.y - 1].vn, rt->data_o[rt->data_o[i].vf.y - 1].v) -  vec_dot(rt->data_o[rt->data_o[i].vnf.y - 1].vn, *cam_pos)) / vec_dot(rt->data_o[rt->data_o[i].vnf.y - 1].vn, *ray_dir));
-		// dist.z = ((vec_dot(rt->data_o[rt->data_o[i].vnf.z - 1].vn, rt->data_o[rt->data_o[i].vf.z - 1].v) -  vec_dot(rt->data_o[rt->data_o[i].vnf.z - 1].vn, *cam_pos)) / vec_dot(rt->data_o[rt->data_o[i].vnf.z - 1].vn, *ray_dir));
-		// if (dist >= EPS)
-		// 	printf("dist triangle = %g\n", dist);
-
 		if (dist >= EPS)
 		{
 			temp = vec_scale(*ray_dir, dist);
@@ -657,54 +652,20 @@ float				get_triangle_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_rt
 			v0 = rt->data_o[rt->data_o[i].vf.x - 1].v;
 			v1 = rt->data_o[rt->data_o[i].vf.y - 1].v;
 			v2 = rt->data_o[rt->data_o[i].vf.z - 1].v;
-			//printf("v0 = %g %g %g\nv1 = %g %g %g\nv2 = %g %g %g\n\n", v0.x,v0.y,v0.z, v1.x,v1.y,v1.z, v2.x,v2.y,v2.z);
-			//printf("%g, %g, %g\n", vec_dot(vec_cross(vec_sub(v1, v0), vec_sub(p, v0)), rt->data_o[rt->data_o[i].vnf.x - 1].vn), vec_dot(vec_cross(vec_sub(v2, v1), vec_sub(p, v1)), rt->data_o[rt->data_o[i].vnf.x - 1].vn), vec_dot(vec_cross(vec_sub(v0, v2), vec_sub(p, v2)), rt->data_o[rt->data_o[i].vnf.x - 1].vn));
 			if (!((vec_dot(vec_cross(vec_sub(v1, v0), vec_sub(p, v0)), norm) < 0) ||
 				(vec_dot(vec_cross(vec_sub(v2, v1), vec_sub(p, v1)), norm) < 0) ||
 				(vec_dot(vec_cross(vec_sub(v0, v2), vec_sub(p, v2)), norm) < 0)))
 			{
 				if (dist < prev)
 				{
-					//printf("dist triangle = %g\n", dist);
 					rt->count_of_triangl = i;
 					g = dist;
 					prev = dist;
 				}		
 			}
 		}
-		// if (dist >= EPS)
-		// {
-		// 	//printf("Check (%f %f %f) \n", rt->data_o[rt->data_o[i].vf.z - 1].v.x, rt->data_o[rt->data_o[i].vf.z - 1].v.y, rt->data_o[rt->data_o[i].vf.z - 1].v.z);
-		// 	v1 = vec_sub(rt->data_o[rt->data_o[i].vf.y - 1].v ,rt->data_o[rt->data_o[i].vf.x - 1].v);
-		// 	v2 = vec_sub(rt->data_o[rt->data_o[i].vf.z - 1].v ,rt->data_o[rt->data_o[i].vf.x - 1].v);
-		// 	temp = vec_scale(*ray_dir, dist);
-		// 	p = vec_sum(*cam_pos, temp);
-		// 	det = v1.x * v2.y - v2.x * v1.y;
-		// 	//printf("v2 = (%f, %f)\n", v2.x, v2.y);
-		// 	if (det != 0)
-		// 	{
-		// 		//printf("det = %f\n", det);
-		// 		t.x = p.x - rt->data_o[rt->data_o[i].vf.x - 1].v.x;
-		// 		t.y = p.y - rt->data_o[rt->data_o[i].vf.x - 1].v.y;
-		// 		c.x = t.x * (v2.y / det) + t.y * (((-1) * v2.x) / det);
-		// 		c.y = t.x * (((-1) * v1.y) / det) + t.y * (v2.x / det);
-		// 		//printf("c = (%f, %f)\n", c.x, c.y);
-			
-		// 		if ((((c.x + c.y) >= 0) && ((c.x + c.y) <= 1)) && (c.x >= 0 && c.x <= 1) && (c.y >= 0 && c.y <= 1))
-		// 		{
-		// 			if (dist < prev)
-		// 			{
-		// 				rt->count_of_triangl = i;
-		// 				g = dist;
-		// 				prev = dist;
-		// 			}
-		// 		}
-		// 	}
-		// }
 		i++;
 	}
-	// if (g != -1)
-	// 	printf("g triangle = %g\n", g);
 	return (g);
 }
 
@@ -939,6 +900,8 @@ int shadow(t_rt *rt, int i_obj, int i_light, float3 pos)
 				d = get_disk_intersection(&dist, &pos, i, rt);
             else if (rt->obj[i].name == TORUS_ID)
                 d = get_torus_intersection(&dist, &pos, i, rt);
+			else if (rt->obj[i].name == OBJ_FILE_ID)
+                d = get_triangle_intersection(&dist, &pos, i, rt);
 			if (d > EPS && d < rt->t)
 				return (i);
 		}
@@ -996,6 +959,8 @@ int ref_inter(t_rt *rt, int i_cur_obj , float3 pos)
 				dist = get_disk_intersection(&rt->ref, &pos, i, rt);
             else if (rt->obj[i].name == TORUS_ID)
                 dist = get_torus_intersection(&rt->ref, &pos, i, rt);
+			else if (rt->obj[i].name == OBJ_FILE_ID)
+                dist = get_triangle_intersection(&rt->ref, &pos, i, rt);
 			if (dist > EPS && dist < rt->t)
 			{
 				f = i;
@@ -1050,6 +1015,8 @@ int refr_inter(t_rt *rt, float3 *pos)
             dist = get_disk_intersection(&rt->ref, pos, i, rt);
         else if (rt->obj[i].name == TORUS_ID)
             dist = get_torus_intersection(&rt->ref, pos, i, rt);
+		else if (rt->obj[i].name == OBJ_FILE_ID)
+            dist = get_triangle_intersection(&rt->ref, pos, i, rt);
 		if (dist > EPS && dist < rt->t)
 		{
 			f = i;
@@ -1091,9 +1058,6 @@ int refr_init(t_rt *rt, int i_obj, float3 *pos)
 	rt->ray_dir = (float3){rt->ref.x, rt->ref.y, rt->ref.z};
 	return (new_inter);
 }
-///
-///
-///
 
 void	uv_mapping_for_skybox(t_rt *rt, float *tab)
 {
@@ -1111,37 +1075,12 @@ void	uv_mapping_for_skybox(t_rt *rt, float *tab)
 	u = 0.5f + (atan2(vec.x, vec.z) / (2.f * M_PI_F));
 	v = 0.5f + (asin(vec.y) / M_PI_F);
 	coord = (int)(u * tex_width) + (int)(v * tex_height) * tex_width;
-	//coord += tex_param[text_id * 3];
 	tab[0] += (float)(RED(rt->tx[coord].c) * 0.00392156862f); 
 	tab[1] += (float)(GREEN(rt->tx[coord].c) * 0.00392156862f);
 	tab[2] += (float)(BLUE(rt->tx[coord].c) * 0.00392156862f);
-	//tab[0] = (float)((rt->tx[coord].c) * 0.00392156862f); 
-	//tab[1] = (float)((rt->tx[coord].c) * 0.00392156862f);
-	//tab[2] = (float)((rt->tx[coord].c) * 0.00392156862f);
+
 }
-/*int	uv_mapping_for_skybox(t_rt *rt)
-{
-	float3	vec;
-	float 	v;
-	float 	u;
-	int		coord;
-	uint		tex_width;
-	uint		tex_height;
 
-
-	vec = vec_scale(rt->ray_dir, -1);
-	tex_width = rt->txdata[0].width;
-	tex_height = rt->txdata[0].height;
-	u = 0.5f + (atan2(vec.x, vec.z) / (2.f * M_PI_F));
-	v = 0.5f + (asin(vec.y) / M_PI_F);
-	coord = (int)(u * tex_width) + (int)(v * tex_height) * tex_width;
-	return ((int)rt->tx[coord].c);
-}*/
-
-//
-//
-//
-//
 void main_light(t_rt *rt, int i_obj, float *tab, float3 *pos)
 {
 	float3 dist;
@@ -1152,18 +1091,13 @@ void main_light(t_rt *rt, int i_obj, float *tab, float3 *pos)
 	while (ind < rt->scene.lgh_c)
 	{
 		tab[3] = rt->scene.ambient;
-        //printf("tab[3] = %g", tab[3]);
 		dist = vec_sub(rt->light[ind].pos, *pos);
-		//printf("dist = %g %g %g", dist.x, dist.y, dist.z);
 		d = ft_clamp((1.0 / native_sqrt(native_sqrt(vec_dot(dist, dist)))), 0.0, 1.0);
-		//printf("d = %g", d);
 		dist = vec_norm(dist);
-        //printf("dist = %g %g %g", dist.x, dist.y, dist.z);
 		if ((obj_num = shadow(rt, i_obj, ind, *pos)) == 0)
 			tab[3] += ft_clamp(vec_dot(dist, rt->norm), 0.0, 1.0);
 		else if (rt->obj[obj_num].refr == 1.0)
 			tab[3] += rt->obj[obj_num].coef_refr * ft_clamp(vec_dot(dist, rt->norm), 0.0, 1.0);
-        // printf("tab[3] = %g", tab[3]);
 		if (rt->obj[i_obj].texture_id != -1)
 		{
 			if(rt->obj[i_obj].name == SPHERE_ID)
@@ -1176,7 +1110,7 @@ void main_light(t_rt *rt, int i_obj, float *tab, float3 *pos)
 				normalize_coord_for_texture(uv_mapping_for_plane(rt, pos),tab,rt,rt->obj[i_obj].texture_id );
 		}
 		transfer_light(i_obj, ind, tab, d, rt);
-		//gloss(rt, i_obj, tab, &dist , d);
+		gloss(rt, i_obj, tab, &dist , d);
 		ind++;
 	}
 }
@@ -1303,7 +1237,7 @@ __kernel void 		start(__global t_cl_object *obj,
 							__global int *i_mem,
 							__global float *d_mem,
 							__global t_cl_txt_rgb *tx,
-							__global t_cl_txdata *txdata)
+							__global t_cl_txdata *txdata,
 							__global t_cl_data_obj *d_obj)
 {
 	int				gid, x, y;

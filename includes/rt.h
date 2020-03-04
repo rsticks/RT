@@ -6,7 +6,7 @@
 /*   By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/17 16:20:37 by daron             #+#    #+#             */
-/*   Updated: 2020/03/04 16:49:20 by rsticks          ###   ########.fr       */
+/*   Updated: 2020/03/04 17:01:18 by rsticks          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,9 @@
 # include <unistd.h>
 # include <fcntl.h>
 # include <stdio.h>
-#include  <math.h>
+# include  <math.h>
 # include "ftvector.h"
+# include "pars_obj.h"
 # include "libft.h"
 # include <SDL2/SDL.h>
 

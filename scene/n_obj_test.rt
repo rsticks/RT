@@ -12,13 +12,22 @@
 </camera>
 
 <light>
-	<pos> {x-60.00 y30.00 z-60.00} </pos>
+	<pos> {x10.0 y8.0 z2.0} </pos>
 	<rgb> {r255 g255 b255} </rgb>
 </light>
 
 <object>
 	<type> {object_f} </type>
-	<rgb> {r255 g255 b255} </rgb>
+	<rgb> {r255 g00 b255} </rgb>
+	<spec> {on} </spec>
 	<file_addr>{obj "objs/3.obj"}</file_addr>
 </object>
 
+<object>
+	<type> {plane} </type>
+	<pos> {x00.00 y-26.00 z00.00} </pos>
+	<dir> {x0.0 y1.0 z0.0} </dir>
+	<rgb> {r255 g255 b255} </rgb>
+	<reflect> {off} </reflect>
+	<refract> {off} </refract>
+</object>

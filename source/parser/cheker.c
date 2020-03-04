@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cheker.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daron <daron@student.42.fr>                +#+  +:+       +#+        */
+/*   By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 15:47:14 by daron             #+#    #+#             */
-/*   Updated: 2020/03/02 15:10:03 by daron            ###   ########.fr       */
+/*   Updated: 2020/03/04 17:05:56 by rsticks          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,21 +52,21 @@ void		cheak_object(t_rt *rt)
 	{
 		if (obj->check[0] == 0)
 			kill_all("ERROR: You must set the object type");
-		else if (obj->check[1] == 0)
+		else if (obj->check[1] == 0 && obj->type != OBJ_FILE_ID)
 			kill_all("ERROR: You must set the object position");
-		else if (obj->check[2] == 0 && obj->type != SPHERE_ID)
+		else if (obj->check[2] == 0 && obj->type != SPHERE_ID && obj->type != OBJ_FILE_ID)
 			kill_all("ERROR: You must set the object direction");
-		else if (obj->check[5] == 0)
+		else if (obj->check[5] == 0 && obj->type != OBJ_FILE_ID)
 			kill_all("ERROR: You must set the reflection level");
-		else if (obj->check[6] == 0)
+		else if (obj->check[6] == 0 && obj->type != OBJ_FILE_ID)
 			kill_all("ERROR: You must set the rafraction level");
-		else if (obj->check[3] == 0)
+		else if (obj->check[3] == 0 && obj->type != OBJ_FILE_ID)
 			kill_all("ERROR: You must set the object color");
 		else if (obj->check[4] == 0 && (obj->type == DISK_ID ||
 				obj->type == SPHERE_ID || obj->type == TORUS_ID ||
-				obj->type == PARABOLOID_ID))
+				obj->type == PARABOLOID_ID) && obj->type != OBJ_FILE_ID)
 			kill_all("ERROR: You must set the sphere radius");
-		else if (obj->check[11] == 0 && obj->type == TORUS_ID)
+		else if (obj->check[11] == 0 && obj->type == TORUS_ID && obj->type != OBJ_FILE_ID)
 			kill_all("ERROR: You must set the torus main radius");
 		obj = obj->next;
 	}
