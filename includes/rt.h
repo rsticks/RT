@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtruman <mtruman@student.42.fr>            +#+  +:+       +#+        */
+/*   By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/17 16:20:37 by daron             #+#    #+#             */
-/*   Updated: 2020/03/04 15:39:54 by mtruman          ###   ########.fr       */
+/*   Updated: 2020/03/04 16:49:20 by rsticks          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,7 @@ typedef struct			s_cl
 	cl_mem				img;
 	cl_mem				d_m;
 	cl_mem				i_m;
+	cl_mem				obj;
 	t_cl_object			*cl_obj;
 	t_cl_light			*cl_light;
 	t_cl_txdata			*cl_txdata;
@@ -270,11 +271,12 @@ typedef struct			s_rt
 	t_txgpu				txt_gpu;
 	int					select_obj;
 	t_cl				*cl;
-
+	t_parse_obj			*data_obj;
 }						t_rt;
 /*
 ** ------------------Function Prototype--------------------------------
 */
+void					check_objs(t_rt *rt);
 void					ft_init_cl(t_cl *cl, t_rt *rt);
 void					start_kernel(t_cl *cl, t_rt *rt);
 void					init_cl(t_cl *cl, t_rt *rt);

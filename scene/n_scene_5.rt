@@ -45,7 +45,7 @@
 	<type> {sphere} </type>
 	<pos> {x45.00 y-23.00 z-13.00} </pos>
 	<radius> {35.00} </radius>
-	<rgb> {r0 g250 b250} </rgb>
+	<rgb> {r250 g0 b0} </rgb>
 	<reflect> {on c0.9} </reflect>
 	<spec> {off} </spec>
 	<refract> {off} </refract>

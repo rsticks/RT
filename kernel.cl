@@ -61,6 +61,19 @@ typedef struct		s_basis
 	__float3		w;
 }					t_basis;
 
+typedef struct				s_cl_data_obj
+{
+	int						num;
+	float3					v;
+	float3					vn;
+	float					u1;
+	float					v1;
+	int3					vf;
+	int3					vnf;
+	int3					vtf;
+}							t_cl_data_obj;
+
+
 typedef struct		s_cl_txdata
 {
 	uint			width;
@@ -138,7 +151,9 @@ typedef struct				s_rt
 	__global t_cl_light		*light;
 	__global t_cl_txt_rgb	*tx;
 	__global t_cl_txdata	*txdata;
+	__global t_cl_data_obj	*data_o;
 
+	int						gid;
 	float3					ray_dir;
 	float					t;
 	float3 					dist;
@@ -154,8 +169,11 @@ typedef struct				s_rt
 
 
 	int						intr_obj;
+	int						f_count;
+	int						count_of_triangl;
 }							t_rt;
 
+float						get_triangle_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_rt *rt);
 void						ft_fzero(float *s, int n);
 float						ft_clamp(float value, float min, float max);
 float3						vec_sum(float3 v1, float3 v2);
@@ -358,6 +376,14 @@ void    ft_fzero(float *s, int n)
 		s[i] = 0.0f;
 		i++;
 	}
+float3		vec_cross(float3 v1, float3 v2)
+{
+	float3	v;
+
+	v.x = v1.y * v2.z - v1.z * v2.y;
+	v.y = v1.z * v2.x - v1.x * v2.z;
+	v.z = v1.x * v2.y - v1.y * v2.x;
+	return (v);
 }
 
 float3		vec_sum(float3 v1, float3 v2)
@@ -408,16 +434,6 @@ float3	vec_norm(float3 v1)
 	return (vec_scale(v1, norm_k));
 }
 
-float3   vec_cross(float3 v1, float3 v2)
-{
-	float3   v;
-
-	v.x = v1.y * v2.z - v1.z * v2.y;
-	v.y = v1.z * v2.x - v1.x * v2.z;
-	v.z = v1.x * v2.y - v1.y * v2.x;
-	return (v);
-}
-//----------------------------Start Math Module---------------------------------
 float				get_quadratic_solution(float a, float b, float discriminant)
 {
 	float 			t1;
@@ -597,6 +613,104 @@ float get_sphere_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_rt *rt)
 	return (get_quadratic_solution(a, b , discriminant));
 }
 
+
+
+
+
+
+float				get_triangle_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_rt *rt)
+{
+	float	dist;
+	float 	g;
+	float	prev;
+	float3 	p;
+	float3 	temp;
+	float2 	c;
+	float2	t;
+	float	det;
+	float3	v0, v1, v2;
+	float3	norm;
+
+	g = -1;
+	i = 0;
+	prev = 90000.0;
+	rt->count_of_triangl = rt->f_count;
+	while (i < rt->f_count)
+	{	
+		norm = vec_sum(rt->data_o[rt->data_o[i].vnf.x - 1].vn, rt->data_o[rt->data_o[i].vnf.y - 1].vn);
+		norm = (vec_sum(norm, rt->data_o[rt->data_o[i].vnf.z - 1].vn));
+		//norm = vec_scale(norm, 1/3);
+		//norm = rt->data_o[rt->data_o[i].vnf.x - 1].vn;
+		//if (rt->gid == 1)
+		//printf("Check %f %f %f\n ", rt->data_o[rt->data_o[i].vf.x - 1].v.x, rt->data_o[rt->data_o[i].vf.x - 1].v.y, rt->data_o[rt->data_o[i].vf.x - 1].v.z);
+		//dist = ((vec_dot(rt->data_o[rt->data_o[i].vnf.x - 1].vn, rt->data_o[rt->data_o[i].vf.x - 1].v) -  vec_dot(rt->data_o[rt->data_o[i].vnf.x - 1].vn, *cam_pos)) / vec_dot(rt->data_o[rt->data_o[i].vnf.x - 1].vn, *ray_dir));
+		dist = ((vec_dot(norm, rt->data_o[rt->data_o[i].vf.x - 1].v) -  vec_dot(norm, *cam_pos)) / vec_dot(norm, *ray_dir));
+		// dist.y = ((vec_dot(rt->data_o[rt->data_o[i].vnf.y - 1].vn, rt->data_o[rt->data_o[i].vf.y - 1].v) -  vec_dot(rt->data_o[rt->data_o[i].vnf.y - 1].vn, *cam_pos)) / vec_dot(rt->data_o[rt->data_o[i].vnf.y - 1].vn, *ray_dir));
+		// dist.z = ((vec_dot(rt->data_o[rt->data_o[i].vnf.z - 1].vn, rt->data_o[rt->data_o[i].vf.z - 1].v) -  vec_dot(rt->data_o[rt->data_o[i].vnf.z - 1].vn, *cam_pos)) / vec_dot(rt->data_o[rt->data_o[i].vnf.z - 1].vn, *ray_dir));
+		// if (dist >= EPS)
+		// 	printf("dist triangle = %g\n", dist);
+
+		if (dist >= EPS)
+		{
+			temp = vec_scale(*ray_dir, dist);
+			p = vec_sum(*cam_pos, temp);
+			v0 = rt->data_o[rt->data_o[i].vf.x - 1].v;
+			v1 = rt->data_o[rt->data_o[i].vf.y - 1].v;
+			v2 = rt->data_o[rt->data_o[i].vf.z - 1].v;
+			//printf("v0 = %g %g %g\nv1 = %g %g %g\nv2 = %g %g %g\n\n", v0.x,v0.y,v0.z, v1.x,v1.y,v1.z, v2.x,v2.y,v2.z);
+			//printf("%g, %g, %g\n", vec_dot(vec_cross(vec_sub(v1, v0), vec_sub(p, v0)), rt->data_o[rt->data_o[i].vnf.x - 1].vn), vec_dot(vec_cross(vec_sub(v2, v1), vec_sub(p, v1)), rt->data_o[rt->data_o[i].vnf.x - 1].vn), vec_dot(vec_cross(vec_sub(v0, v2), vec_sub(p, v2)), rt->data_o[rt->data_o[i].vnf.x - 1].vn));
+			if (!((vec_dot(vec_cross(vec_sub(v1, v0), vec_sub(p, v0)), norm) < 0) ||
+				(vec_dot(vec_cross(vec_sub(v2, v1), vec_sub(p, v1)), norm) < 0) ||
+				(vec_dot(vec_cross(vec_sub(v0, v2), vec_sub(p, v2)), norm) < 0)))
+			{
+				if (dist < prev)
+				{
+					//printf("dist triangle = %g\n", dist);
+					rt->count_of_triangl = i;
+					g = dist;
+					prev = dist;
+				}		
+			}
+		}
+		// if (dist >= EPS)
+		// {
+		// 	//printf("Check (%f %f %f) \n", rt->data_o[rt->data_o[i].vf.z - 1].v.x, rt->data_o[rt->data_o[i].vf.z - 1].v.y, rt->data_o[rt->data_o[i].vf.z - 1].v.z);
+		// 	v1 = vec_sub(rt->data_o[rt->data_o[i].vf.y - 1].v ,rt->data_o[rt->data_o[i].vf.x - 1].v);
+		// 	v2 = vec_sub(rt->data_o[rt->data_o[i].vf.z - 1].v ,rt->data_o[rt->data_o[i].vf.x - 1].v);
+		// 	temp = vec_scale(*ray_dir, dist);
+		// 	p = vec_sum(*cam_pos, temp);
+		// 	det = v1.x * v2.y - v2.x * v1.y;
+		// 	//printf("v2 = (%f, %f)\n", v2.x, v2.y);
+		// 	if (det != 0)
+		// 	{
+		// 		//printf("det = %f\n", det);
+		// 		t.x = p.x - rt->data_o[rt->data_o[i].vf.x - 1].v.x;
+		// 		t.y = p.y - rt->data_o[rt->data_o[i].vf.x - 1].v.y;
+		// 		c.x = t.x * (v2.y / det) + t.y * (((-1) * v2.x) / det);
+		// 		c.y = t.x * (((-1) * v1.y) / det) + t.y * (v2.x / det);
+		// 		//printf("c = (%f, %f)\n", c.x, c.y);
+			
+		// 		if ((((c.x + c.y) >= 0) && ((c.x + c.y) <= 1)) && (c.x >= 0 && c.x <= 1) && (c.y >= 0 && c.y <= 1))
+		// 		{
+		// 			if (dist < prev)
+		// 			{
+		// 				rt->count_of_triangl = i;
+		// 				g = dist;
+		// 				prev = dist;
+		// 			}
+		// 		}
+		// 	}
+		// }
+		i++;
+	}
+	// if (g != -1)
+	// 	printf("g triangle = %g\n", g);
+	return (g);
+}
+
+
+
+
 float get_plane_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_rt *rt)
 {
 	float dist;
@@ -608,12 +722,15 @@ float get_plane_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_rt *rt)
 	return (dist);
 }
 
+
+
+
 float get_cone_intersection(float3 *ray_dir, float3 *cam_pos, int i, t_rt *rt)
 {
 	float	b;
 	float	c;
 	float	a;
-	float discriminant;
+	float	discriminant;
 
 	rt->dist = vec_sub(*cam_pos, rt->obj[i].pos);
 	rt->obj[i].rot = vec_norm(rt->obj[i].rot);
@@ -739,7 +856,9 @@ int     intersection(t_rt *rt, float3 *ray_dir, float3 *cam_pos)
 			dist = get_disk_intersection(ray_dir, cam_pos, i, rt);
         else if (rt->obj[i].name == TORUS_ID)
             dist = get_torus_intersection(ray_dir, cam_pos, i, rt);
-        if (dist > EPS && dist < rt->t)
+		else if (rt->obj[i].name == OBJ_FILE_ID)
+			dist = get_triangle_intersection(ray_dir, cam_pos, i, rt);
+		if (dist > EPS && dist < rt->t)
 		{
 			f = i;
 			rt->t = dist;
@@ -776,6 +895,8 @@ float3 object_norm(t_rt *rt, int i, float3 pos)
 		norm = rt->obj[i].rot;
 	else if (rt->obj[i].name == PARABOLOID_ID)
 		norm = vec_sub( vec_sub(pos, rt->obj[i].pos), vec_scale(rt->obj[i].rot, (vec_dot(vec_sub(pos, rt->obj[i].pos), rt->obj[i].rot) + rt->obj[i].r)));
+	else if (rt->obj[i].name == OBJ_FILE_ID)
+		norm = rt->data_o[rt->data_o[rt->count_of_triangl].vnf.x - 1].vn;
 	else if (rt->obj[i].name == SPHERE_ID)
 		norm = vec_sub(pos, rt->obj[i].pos);
 	return (vec_norm(norm));
@@ -1055,7 +1176,7 @@ void main_light(t_rt *rt, int i_obj, float *tab, float3 *pos)
 				normalize_coord_for_texture(uv_mapping_for_plane(rt, pos),tab,rt,rt->obj[i_obj].texture_id );
 		}
 		transfer_light(i_obj, ind, tab, d, rt);
-		gloss(rt, i_obj, tab, &dist , d);
+		//gloss(rt, i_obj, tab, &dist , d);
 		ind++;
 	}
 }
@@ -1153,6 +1274,7 @@ void ft_tracing(float x, float y, t_rt *rt, __global int *data, int gid)
 	int x_next = (int)x + 1, y_next = (int)y + 1; 
 	float p;
 
+
 	ft_fzero(r, 3);
 	p = 0.0;
 	while (y < y_next)
@@ -1171,9 +1293,6 @@ void ft_tracing(float x, float y, t_rt *rt, __global int *data, int gid)
 		}
 		y = y + (1.0 / rt->window.anti_alias);
 	}
-	//if (tab[0] == 0.0 && tab[1] == 0.0 && tab[2] == 0.0)
-	//	data[gid] = uv_mapping_for_skybox(rt);
-	//else 
 	data[gid] = (((int)(r[0] / p * 255.0) & 0xff) << 16) + (((int)(r[1] / p * 255.0) & 0xff) << 8) + (((int)(r[2] / p * 255.0) & 0xff));
 }
 
@@ -1185,6 +1304,7 @@ __kernel void 		start(__global t_cl_object *obj,
 							__global float *d_mem,
 							__global t_cl_txt_rgb *tx,
 							__global t_cl_txdata *txdata)
+							__global t_cl_data_obj *d_obj)
 {
 	int				gid, x, y;
 	t_rt			rt;
@@ -1197,6 +1317,7 @@ __kernel void 		start(__global t_cl_object *obj,
 	rt.scene.obj_c = i_mem[3];
 	rt.scene.lgh_c = i_mem[4];
 	rt.scene.maxref = i_mem[5];
+	rt.f_count = i_mem[6];
 	rt.cam.pos = (float3){d_mem[0], d_mem[1], d_mem[2]};
 	rt.scene.ambient = d_mem[3];
 	rt.cam.rot = (float3){d_mem[4], d_mem[5], d_mem[6]};
@@ -1204,6 +1325,25 @@ __kernel void 		start(__global t_cl_object *obj,
 	rt.light = light;
 	rt.tx = tx;
 	rt.txdata = txdata;
+	rt.gid = gid;
+	rt.data_o = d_obj;
+	int i = 0;
+	//rt.obj[0].name = OBJ_FILE_ID;
+	// if (gid >= 1 && gid <= 3)
+	// {
+	// 	//printf("IN KERNEL\n");
+	// 	printf("f || %d/%d/%d %d/%d/%d %d/%d/%d\n f_count = %d\n", 
+	// 	d_obj[rt.f_count - 1].vf.x, d_obj[rt.f_count - 1].vtf.x, d_obj[rt.f_count - 1].vnf.x,
+	// 	d_obj[rt.f_count - 1].vf.y, d_obj[rt.f_count - 1].vtf.y, d_obj[rt.f_count - 1].vnf.y,
+	// 	d_obj[rt.f_count - 1].vf.z, d_obj[rt.f_count - 1].vtf.z, d_obj[rt.f_count - 1].vnf.z,
+	// 	rt.f_count);
+	// 	for (size_t i = 0; i < 3; i++)
+	// 	{
+	// 		printf("v [%d] %f %f %f\n", (gid - 1), d_obj[gid - 1].v.x, d_obj[gid - 1].v.y, d_obj[gid - 1].v.z);
+	// 	}
+	// 	printf("vn %f %f %f\n", d_obj[i].vn.x, d_obj[i].vn.y, d_obj[i].vn.z);
+	// }
+
 	x = gid % rt.window.size[0];
 	y = gid / rt.window.size[1];
 	//if (gid == 1)

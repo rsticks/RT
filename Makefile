@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mtruman <mtruman@student.42.fr>            +#+  +:+       +#+         #
+#    By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/09 16:02:42 by daron             #+#    #+#              #
-#    Updated: 2020/03/04 15:45:38 by mtruman          ###   ########.fr        #
+#    Updated: 2020/03/04 16:50:00 by rsticks          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,7 +40,8 @@ FTVECTOR = $(FTVECTOR_DIRECTORY)ftvector.a
 FTVECTOR_DIRECTORY = ./ftvector/
 FTVECTOR_HEADERS = $(FTVECTOR_DIRECTORY)includes/
 
-HEADERS_LIST = rt.h
+HEADERS_LIST =	rt.h
+				
 HEADERS_DIRECTORY = ./includes/
 HEADERS = $(addprefix $(HEADERS_DIRECTORY), $(HEADERS_LIST))
 
@@ -76,7 +77,10 @@ SOURCES_LIST = main.c \
                     events/mouse.c \
                     intersection/intersection.c \
                     intersection/intersection_1.c \
-					load_texture.c 
+					load_texture.c \
+					parser_obj/parse_obj.c \
+					check_objs.c \
+
 SOURCES = $(addprefix $(SOURCES_DIRECTORY), $(SOURCES_LIST))
 
 OBJECTS_DIRECTORY = objects/
@@ -103,6 +107,7 @@ $(OBJECTS_DIRECTORY):
 	@mkdir -p $(OBJECTS_DIRECTORY)/parser
 	@mkdir -p $(OBJECTS_DIRECTORY)/events
 	@mkdir -p $(OBJECTS_DIRECTORY)/intersection
+	@mkdir -p $(OBJECTS_DIRECTORY)/parser_obj
 	@echo "$(NAME): $(GREEN)$(OBJECTS_DIRECTORY) was created$(RESET)"
 
 $(OBJECTS_DIRECTORY)%.o : $(SOURCES_DIRECTORY)%.c $(HEADERS)

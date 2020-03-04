@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtruman <mtruman@student.42.fr>            +#+  +:+       +#+        */
+/*   By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/17 16:08:56 by daron             #+#    #+#             */
-/*   Updated: 2020/03/04 15:39:54 by mtruman          ###   ########.fr       */
+/*   Updated: 2020/03/04 16:55:10 by rsticks          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,16 @@ int				main(int argc, char **argv)
 {
 	t_cl		*cl;
 	t_rt		rt;
+	int			num_obj;
 
+	num_obj = 0;
 	if (argc != 2 || !argv[1] || !ft_strstr(argv[1], ".rt"))
 		kill_all("usage: ./RTv1 scene_name");
 	if (!(cl = (t_cl*)malloc(sizeof(t_cl))))
 		kill_all("Can't initialize CL <main>");
 	init_rt(&rt, argv[1], 1);
 	texture_init(&rt);
-	printf("%i", rt.txt_gpu.txdata[0].height);
+	check_objs(&rt);
 	sdl_initialize(&rt);
 	if(!(cl->data = (int*)malloc(sizeof(int) * rt.window.size[0] * rt.window.size[1])))
 		kill_all("Can't initialize CL_data <main>");

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cl.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtruman <mtruman@student.42.fr>            +#+  +:+       +#+        */
+/*   By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 19:16:48 by rsticks           #+#    #+#             */
-/*   Updated: 2020/03/04 14:42:34 by mtruman          ###   ########.fr       */
+/*   Updated: 2020/03/04 16:53:30 by rsticks          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,9 @@ void			ft_init_cl(t_cl *cl, t_rt *rt)
 	cl->txt_rgb_mem = clCreateBuffer(cl->ct, CMRW, sizeof(t_rgb) * rt->txt_gpu.total_size, NULL, &cl->err);
 	cl->txt_data_mem = clCreateBuffer(cl->ct, CMRW, sizeof(t_txdata) * rt->txt_gpu.tx_count, NULL, &cl->err);
 	cl->img = clCreateBuffer(cl->ct, CMRW, sizeof(int) * w, NULL, &cl->err);
-	cl->i_m = clCreateBuffer(cl->ct, CMRW, sizeof(int) * 6, NULL, &cl->err);
+	cl->i_m = clCreateBuffer(cl->ct, CMRW, sizeof(int) * 7, NULL, &cl->err);
 	cl->d_m = clCreateBuffer(cl->ct, CMRW, sizeof(float) * 7, NULL, &cl->err);
+	cl->obj = clCreateBuffer(cl->ct, CMRW, sizeof(t_cl_data_obj) * rt->data_obj->max_c, NULL, &cl->err);
 	cl->err = clSetKernelArg(cl->kernel, 0, sizeof(cl_mem), &cl->obj_mem);
 	cl->err = clSetKernelArg(cl->kernel, 1, sizeof(cl_mem), &cl->light_mem);
 	cl->err = clSetKernelArg(cl->kernel, 2, sizeof(cl_mem), &cl->img);
@@ -60,6 +61,7 @@ void			ft_init_cl(t_cl *cl, t_rt *rt)
 	cl->err = clSetKernelArg(cl->kernel, 4, sizeof(cl_mem), &cl->d_m);
 	cl->err = clSetKernelArg(cl->kernel, 5, sizeof(cl_mem), &cl->txt_rgb_mem);
 	cl->err = clSetKernelArg(cl->kernel, 6, sizeof(cl_mem), &cl->txt_data_mem);
+	cl->err = clSetKernelArg(cl->kernel, 7, sizeof(cl_mem), &cl->obj);
 	printf("%-32s || %d\n", "clSetKernelArg", cl->err);
 }
 
@@ -110,28 +112,29 @@ void			mem_to_kernel(t_rt *rt, float *d_m, int *i_m)
 	i_m[3] = rt->scene.obj_c;
 	i_m[4] = rt->scene.lgh_c;
 	i_m[5] = rt->scene.maxref;
+	i_m[6] = rt->data_obj->count_f;
 }
 
 void			start_kernel(t_cl *cl, t_rt *rt)
 {
 	size_t		gws;
-	int			i_m[6];
+	int			i_m[7];
 	float		d_m[7];
 
 	cl->cl_obj = transform_obj_data(rt);
 	cl->cl_light = transform_light_data(rt);
 	mem_to_kernel(rt, d_m, i_m);
 	gws = rt->window.size[0] * rt->window.size[1];
-	//printf("\nHOST = %d\n", cl->cl_txt_rgb[1].c);
-	cl->err = clEnqueueWriteBuffer(cl->q, cl->i_m, CL_TRUE, 0, sizeof(int) * 6, i_m, 0, NULL, NULL);
+
+	cl->err = clEnqueueWriteBuffer(cl->q, cl->i_m, CL_TRUE, 0, sizeof(int) * 7, i_m, 0, NULL, NULL);
 	cl->err = clEnqueueWriteBuffer(cl->q, cl->d_m, CL_TRUE, 0, sizeof(float) * 7, d_m, 0, NULL, NULL);
 	cl->err = clEnqueueWriteBuffer(cl->q, cl->obj_mem, CL_TRUE, 0, sizeof(t_cl_object) * rt->scene.obj_c, cl->cl_obj, 0, NULL, NULL);
 	cl->err = clEnqueueWriteBuffer(cl->q, cl->light_mem, CL_TRUE, 0, sizeof(t_cl_light) * rt->scene.lgh_c, cl->cl_light, 0, NULL, NULL);
 	cl->err = clEnqueueWriteBuffer(cl->q, cl->txt_rgb_mem, CL_TRUE, 0, sizeof(t_rgb) * rt->txt_gpu.total_size, rt->txt_gpu.tx, 0, NULL, NULL);
 	cl->err = clEnqueueWriteBuffer(cl->q, cl->txt_data_mem, CL_TRUE, 0, sizeof(t_txdata) * rt->txt_gpu.tx_count, rt->txt_gpu.txdata, 0, NULL, NULL);
+	cl->err = clEnqueueWriteBuffer(cl->q, cl->obj, CL_TRUE, 0, sizeof(t_cl_data_obj) * rt->data_obj->max_c, rt->data_obj->d_obj, 0, NULL, NULL);
 	cl->err = clEnqueueNDRangeKernel(cl->q, cl->kernel, 1, NULL, &gws, NULL, 0, NULL, NULL);
 	cl->err = clEnqueueReadBuffer(cl->q, cl->img, CL_TRUE, 0, sizeof(int) * gws, cl->data, 0, NULL, NULL);
-
 
 
 	SDL_RenderClear(rt->window.render);
