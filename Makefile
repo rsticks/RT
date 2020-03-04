@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+         #
+#    By: mtruman <mtruman@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/09 16:02:42 by daron             #+#    #+#              #
-#    Updated: 2020/03/02 18:08:48 by daron            ###   ########.fr        #
+#    Updated: 2020/03/04 15:29:28 by mtruman          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = RT
 CC = gcc
-FLAGS = -Wall -Wextra -O3
+FLAGS = -Wall -Wextra -g
 LIBRARIES = -L$(LIBFT_DIRECTORY) \
             -L$(FTVECTOR_DIRECTORY) \
 			-framework OpenGL \
@@ -76,6 +76,8 @@ SOURCES_LIST = main.c \
                     events/mouse.c \
                     intersection/intersection.c \
                     intersection/intersection_1.c
+					load_texture.c \
+                    intersection.c
 SOURCES = $(addprefix $(SOURCES_DIRECTORY), $(SOURCES_LIST))
 
 OBJECTS_DIRECTORY = objects/

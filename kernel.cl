@@ -38,10 +38,41 @@
 
 # define WAVES_ID		1
 # define CHECH_BEARD_ID 2
+
+# define SB_BRICK_ID	1
+# define SB_HERNIA_1_ID 2
 /*
 ** Help
 */
 # define EPS 0.0001
+__constant float EPSILON = 0.001;
+__constant float PI = 3.14159265359f;
+__constant float PI_2 = 6.28318530718f;
+__constant int max_bounces = 20;
+__constant int min_bounces = 5;
+# define RED(color) (((int)color >> 16) & 0xFF)
+# define GREEN(color) (((int)color >> 8) & 0xFF)
+# define BLUE(color) ((int)color & 0xFF)
+
+typedef struct		s_basis
+{
+	__float3		u;
+	__float3		v;
+	__float3		w;
+}					t_basis;
+
+typedef struct		s_cl_txdata
+{
+	uint			width;
+	uint			height;
+	uint			start;
+}					t_cl_txdata;
+
+typedef union		s_cl_txt_rgb
+{
+	int			c;
+	uchar			bgra[4];
+}					t_cl_txt_rgb;
 
 typedef struct			    s_cl_object
 {
@@ -54,6 +85,7 @@ typedef struct			    s_cl_object
 	int				        specular;
     int                     contruction_id;
 	int				        reflect;
+	int						texture_id;
 	float			        coef_refl;
 	int				        refr; //если == 1 то этот объект будет преломлять свет
 	float			        ind_refr; // Коэффициент преломления
@@ -104,6 +136,8 @@ typedef struct				s_rt
 
 	__global t_cl_object	*obj;
 	__global t_cl_light		*light;
+	__global t_cl_txt_rgb	*tx;
+	__global t_cl_txdata	*txdata;
 
 	float3					ray_dir;
 	float					t;
@@ -117,6 +151,7 @@ typedef struct				s_rt
 	int						prim;
 	float					n1;
 	float					n2;
+
 
 	int						intr_obj;
 }							t_rt;
@@ -162,6 +197,135 @@ int 						reflection(t_rt *rt, int i_obj, float3 *pos, float *tab);
 void						ft_average(float *r, float *tab);
 void 						create_ray(t_rt *rt, float x, float y);
 void 						ft_tracing(float x, float y, t_rt *rt, __global int *data, int gid);
+static float3			vec_change(float3 n, float3 vec)
+{
+    float	cos_x,		cos_z;
+    float3	new_vec,	new_n;
+    float	alpha_x,	alpha_z;
+
+    if (length((float2)(n.x, n.y)) < 1e-5f)
+        return (vec);
+    else
+    {
+        cos_x = n.x / length((float2)(n.x, n.y));
+        if (n.y > 0.f)
+            alpha_x = acos(cos_x);
+        else
+            alpha_x = -acos(cos_x);
+    }
+
+    float cos_alpha_x = cos(alpha_x);
+	float sin_alpha_x = sin(alpha_x);
+    new_vec.x = dot((float3)(cos_alpha_x, sin_alpha_x, 0.f), vec);
+    new_vec.y = dot((float3)(-sin_alpha_x, cos_alpha_x, 0.f), vec);
+    new_vec.z = dot((float3)(0.f, 0.f, 1.f), vec);
+
+    new_n.x = dot((float3)(cos_alpha_x, sin_alpha_x, 0.f), n);
+    new_n.y = dot((float3)(-sin_alpha_x, cos_alpha_x, 0.f), n);
+    new_n.z = dot((float3)(0.f, 0.f, 1.f), n);
+
+
+    cos_z = new_n.z / length(new_n);
+    if (new_n.x > 0)
+        alpha_z = acos(cos_z);
+    else
+        alpha_z = -acos(cos_z);
+
+	float cos_alpha_z = cos(alpha_z);
+	float sin_alpha_z = sin(alpha_z);
+    vec.x = dot((float3)(cos_alpha_z, 0.f, -sin_alpha_z), new_vec);
+    vec.y = dot((float3)(0.f, 1.f, 0.f), new_vec);
+    vec.z = dot((float3)(sin_alpha_z, 0.f, cos_alpha_z), new_vec);
+
+	new_vec.x = vec.y;
+	new_vec.y = vec.z;
+	new_vec.z = vec.x;
+    return (new_vec);
+}
+
+void	normalize_coord_for_texture(float2 uv, float *color,  t_rt *rt,  int texture_id)
+{
+	int		coord;
+	int		tex_width;
+	int		tex_height;
+
+	if (texture_id >= 0)
+	{
+		tex_width = rt->txdata[texture_id].width;
+		tex_height = rt->txdata[texture_id].height;
+		coord = (int)(uv.x * tex_width) + (int)(uv.y * tex_height) * tex_width;
+		coord += rt->txdata[texture_id].start * 3;
+		color[0] = (float)(RED(rt->tx[coord].c) * 0.00392156862f); 
+		color[1] = (float)(GREEN(rt->tx[coord].c) * 0.00392156862f);
+		color[2] = (float)(BLUE(rt->tx[coord].c) * 0.00392156862f);
+	}
+}
+
+float2			uv_mapping_for_sphere(t_rt *rt, float3 *pos)
+{
+	float3	vec;
+	float 	v;
+	float 	u;
+
+	vec = rt->norm;
+	u = 0.5f + (atan2(vec.x, -vec.z) / (2.f * M_PI_F));
+	v = 0.5f - (asin(vec.y) / M_PI_F);
+	return ((float2){u, v});
+}
+
+float2			uv_mapping_for_plane(t_rt *rt, float3 *pos)
+{
+	float3 vec;
+	float3 normvec;
+	float3 crossvec;
+	float v;
+	float u;
+
+    vec = *pos;
+
+	if (rt->norm.x != 0.0f)
+		normvec = normalize((float3) {0.0f, rt->norm.z, rt->norm.x});
+	else
+		normvec = (float3) {1.0f, 0.0f, 0.0f};
+	
+	if (rt->norm.z >= 0.0f)
+		rt->norm.z *= -1;
+	crossvec = vec_cross(
+		rt->norm, normvec);
+	u = 0.5f + fmod(dot(normvec, vec), 16.0f) / 32.f;
+	v = 0.5f + fmod(dot(crossvec, vec), 16.0f) / 32.f;
+	return ((float2){u, v});
+}
+
+float2 			uv_mapping_for_cone(t_rt *rt, float3 *pos,int i)
+{
+	float3	vec;
+	float 	v;
+	float 	u;
+	float p;
+
+	vec = vec_change(rt->obj[i].rot, *pos);
+	p = (vec.x / vec.y) / tan(rt->obj[i].r);
+	if (vec.z > 0.f)
+		u = acos(p);
+	else
+		u = 2.f * M_PI - acos(p);
+	u /= (2.f * M_PI);
+	v = 0.5f - modf(vec.y * 100.f / 1024.f, &v) / 2.f;
+	return ((float2) {u, v});
+}
+
+float2			uv_mapping_for_cylinder(t_rt *rt, float3 *pos, int i)
+{
+	float3	vec;
+	float 	v;
+	float 	u;
+
+	vec = vec_change(rt->obj[i].rot, *pos);
+	u = 0.5f + (atan2(vec.x, vec.z) / (2.f * M_PI_F));
+    v = 0.5f - (modf(vec.y / rt->obj[i].r * 250.f / 1024.f, &v) / 2.f);
+	return ((float2){u, v});
+}
 
 void ft_tab_coef(float *tab, float coef, int size)
 {
@@ -806,7 +970,57 @@ int refr_init(t_rt *rt, int i_obj, float3 *pos)
 	rt->ray_dir = (float3){rt->ref.x, rt->ref.y, rt->ref.z};
 	return (new_inter);
 }
+///
+///
+///
 
+void	uv_mapping_for_skybox(t_rt *rt, float *tab)
+{
+	float3	vec;
+	float 	v;
+	float 	u;
+	int		coord;
+	uint		tex_width;
+	uint		tex_height;
+
+
+	vec = vec_scale(rt->ray_dir, -1);
+	tex_width = rt->txdata[0].width;
+	tex_height = rt->txdata[0].height;
+	u = 0.5f + (atan2(vec.x, vec.z) / (2.f * M_PI_F));
+	v = 0.5f + (asin(vec.y) / M_PI_F);
+	coord = (int)(u * tex_width) + (int)(v * tex_height) * tex_width;
+	//coord += tex_param[text_id * 3];
+	tab[0] += (float)(RED(rt->tx[coord].c) * 0.00392156862f); 
+	tab[1] += (float)(GREEN(rt->tx[coord].c) * 0.00392156862f);
+	tab[2] += (float)(BLUE(rt->tx[coord].c) * 0.00392156862f);
+	//tab[0] = (float)((rt->tx[coord].c) * 0.00392156862f); 
+	//tab[1] = (float)((rt->tx[coord].c) * 0.00392156862f);
+	//tab[2] = (float)((rt->tx[coord].c) * 0.00392156862f);
+}
+/*int	uv_mapping_for_skybox(t_rt *rt)
+{
+	float3	vec;
+	float 	v;
+	float 	u;
+	int		coord;
+	uint		tex_width;
+	uint		tex_height;
+
+
+	vec = vec_scale(rt->ray_dir, -1);
+	tex_width = rt->txdata[0].width;
+	tex_height = rt->txdata[0].height;
+	u = 0.5f + (atan2(vec.x, vec.z) / (2.f * M_PI_F));
+	v = 0.5f + (asin(vec.y) / M_PI_F);
+	coord = (int)(u * tex_width) + (int)(v * tex_height) * tex_width;
+	return ((int)rt->tx[coord].c);
+}*/
+
+//
+//
+//
+//
 void main_light(t_rt *rt, int i_obj, float *tab, float3 *pos)
 {
 	float3 dist;
@@ -829,6 +1043,17 @@ void main_light(t_rt *rt, int i_obj, float *tab, float3 *pos)
 		else if (rt->obj[obj_num].refr == 1.0)
 			tab[3] += rt->obj[obj_num].coef_refr * ft_clamp(vec_dot(dist, rt->norm), 0.0, 1.0);
         // printf("tab[3] = %g", tab[3]);
+		if (rt->obj[i_obj].texture_id != -1)
+		{
+			if(rt->obj[i_obj].name == SPHERE_ID)
+				normalize_coord_for_texture(uv_mapping_for_sphere(rt, pos),tab,rt,rt->obj[i_obj].texture_id );
+			else if (rt->obj[i_obj].name == CYLINDER_ID)
+				normalize_coord_for_texture(uv_mapping_for_cylinder(rt, pos, i_obj),tab,rt,rt->obj[i_obj].texture_id );
+			else if (rt->obj[i_obj].name == CONE_ID)
+				normalize_coord_for_texture(uv_mapping_for_cone(rt, pos, i_obj),tab,rt,rt->obj[i_obj].texture_id );
+			else if (rt->obj[i_obj].name == PLANE_ID)
+				normalize_coord_for_texture(uv_mapping_for_plane(rt, pos),tab,rt,rt->obj[i_obj].texture_id );
+		}
 		transfer_light(i_obj, ind, tab, d, rt);
 		gloss(rt, i_obj, tab, &dist , d);
 		ind++;
@@ -873,7 +1098,10 @@ void 	calculate_light(t_rt *rt, float *tab)
 			rt->cpt += 1;
 		}
 		else
+		{
+			uv_mapping_for_skybox(rt, tab);
 			break ;
+		}
 	}
 	rt->cpt = 0;
 	while (rt->obj[rt->intr_obj].refr && rt->cpt < rt->scene.maxref && rt->obj[rt->intr_obj].coef_refr > 0.0)
@@ -885,7 +1113,10 @@ void 	calculate_light(t_rt *rt, float *tab)
 			rt->cpt += 1;
 		}
 		else
-			break;
+		{
+			uv_mapping_for_skybox(rt, tab);
+			break ;
+		}
 	}
 	result_in_tab(rt, start_obj, tab, tab_refl, tab_refr);
 }
@@ -933,11 +1164,16 @@ void ft_tracing(float x, float y, t_rt *rt, __global int *data, int gid)
 			ft_fzero(tab, 4);
 			if((rt->intr_obj = intersection(rt, &rt->ray_dir, &rt->cam.pos)) >= 0)
 				calculate_light(rt, tab);
+			//else 
+				//uv_mapping_for_skybox(rt, &tab);
             ft_average(r, tab);
 			x = x + (1.0 / rt->window.anti_alias);
 		}
 		y = y + (1.0 / rt->window.anti_alias);
 	}
+	//if (tab[0] == 0.0 && tab[1] == 0.0 && tab[2] == 0.0)
+	//	data[gid] = uv_mapping_for_skybox(rt);
+	//else 
 	data[gid] = (((int)(r[0] / p * 255.0) & 0xff) << 16) + (((int)(r[1] / p * 255.0) & 0xff) << 8) + (((int)(r[2] / p * 255.0) & 0xff));
 }
 
@@ -946,11 +1182,14 @@ __kernel void 		start(__global t_cl_object *obj,
 							__global t_cl_light *light,
 							__global int *out_data,
 							__global int *i_mem,
-							__global float *d_mem)
+							__global float *d_mem,
+							__global t_cl_txt_rgb *tx,
+							__global t_cl_txdata *txdata)
 {
 	int				gid, x, y;
 	t_rt			rt;
 
+	
 	gid = get_global_id(0);
 	rt.window.size[0] = i_mem[0];
 	rt.window.size[1] = i_mem[1];
@@ -963,7 +1202,11 @@ __kernel void 		start(__global t_cl_object *obj,
 	rt.cam.rot = (float3){d_mem[4], d_mem[5], d_mem[6]};
 	rt.obj = obj;
 	rt.light = light;
+	rt.tx = tx;
+	rt.txdata = txdata;
 	x = gid % rt.window.size[0];
 	y = gid / rt.window.size[1];
+	//if (gid == 1)
+	//	printf("\nIN KERNEL txdata = [%d]\n", tx[0].c);
 	ft_tracing(x, y, &rt, out_data, gid);
 }

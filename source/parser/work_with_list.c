@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   work_with_list.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daron <daron@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mtruman <mtruman@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/19 18:22:13 by daron             #+#    #+#             */
-/*   Updated: 2020/03/02 15:22:32 by daron            ###   ########.fr       */
+/*   Updated: 2020/03/04 15:39:54 by mtruman          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ static void	initialize_object(t_obj *obj)
 	obj->obj_on = 0;
 	obj->file_name = NULL;
 	obj->contruction_id = -1;
+	obj->texture_id = -1;
 	ft_memset_int(obj->check, 0, 13);
 }
 

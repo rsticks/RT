@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   transform.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mtruman <mtruman@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 15:32:59 by rsticks           #+#    #+#             */
-/*   Updated: 2020/03/02 17:00:37 by daron            ###   ########.fr       */
+/*   Updated: 2020/03/04 15:39:54 by mtruman          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void		data_transfer(t_obj *obj_mas, t_cl_object *cl_obj)
 	cl_obj->ind_refr = obj_mas->ind_refr;
 	cl_obj->coef_refr = obj_mas->coef_refr;
 	cl_obj->torus_r = obj_mas->torus_r;
-	cl_obj->torus_r = obj_mas->torus_r;
+	cl_obj->texture_id = obj_mas->texture_id;
 }
 
 t_cl_object		*transform_obj_data(t_rt *rt)
