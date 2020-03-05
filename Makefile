@@ -6,12 +6,12 @@
 #    By: kzina <kzina@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/09 16:02:42 by daron             #+#    #+#              #
-#    Updated: 2020/03/05 19:57:58 by kzina            ###   ########.fr        #
+#    Updated: 2020/03/05 19:44:53 by kzina            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = RT
-CC = gcc
+CC = gcc 
 FLAGS = -Wall -Wextra -Werror -g
 LIBRARIES = -L$(LIBFT_DIRECTORY) \
             -L$(FTVECTOR_DIRECTORY) \
@@ -83,8 +83,11 @@ SOURCES_LIST = main.c \
                     parser_obj/additional.c \
                     parser_obj/parseings.c \
                     parser_obj/f_pars.c \
-                    parser_obj/final.c \
 					check_objs.c \
+                    gui/menu.c \
+					gui/menu_2.c \
+					gui/auxiliary.c \
+					gui/auxiliary_2.c \
 
 SOURCES = $(addprefix $(SOURCES_DIRECTORY), $(SOURCES_LIST))
 
@@ -113,6 +116,7 @@ $(OBJECTS_DIRECTORY):
 	@mkdir -p $(OBJECTS_DIRECTORY)/events
 	@mkdir -p $(OBJECTS_DIRECTORY)/intersection
 	@mkdir -p $(OBJECTS_DIRECTORY)/parser_obj
+	@mkdir -p $(OBJECTS_DIRECTORY)/gui
 	@echo "$(NAME): $(GREEN)$(OBJECTS_DIRECTORY) was created$(RESET)"
 
 $(OBJECTS_DIRECTORY)%.o : $(SOURCES_DIRECTORY)%.c $(HEADERS)

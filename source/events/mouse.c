@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mouse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kzina <kzina@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 14:34:47 by daron             #+#    #+#             */
-/*   Updated: 2020/03/05 16:41:39 by daron            ###   ########.fr       */
+/*   Updated: 2020/03/05 21:16:27 by kzina            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,19 @@ static int		mouse_intersection(double u, double v,
 	return (intersection(rt, &ray_dir, pos));
 }
 
+void			m_down_menu(t_rt *rt)
+{
+	int			x;
+	int			y;
+
+	if (SDL_BUTTON_LEFT == rt->event.button.button)
+	{
+		SDL_GetMouseState(&x, &y);
+		if (x > 238 && x < 348 && y > 174 && y < 224)
+			start_kernel(rt->cl, rt);
+	}
+}
+
 void			mouse_down(t_rt *rt)
 {
 	int			x;
@@ -40,12 +53,13 @@ void			mouse_down(t_rt *rt)
 	double		v;
 	t_vector	pos;
 
-	if (SDL_BUTTON_LEFT == rt->window.event.button.button)
+	if (SDL_BUTTON_LEFT == rt->event.button.button)
 	{
 		SDL_GetMouseState(&x, &y);
-		u = (rt->window.size[0] - (double)x * FOV) / rt->window.size[1];
-		v = (rt->window.size[1] - (double)y * FOV) / rt->window.size[0];
+		u = (rt->window.size[0] - (double)x * 2.0) / rt->window.size[1];
+		v = (rt->window.size[1] - (double)y * 2.0) / rt->window.size[0];
 		pos = (t_vector){rt->cam.pos.x + u, rt->cam.pos.y + v, rt->cam.pos.z};
 		rt->select_obj = mouse_intersection(u, v, &pos, rt);
+		refresh_menu(rt);
 	}
 }

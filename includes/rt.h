@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kzina <kzina@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/17 16:20:37 by daron             #+#    #+#             */
-/*   Updated: 2020/03/05 17:12:54 by daron            ###   ########.fr       */
+/*   Updated: 2020/03/05 19:49:51 by kzina            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,34 @@
 # include "pars_obj.h"
 # include "libft.h"
 # include <SDL2/SDL.h>
-# include <SDL_image.h>
+# include "../frameworks/SDL2_image.framework/Headers/SDL_image.h"
+# include "../frameworks/SDL2_ttf.framework/Headers/SDL_ttf.h"
 
 # define CMRW			CL_MEM_READ_WRITE
 # define CDTG			CL_DEVICE_TYPE_GPU
+
+/*
+** Colors
+*/
+
+# define RED			255,0,0
+# define ORE			255,120,0
+# define YEL			226,255,0
+# define GRE			0,255,5
+# define BLU			0,214,255
+# define DBL			8,0,255
+# define PUR			217,0,244
+# define VIO			244,0,98
+# define TXT			127,133,141,255
+
+/*
+** Menu size
+*/
+
+# define WIDTH_M		400
+# define HEIGHT_M		400
+# define STATE_X		800
+# define STATE_Y		400
 
 /*
 ** Size configuration
@@ -244,7 +268,7 @@ typedef	struct			s_win
 	int					anti_alias;
 	SDL_Window			*window;
 	SDL_Renderer		*render;
-	SDL_Event			event;
+	//SDL_Event			event;
 	SDL_Texture			*textur;
 	int					check[6];
 }						t_win;
@@ -260,11 +284,24 @@ typedef	struct			s_scene
 	int					check[5];
 }						t_scene;
 
+typedef	struct			s_ui 
+{
+	SDL_Surface			*temp_surf[20];
+	SDL_Texture			*textur[20];
+	SDL_Rect			rect[20];
+	TTF_Font			*font[2];
+	SDL_Surface			*s_ui;
+	SDL_Color			color;
+	int					shift;
+}						t_ui;
+
 typedef struct			s_rt
 {
 	t_read				read_b;
 	t_scene				scene;
+	t_ui				ui;
 	t_win				window;
+	t_win				win_menu;
 	t_cam				cam;
 	t_obj				*obj_head;
 	t_light				*lgh_head;
@@ -276,6 +313,10 @@ typedef struct			s_rt
 	int					select_obj;
 	t_cl				*cl;
 	t_parse_obj			*data_obj;
+	SDL_Event			event;
+	SDL_Cursor			*cursor;
+	SDL_Surface			*w_icon;
+	char				text[100];
 }						t_rt;
 /*
 ** ------------------Function Prototype--------------------------------
@@ -309,6 +350,7 @@ float					get_disk_intersection(t_vector *ray_dir,
 		t_vector *cam_pos, int i, t_rt *rt);
 float					get_cylinder_intersection(t_vector *ray_dir,
 		t_vector *cam_pos, int i, t_rt *rt);
+void					free_o_l(t_cl *cl);
 /*
 ** ------------------Function Parser--------------------------------
 */
@@ -365,5 +407,26 @@ void					cheak_scene(t_rt *rt);
 void					cheak_object(t_rt *rt);
 void					cheak_part(t_rt *rt);
 void					texture_init(t_rt *rt);
+/*
+** ------------------Function's Menu_gui--------------------------------
+*/
+void					sdl_init_menu(t_rt *rt);
+void					sdl_refresh(t_rt *rt, t_cl *cl);
+void					my_free_ui(t_rt *sdl);
+void					draw_selected(t_rt *sdl);
+void					draw_essentil_menu(t_rt *sdl);
+void					draw_text(t_rt *rt, int t, int x, int y);
+void					refresh_menu(t_rt *rt);
+t_obj					*new_sphere(void);
+void					m_down_menu(t_rt *rt);
+inline	void			swap(char *x, char *y);
+char					*reverse(char *buffer, int i, int j);
+char					*itoa(int value, char *buffer);
+void					calc_shift(t_rt *rt);
+void					draw_color_2(t_rt *rt);
+void					draw_color(t_rt *rt);
+void					draw_scene_param(t_rt *rt);
+void					draw_selected_2(t_rt *rt, t_obj *obj);
+void					ftoa(float n, char* res, int afterpoint);
 
 #endif
