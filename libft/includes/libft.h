@@ -6,7 +6,7 @@
 /*   By: daron <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/03 10:36:11 by daron             #+#    #+#             */
-/*   Updated: 2020/03/02 14:55:12 by daron            ###   ########.fr       */
+/*   Updated: 2020/03/05 17:00:17 by daron            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,6 @@
  ** For get_next_line()
 */
 # define BUFF_SIZE 32
-
-/*
- * s_double_inf
- * a - for result double value
- * e - for the pow of value
- * c - for store char value
- */
 
 typedef	struct		s_double_inf
 {

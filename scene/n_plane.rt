@@ -22,5 +22,6 @@
 	<dir> {x0.0 y1.0 z0.0} </dir>
 	<rgb> {r255 g255 b255} </rgb>
 	<reflect> {off} </reflect>
+	<spec> {on} </spec>
 	<refract> {off} </refract>
 </object>

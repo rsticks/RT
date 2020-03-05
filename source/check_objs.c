@@ -6,7 +6,7 @@
 /*   By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 17:06:14 by rsticks           #+#    #+#             */
-/*   Updated: 2020/02/26 17:36:08 by rsticks          ###   ########.fr       */
+/*   Updated: 2020/03/05 16:41:39 by daron            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void				check_objs(t_rt *rt)
 {
-	int 			i;
+	int				i;
 	int				num_obj;
 
 	num_obj = 0;

@@ -6,7 +6,7 @@
 /*   By: mtruman <mtruman@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 16:42:56 by daron             #+#    #+#             */
-/*   Updated: 2020/03/04 15:39:54 by mtruman          ###   ########.fr       */
+/*   Updated: 2020/03/05 16:41:39 by daron            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,26 +94,6 @@ void		copy_obj(t_rt *rt)
 	while (i < rt->scene.obj_c)
 	{
 		data_transfer(&rt->obj_mas[i], obj);
-		rt->obj_mas[i].pos = (t_vector){obj->pos.x, obj->pos.y, obj->pos.z};
-		rt->obj_mas[i].rgb = (t_rgb2){obj->rgb.r, obj->rgb.g, obj->rgb.b};
-		rt->obj_mas[i].dir = (t_vector){obj->dir.x, obj->dir.y, obj->dir.z};
-		rt->obj_mas[i].obj_name = obj->obj_name;
-		rt->obj_mas[i].type = obj->type;
-		rt->obj_mas[i].reflect = obj->reflect;
-		rt->obj_mas[i].coef_refl = obj->coef_refl;
-		rt->obj_mas[i].spec = obj->spec;
-		rt->obj_mas[i].radius = obj->radius;
-        rt->obj_mas[i].torus_r = obj->torus_r;
-		rt->obj_mas[i].limit = obj->limit;
-		rt->obj_mas[i].refr = obj->refr;
-		rt->obj_mas[i].ind_refr = obj->ind_refr;
-		rt->obj_mas[i].coef_refr = obj->coef_refr;
-		rt->obj_mas[i].text_on = obj->text_on;
-		rt->obj_mas[i].texture = obj->texture;
-		rt->obj_mas[i].obj_on = obj->obj_on;
-		rt->obj_mas[i].file_name = obj->file_name;
-        rt->obj_mas[i].contruction_id = obj->contruction_id;
-		rt->obj_mas[i].texture_id = obj->texture_id;
 		obj = obj->next;
 		i++;
 	}

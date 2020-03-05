@@ -6,22 +6,23 @@
 /*   By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/17 16:20:37 by daron             #+#    #+#             */
-/*   Updated: 2020/03/04 17:01:18 by rsticks          ###   ########.fr       */
+/*   Updated: 2020/03/05 17:12:54 by daron            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef RTV1_H
-# define RTV1_H
+#ifndef RT_H
+# define RT_H
 
 # include <OpenCL/opencl.h>
 # include <unistd.h>
 # include <fcntl.h>
 # include <stdio.h>
-# include  <math.h>
+# include <math.h>
 # include "ftvector.h"
 # include "pars_obj.h"
 # include "libft.h"
 # include <SDL2/SDL.h>
+# include <SDL_image.h>
 
 # define CMRW			CL_MEM_READ_WRITE
 # define CDTG			CL_DEVICE_TYPE_GPU
@@ -30,7 +31,7 @@
 ** Size configuration
 */
 
-# define     EQN_EPS     1e-9
+# define EQN_EPS		1e-9
 # define FOV			2.0
 
 /*
@@ -45,7 +46,6 @@
 # define PARABOLOID_ID	6
 # define DISK_ID		7
 # define TORUS_ID		8
-
 
 /*
 ** Texture ID
@@ -72,6 +72,8 @@
 # define SEKKS			sdl->event.key.keysym.sym
 # define SSO			sdl->select_obj
 # define SC				sdl->cam
+# define ROP			rt->obj_mas[rt->select_obj].pos
+# define ROD			rt->obj_mas[rt->select_obj].dir
 
 /*
 ** ------------------------------Structures-------------------------------------
@@ -84,15 +86,15 @@ typedef struct			s_cl_object
 	cl_float3			rot;
 	cl_float3			col;
 	cl_float			r;
-    cl_float            torus_r;
+	cl_float			torus_r;
 	cl_int				name;
 	cl_int				specular;
-    cl_int              contruction_id;
+	cl_int				contruction_id;
 	cl_int				reflect;
 	cl_int				texture_id;
 	cl_float			coef_refl;
-	cl_int				refr; //если == 1 то этот объект будет преломлять свет
-	cl_float			ind_refr; // Коэффициент преломления
+	cl_int				refr;
+	cl_float			ind_refr;
 	cl_float			coef_refr;
 	cl_float			limit;
 }						t_cl_object;
@@ -104,17 +106,18 @@ typedef	struct			s_cl_light
 	cl_float3			col;
 }						t_cl_light;
 
-typedef struct		s_cl_txdata
+typedef struct			s_cl_txdata
 {
-	cl_uint			width;
-	cl_uint			height;
-	cl_uint			start;
-}					t_cl_txdata;
-typedef union		s_cl_txt_rgb
+	cl_uint				width;
+	cl_uint				height;
+	cl_uint				start;
+}						t_cl_txdata;
+
+typedef struct			s_cl_txt_rgb
 {
-	cl_uint			c;
-	cl_uchar		bgra[4];
-}					t_cl_txt_rgb;
+	cl_uint				c;
+	cl_uchar			bgra[4];
+}						t_cl_txt_rgb;
 
 typedef struct			s_cl
 {
@@ -151,25 +154,25 @@ typedef struct			s_cl
 ** ------------------Structures Fot main program--------------------------------
 */
 
-typedef union		u_rgb
+typedef union			u_rgb
 {
-	cl_int			c;
-}					t_rgb;
+	cl_int				c;
+}						t_rgb;
 
-typedef struct		s_txdata
+typedef struct			s_txdata
 {
-	cl_uint			width;
-	cl_uint			height;
-	cl_uint			start;
-}					t_txdata;
+	cl_uint				width;
+	cl_uint				height;
+	cl_uint				start;
+}						t_txdata;
 
-typedef struct		s_txgpu
+typedef struct			s_txgpu
 {
-	t_txdata		*txdata;
-	int				*tx;
-	int				tx_count;
-	int				total_size;
-}					t_txgpu;
+	t_txdata			*txdata;
+	int					*tx;
+	int					tx_count;
+	int					total_size;
+}						t_txgpu;
 
 typedef struct			s_rgb2
 {
@@ -180,8 +183,8 @@ typedef struct			s_rgb2
 
 typedef	struct			s_read
 {
-	char				**buff; //Буффер для считывания файла
-	int					str_c; // количество считанных стрк
+	char				**buff;
+	int					str_c;
 }						t_read;
 
 typedef	struct			s_cam
@@ -201,26 +204,26 @@ typedef	struct			s_light
 
 typedef struct			s_obj
 {
-	char 				*obj_name; //Храним имя объекта строкаой
-	int					type; // Идентификатор типа SPHERE_ID
+	char				*obj_name;
+	int					type;
 	t_vector			pos;
 	t_vector			dir;
 	t_rgb2				rgb;
-	int					reflect;//если == 1 то этот объект будет отражающим
-	float				coef_refl; // коэффициент отражения
-	int					spec; // блестящесть
+	int					reflect;
+	float				coef_refl;
+	int					spec;
 	float				radius;
-    float               torus_r;
-	float				limit; // ограничение объекта
-	int					refr; //если == 1 то этот объект будет преломлять свет
-	float				ind_refr; // Коэффициент преломления
+	float				torus_r;
+	float				limit;
+	int					refr;
+	float				ind_refr;
 	float				coef_refr;
-	int					text_on; //есль == 1 говорит что текстуры включены
-	char				*texture;//иня файла где храниться текстура
-	int					obj_on;//есль == 1 говорит это будет obj фаил
-	int                 texture_id;
-	char				*file_name; // имя obj файла
-	int                 contruction_id;
+	int					text_on;
+	char				*texture;
+	int					obj_on;
+	int					texture_id;
+	char				*file_name;
+	int					contruction_id;
 	int					check[13];
 	struct s_obj		*next;
 }						t_obj;
@@ -232,13 +235,13 @@ typedef struct			s_move
 	t_vector			k;
 }						t_move;
 
-typedef	struct		s_win
+typedef	struct			s_win
 {
 	char				*windname;
-	char				*effecr_name; // имя эффекта
+	char				*effecr_name;
 	int					effect_on;
 	int					size[2];
-	int 				anti_alias;//Уровень антиалиасинга
+	int					anti_alias;
 	SDL_Window			*window;
 	SDL_Renderer		*render;
 	SDL_Event			event;
@@ -248,27 +251,27 @@ typedef	struct		s_win
 
 typedef	struct			s_scene
 {
-	float				spec; // Уровень блестящести
-	int					obj_c; // Количество считанных объектов
-	int					lgh_c; // Количество источников света
+	float				spec;
+	int					obj_c;
+	int					lgh_c;
 	int					maxref;
 	float				ambient;
 	int					skybox_id;
 	int					check[5];
-} 						t_scene;
+}						t_scene;
 
 typedef struct			s_rt
 {
 	t_read				read_b;
-	t_scene 			scene;
-	t_win 				window;
-	t_cam 				cam;
-	t_obj 				*obj_head; // голова списка
-	t_light 			*lgh_head; // голова списка
-	t_obj 				*obj_cur; // Текущий объект с которым работаем
-	t_light 			*lgh_cur; // Текущий объект с которым работаем
-	t_obj 				*obj_mas; // Текущий объект с которым работаем
-	t_light 			*lgh_mas; // Текущий объект с которым работаем
+	t_scene				scene;
+	t_win				window;
+	t_cam				cam;
+	t_obj				*obj_head;
+	t_light				*lgh_head;
+	t_obj				*obj_cur;
+	t_light				*lgh_cur;
+	t_obj				*obj_mas;
+	t_light				*lgh_mas;
 	t_txgpu				txt_gpu;
 	int					select_obj;
 	t_cl				*cl;
@@ -286,7 +289,8 @@ t_cl_light				*transform_light_data(t_rt *rt);
 void					kill_error(char *message, int string_number);
 int						kill_all(char *message);
 void					sdl_initialize(t_rt *rt);
-double					get_quadratic_solution(double a, double b, double discriminant);
+double					get_quadratic_solution(double a, double b,
+		double discriminant);
 void					my_free(t_rt *rt);
 float					ft_clamp(float value, float min, float max);
 void					events(t_rt *rt);
@@ -297,10 +301,14 @@ void					detail_key(t_rt *rt);
 void					swithc_gloss(t_rt *rt);
 void					reflection_key(t_rt *rt);
 void					printf_scene_data(t_rt *rt);
-int						intersection(t_rt *rt, t_vector *ray_dir, t_vector *cam_pos);
-float					get_paraboloid_intersection(t_vector *ray_dir, t_vector *cam_pos, int i, t_rt *rt);
-float					get_disk_intersection(t_vector *ray_dir, t_vector *cam_pos, int i, t_rt *rt);
-float					get_cylinder_intersection(t_vector *ray_dir, t_vector *cam_pos, int i, t_rt *rt);
+int						intersection(t_rt *rt, t_vector *ray_dir,
+		t_vector *cam_pos);
+float					get_paraboloid_intersection(t_vector *ray_dir,
+		t_vector *cam_pos, int i, t_rt *rt);
+float					get_disk_intersection(t_vector *ray_dir,
+		t_vector *cam_pos, int i, t_rt *rt);
+float					get_cylinder_intersection(t_vector *ray_dir,
+		t_vector *cam_pos, int i, t_rt *rt);
 /*
 ** ------------------Function Parser--------------------------------
 */
@@ -340,7 +348,8 @@ char					*take_skybox(char *line, int *skybox_id, int str_c);
 char					*take_double(char *line, float *put_s, int str_c);
 char					*take_word(char *line, char **put_s, int str_c);
 char					*take_res(char *line, int *put_s, int str_c);
-char                    *take_construction(char *line, int *construction_id, int str_c);
+char					*take_construction(char *line,
+		int *construction_id, int str_c);
 double					cheak_double(char *line, int str_c);
 char					*take_vector(char *line, t_vector *put_s, int str_c);
 char					*take_rgb(char *line, t_rgb2 *put_s, int str_c);
@@ -348,11 +357,13 @@ char					*take_refl(char *line, t_obj *obj, int str_c);
 float					take_coef(char *line, int str_c, char let);
 char					*take_refraction(char *line, t_obj *obj, int str_c);
 char					*take_on_off(char *line, int *put_s, int str_c);
-char					*take_texture(char *line, t_obj *obj, char *type,int str_c);
+char					*take_texture(char *line, t_obj *obj, char *type,
+		int str_c);
 void					cheak_camera(t_rt *rt);
 void					cheak_light(t_rt *rt);
 void					cheak_scene(t_rt *rt);
 void					cheak_object(t_rt *rt);
 void					cheak_part(t_rt *rt);
-void 					texture_init(t_rt *rt);
+void					texture_init(t_rt *rt);
+
 #endif

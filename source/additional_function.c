@@ -6,7 +6,7 @@
 /*   By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 15:54:57 by daron             #+#    #+#             */
-/*   Updated: 2020/03/02 16:37:44 by daron            ###   ########.fr       */
+/*   Updated: 2020/03/05 16:41:39 by daron            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 void			my_free(t_rt *rt)
 {
 	free(rt->obj_mas);
-	free(rt->lgh_mas);
+	if (rt->scene.lgh_c)
+		free(rt->lgh_mas);
 	SDL_DestroyRenderer(rt->window.render);
 	SDL_DestroyWindow(rt->window.window);
 	SDL_Quit();

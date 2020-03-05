@@ -1,0 +1,44 @@
+<scene>
+	<maxref> {1} </maxref>
+	<name> {Object Table} </name>
+	<res> {1080 1080} </res>
+	<antialias> {1} </antialias>
+	<ambiant> {0.5} </ambiant>
+</scene>
+
+<camera>
+	<pos> {x69.9314, y12.6614, z37.524} </pos>
+	<dir> {x-34.0257, y19.7801, z-41.9196} </dir>
+</camera>
+
+<light>
+	<pos> {x10.0 y20.0 z00.0} </pos>
+	<rgb> {r255 g255 b255} </rgb>
+</light>
+
+<object>
+	<type> {object_f} </type>
+	<rgb> {r255 g00 b255} </rgb>
+	<spec> {on} </spec>
+	<file_addr>{obj "objs/3.obj"}</file_addr>
+</object>
+
+<object>
+	<type> {plane} </type>
+	<pos> {x00.00 y-6.00 z00.00} </pos>
+	<dir> {x0.0 y1.0 z0.0} </dir>
+	<rgb> {r255 g255 b255} </rgb>
+	<reflect> {off} </reflect>
+	<spec> {off} </spec>
+	<refract> {off} </refract>
+</object>
+
+<object>
+	<type> {plane} </type>
+	<pos>  {x90.54, y-6.00, z-17.35} </pos>
+	<dir> {x-0.86, y-0.17, z0.47} </dir>
+	<rgb> {r255 g255 b255} </rgb>
+	<reflect> {off} </reflect>
+	<spec> {off} </spec>
+	<refract> {off} </refract>
+</object>

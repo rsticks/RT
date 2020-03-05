@@ -3,8 +3,9 @@
 	<name> {Show simple object cone} </name>
 	<res> {900 900} </res>
 	<antialias> {1} </antialias>
-	<ambiant> {0.0} </ambiant>
+	<ambiant> {0.15} </ambiant>
 </scene>
+
 <camera>
 	<pos> {x0.00 y00.00 z-250.00} </pos>
 	<dir> {x0.0 y0.00 z1.00} </dir>
@@ -12,15 +13,15 @@
 
 <light>
 	<pos> {x-60.00 y30.00 z-60.00} </pos>
-	<rgb> {r255 g255 b255} </rgb>
+	<rgb> {r255 g0 b255} </rgb>
 </light>
 
 <object>
-	<type> {sphere} </type>
-	<pos> {x-20.00 y0.00 z00.00} </pos>
+	<type> {cone} </type>
+	<pos> {x0.00 y0.00 z00.00} </pos>
 	<dir> {x0.0 y1.0 z0.0} </dir>
 	<radius> {60.00} </radius>
-	<rgb> {r255 g255 b255} </rgb>
+	<rgb> {r250 g0 b250} </rgb>
 	<spec> {on} </spec>
 	<reflect> {off} </reflect>
 	<refract> {off} </refract>

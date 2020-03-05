@@ -6,7 +6,7 @@
 /*   By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 15:47:14 by daron             #+#    #+#             */
-/*   Updated: 2020/03/04 17:05:56 by rsticks          ###   ########.fr       */
+/*   Updated: 2020/03/05 17:06:48 by daron            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,30 @@ void		cheak_scene(t_rt *rt)
 		kill_all("ERROR: You must set the scene name");
 }
 
+static void	cheak_object_1(t_obj *obj)
+{
+	if (obj->check[0] == 0)
+		kill_all("ERROR: You must set the object type");
+	else if (obj->check[1] == 0 && obj->type != OBJ_FILE_ID)
+		kill_all("ERROR: You must set the object position");
+	else if (obj->check[2] == 0 && obj->type != SPHERE_ID
+			&& obj->type != OBJ_FILE_ID)
+		kill_all("ERROR: You must set the object direction");
+	else if (obj->check[5] == 0 && obj->type != OBJ_FILE_ID)
+		kill_all("ERROR: You must set the reflection level");
+	else if (obj->check[6] == 0 && obj->type != OBJ_FILE_ID)
+		kill_all("ERROR: You must set the rafraction level");
+	else if (obj->check[3] == 0 && obj->type != OBJ_FILE_ID)
+		kill_all("ERROR: You must set the object color");
+	else if (obj->check[4] == 0 && (obj->type == DISK_ID ||
+		obj->type == SPHERE_ID || obj->type == TORUS_ID ||
+		obj->type == PARABOLOID_ID) && obj->type != OBJ_FILE_ID)
+		kill_all("ERROR: You must set the sphere radius");
+	else if (obj->check[11] == 0 && obj->type == TORUS_ID
+			&& obj->type != OBJ_FILE_ID)
+		kill_all("ERROR: You must set the torus main radius");
+}
+
 void		cheak_object(t_rt *rt)
 {
 	t_obj	*obj;
@@ -50,34 +74,7 @@ void		cheak_object(t_rt *rt)
 	obj = rt->obj_head;
 	while (obj)
 	{
-		if (obj->check[0] == 0)
-			kill_all("ERROR: You must set the object type");
-		else if (obj->check[1] == 0 && obj->type != OBJ_FILE_ID)
-			kill_all("ERROR: You must set the object position");
-		else if (obj->check[2] == 0 && obj->type != SPHERE_ID && obj->type != OBJ_FILE_ID)
-			kill_all("ERROR: You must set the object direction");
-		else if (obj->check[5] == 0 && obj->type != OBJ_FILE_ID)
-			kill_all("ERROR: You must set the reflection level");
-		else if (obj->check[6] == 0 && obj->type != OBJ_FILE_ID)
-			kill_all("ERROR: You must set the rafraction level");
-		else if (obj->check[3] == 0 && obj->type != OBJ_FILE_ID)
-			kill_all("ERROR: You must set the object color");
-		else if (obj->check[4] == 0 && (obj->type == DISK_ID ||
-				obj->type == SPHERE_ID || obj->type == TORUS_ID ||
-				obj->type == PARABOLOID_ID) && obj->type != OBJ_FILE_ID)
-			kill_all("ERROR: You must set the sphere radius");
-		else if (obj->check[11] == 0 && obj->type == TORUS_ID && obj->type != OBJ_FILE_ID)
-			kill_all("ERROR: You must set the torus main radius");
+		cheak_object_1(obj);
 		obj = obj->next;
 	}
-}
-
-void		cheak_part(t_rt *rt)
-{
-	if (rt->scene.check[0] == 0)
-		kill_all("ERROR: You must create camera");
-	else if (rt->scene.check[2] == 0)
-		kill_all("ERROR: You must create scene");
-	else if (rt->scene.check[3] == 0)
-		kill_all("ERROR: You must create at least one object");
 }

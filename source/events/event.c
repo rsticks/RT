@@ -6,7 +6,7 @@
 /*   By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 12:30:37 by daron             #+#    #+#             */
-/*   Updated: 2020/03/02 16:36:50 by daron            ###   ########.fr       */
+/*   Updated: 2020/03/05 17:08:52 by daron            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,8 @@ void		events(t_rt *rt)
 		while (SDL_PollEvent(&rt->window.event))
 		{
 			if ((SDL_QUIT == rt->window.event.type) ||
-				(SDL_SCANCODE_ESCAPE == rt->window.event.key.keysym.scancode)) {
-				printf_scene_data(rt);
+				(SDL_SCANCODE_ESCAPE == rt->window.event.key.keysym.scancode))
 				my_free(rt);
-			}
 			else if (SDLK_RETURN == rt->window.event.key.keysym.sym
 			&& rt->window.event.type == SDL_KEYDOWN)
 				rt->select_obj = -1;

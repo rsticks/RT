@@ -6,7 +6,7 @@
 /*   By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/17 16:08:56 by daron             #+#    #+#             */
-/*   Updated: 2020/03/04 16:55:10 by rsticks          ###   ########.fr       */
+/*   Updated: 2020/03/05 17:17:30 by daron            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,12 @@ int				main(int argc, char **argv)
 	texture_init(&rt);
 	check_objs(&rt);
 	sdl_initialize(&rt);
-	if(!(cl->data = (int*)malloc(sizeof(int) * rt.window.size[0] * rt.window.size[1])))
+	if (!(cl->data = (int*)malloc(sizeof(int) * rt.window.size[0]
+			* rt.window.size[1])))
 		kill_all("Can't initialize CL_data <main>");
-	rt.window.textur = SDL_CreateTexture(rt.window.render, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_TARGET, rt.window.size[0], rt.window.size[1]);
+	rt.window.textur = SDL_CreateTexture(rt.window.render,
+			SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_TARGET,
+			rt.window.size[0], rt.window.size[1]);
 	init_cl(cl, &rt);
 	start_kernel(cl, &rt);
 	rt.cl = cl;

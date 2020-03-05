@@ -6,13 +6,13 @@
 #    By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/09 16:02:42 by daron             #+#    #+#              #
-#    Updated: 2020/03/05 15:44:22 by rsticks          ###   ########.fr        #
+#    Updated: 2020/03/05 16:52:12 by daron            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = RT
 CC = gcc
-FLAGS = -Wall -Wextra -g
+FLAGS = -Wall -Wextra -Werror -g
 LIBRARIES = -L$(LIBFT_DIRECTORY) \
             -L$(FTVECTOR_DIRECTORY) \
 			-framework OpenGL \
@@ -61,6 +61,7 @@ SOURCES_LIST = main.c \
                     parser/object_parser_1.c \
                     parser/object_parser_cheaker.c \
                     parser/cheker.c \
+                    parser/cheaker_1.c \
                     parser/list_to_mas.c \
                     parser/list_to_mas_1.c \
                     parser/parser_main_f.c \
