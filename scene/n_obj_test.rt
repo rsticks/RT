@@ -18,9 +18,10 @@
 
 <object>
 	<type> {object_f} </type>
-	<rgb> {r255 g00 b255} </rgb>
+	<rgb> {r255 g255 b255} </rgb>
+	<reflect> {on c0.9} </reflect>
 	<spec> {on} </spec>
-	<file_addr>{obj "objs/3.obj"}</file_addr>
+	<file_addr>{obj "objs/plane.obj"}</file_addr>
 </object>
 
 <object>
@@ -30,4 +31,15 @@
 	<rgb> {r255 g255 b255} </rgb>
 	<reflect> {off} </reflect>
 	<refract> {off} </refract>
+</object>
+
+<object>
+	<type> {sphere} </type>
+	<pos> {x-12.00 y25.00 z5.00} </pos>
+	<radius> {25.00} </radius>
+	<rgb> {r0 g250 b250} </rgb>
+	<reflect> {off c0.3} </reflect>
+	<spec> {off} </spec>
+	<refract> {off} </refract>
+	<texture> {img "Globe1.jpg"} </texture>
 </object>
