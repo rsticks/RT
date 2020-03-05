@@ -6,7 +6,7 @@
 /*   By: kzina <kzina@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 14:34:47 by daron             #+#    #+#             */
-/*   Updated: 2020/03/01 18:52:51 by kzina            ###   ########.fr       */
+/*   Updated: 2020/03/05 16:41:30 by kzina            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,12 @@ void		m_down_menu(t_rt *rt)
 {
 	int			x;
 	int			y;
-	//t_vector	pos;
 
 	if (SDL_BUTTON_LEFT == rt->event.button.button)
 	{
-		SDL_GetMouseState(&x, &y);	
-		//refresh_menu(rt);
+		SDL_GetMouseState(&x, &y);
+		if(x > 238 && x < 348 && y > 174 && y < 224)
+			start_kernel(rt->cl, rt);
 	}
 }
 

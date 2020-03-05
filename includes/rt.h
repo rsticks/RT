@@ -6,7 +6,7 @@
 /*   By: kzina <kzina@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/17 16:20:37 by daron             #+#    #+#             */
-/*   Updated: 2020/03/01 18:51:01 by kzina            ###   ########.fr       */
+/*   Updated: 2020/03/05 18:15:45 by kzina            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,15 @@
 ** Colors
 */
 
-# define WHITE			255,255,255,255
-# define BLACK			0,0,0,255
-# define RED			255,0,0,255
-# define BLUE			67,91,112,255
-# define SILV			137,143,149,255
-# define SEL_O			62,113,87,255
-# define SEL_S			96,102,70,255
+# define RED			255,0,0
+# define ORE			255,120,0
+# define YEL			226,255,0
+# define GRE			0,255,5
+# define BLU			0,214,255
+# define DBL			8,0,255
+# define PUR			217,0,244
+# define VIO			244,0,98
+# define TXT			127,133,141,255
 
 /*
 ** Menu size
@@ -44,13 +46,12 @@
 
 # define WIDTH_M		400
 # define HEIGHT_M		400
-# define STATE_W		0
-# define STATE_H		0
+# define STATE_X		800
+# define STATE_Y		400
 
 /*
 ** Size configuration
 */
-
 
 # define FOV			2.0
 
@@ -189,7 +190,7 @@ typedef struct			s_move
 	t_vector			k;
 }						t_move;
 
-typedef	struct		s_win
+typedef	struct			s_win
 {
 	char				*windname;
 	char				*effecr_name; // имя эффекта
@@ -198,7 +199,6 @@ typedef	struct		s_win
 	int 				anti_alias;//Уровень антиалиасинга
 	SDL_Window			*window;
 	SDL_Renderer		*render;
-	//SDL_Event			event;
 	SDL_Texture			*textur;
 	int					check[6];
 }						t_win;
@@ -215,13 +215,13 @@ typedef	struct			s_scene
 
 typedef	struct			s_ui 
 {
-	SDL_Surface		*temp_surf[13];
-	SDL_Texture		*textur[13];
-	SDL_Rect		rect[13];
-	TTF_Font		*font[2];
-	SDL_Surface		*s_ui;
-	SDL_Color		color;
-	int				shift;
+	SDL_Surface			*temp_surf[20];
+	SDL_Texture			*textur[20];
+	SDL_Rect			rect[20];
+	TTF_Font			*font[2];
+	SDL_Surface			*s_ui;
+	SDL_Color			color;
+	int					shift;
 }						t_ui;
 
 typedef struct			s_rt
@@ -244,6 +244,7 @@ typedef struct			s_rt
 	t_cl				*cl;
 	SDL_Surface			*s_back;
 	SDL_Event			event;
+	char				text[100];
 
 }						t_rt;
 /*
@@ -300,7 +301,7 @@ char					*take_refl(char *line, t_obj *obj, int str_c);
 float					take_coef(char *line, int str_c, char let);
 char					*take_refraction(char *line, t_obj *obj, int str_c);
 char					*take_on_off(char *line, int *put_s, int str_c);
-char					*take_texture(char *line, t_obj *obj, char *type,int str_c);
+char					*take_texture(char *line, t_obj *obj, char *type, int str_c);
 void					cheak_camera(t_rt *rt);
 void					cheak_light(t_rt *rt);
 void					cheak_scene(t_rt *rt);
@@ -309,19 +310,23 @@ void					cheak_part(t_rt *rt);
 /*
 ** ------------------Function's Menu_gui--------------------------------
 */
-void        			sdl_init_menu(t_rt *rt);
-void        			sdl_refresh(t_rt *rt, t_cl *cl);
+void					sdl_init_menu(t_rt *rt);
+void					sdl_refresh(t_rt *rt, t_cl *cl);
 void					my_free_ui(t_rt *sdl);
 void					draw_selected(t_rt *sdl);
 void					draw_essentil_menu(t_rt *sdl);
-void					draw_text(t_rt *rt, char *text,  int t, int x, int y);
+void					draw_text(t_rt *rt, int t, int x, int y);
 void					refresh_menu(t_rt *rt);
-void					menu_button(t_rt *rt, int x, int y);
 t_obj					*new_sphere(void);
 void					m_down_menu(t_rt *rt);
-inline void 			swap(char *x, char *y);
+inline	void			swap(char *x, char *y);
 char					*reverse(char *buffer, int i, int j);
-char					*itoa(int value, char* buffer);
-void					calc_shift(int comp, t_rt *rt);
+char					*itoa(int value, char *buffer);
+void					calc_shift(t_rt *rt);
+void					draw_color_2(t_rt *rt);
+void					draw_color(t_rt *rt);
+void					draw_scene_param(t_rt *rt);
+void					draw_selected_2(t_rt *rt, t_obj *obj);
+void					ftoa(float n, char* res, int afterpoint);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: kzina <kzina@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/17 16:08:56 by daron             #+#    #+#             */
-/*   Updated: 2020/02/15 18:52:47 by kzina            ###   ########.fr       */
+/*   Updated: 2020/03/05 17:19:51 by kzina            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void			sdl_initialize(t_rt *rt)
 {
 	if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
 		kill_all("Can't initialize SDL <sdl_initialize>");
-	if (!(rt->window.window = SDL_CreateWindow((const char*)rt->window.windname, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, rt->window.size[0], rt->window.size[1], SDL_WINDOW_SHOWN)))
+	if (!(rt->window.window = SDL_CreateWindow((const char*)rt->window.windname, STATE_X, STATE_Y, rt->window.size[0], rt->window.size[1], SDL_WINDOW_SHOWN)))
 		kill_all("Can't initialize Window <sdl_initialize>");
 	if (!(rt->window.render = SDL_CreateRenderer(rt->window.window, -1, SDL_RENDERER_ACCELERATED)))
 		kill_all("Can't render Window <sdl_initialize>");
