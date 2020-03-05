@@ -6,7 +6,7 @@
 /*   By: kzina <kzina@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 14:34:47 by daron             #+#    #+#             */
-/*   Updated: 2020/02/16 14:11:30 by kzina            ###   ########.fr       */
+/*   Updated: 2020/03/01 18:52:51 by kzina            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,20 @@ static int	mouse_intersection(double u, double v,
 	return (intersection(rt, &ray_dir, pos));
 }
 
-void			mouse_down(t_rt *rt)
+void		m_down_menu(t_rt *rt)
+{
+	int			x;
+	int			y;
+	//t_vector	pos;
+
+	if (SDL_BUTTON_LEFT == rt->event.button.button)
+	{
+		SDL_GetMouseState(&x, &y);	
+		//refresh_menu(rt);
+	}
+}
+
+void		mouse_down(t_rt *rt)
 {
 	int			x;
 	int			y;
@@ -40,14 +53,13 @@ void			mouse_down(t_rt *rt)
 	double		v;
 	t_vector	pos;
 
-	if (SDL_BUTTON_LEFT == rt->window.event.button.button)
+	if (SDL_BUTTON_LEFT == rt->event.button.button)
 	{
 		SDL_GetMouseState(&x, &y);
 		u = (rt->window.size[0] - (double)x * 2.0) / rt->window.size[1];
 		v = (rt->window.size[1] - (double)y * 2.0) / rt->window.size[0];
 		pos = (t_vector){rt->cam.pos.x + u, rt->cam.pos.y + v, rt->cam.pos.z};
-		if ((rt->select_obj = mouse_intersection(u, v, &pos, rt)) == -1)
-		//	menu_button(rt, x, y);
+		rt->select_obj = mouse_intersection(u, v, &pos, rt);
 		refresh_menu(rt);
 	}
 }

@@ -1,0 +1,493 @@
+python/py-bpevent.o: python/py-bpevent.c defs.h common/common-defs.h \
+  config.h build-gnulib/config.h build-gnulib/import/stdio.h \
+  build-gnulib/import/stdlib.h build-gnulib/import/string.h \
+  ../include/ansidecl.h ../include/libiberty.h gnulib/import/pathmax.h \
+  ../include/gdb/signals.h ../include/gdb/signals.def \
+  common/gdb_locale.h ../intl/libintl.h common/ptid.h \
+  common/common-types.h ../bfd/bfd.h ../include/symcat.h \
+  ../bfd/bfd_stdint.h build-gnulib/import/sys/types.h \
+  ../include/diagnostics.h build-gnulib/import/sys/stat.h \
+  build-gnulib/import/inttypes.h common/common-utils.h common/poison.h \
+  common/traits.h ../include/obstack.h common/gdb_assert.h \
+  common/errors.h common/print-utils.h common/common-debug.h \
+  common/cleanups.h common/common-exceptions.h common/gdb_unique_ptr.h \
+  build-gnulib/import/fcntl.h gdb_wchar.h build-gnulib/import/wchar.h \
+  build-gnulib/import/wctype.h ui-file.h ui-style.h common/host-defs.h \
+  common/enum-flags.h ../include/hashtab.h ../include/fopen-bin.h \
+  gdbarch.h frame.h language.h symtab.h common/gdb_vecs.h common/vec.h \
+  gdbtypes.h common/array-view.h common/offset-type.h \
+  common/underlying.h gdb_regex.h ../include/xregex.h \
+  ../include/xregex2.h common/function-view.h common/gdb_optional.h \
+  common/next-iterator.h completer.h command.h common/scoped_restore.h \
+  minsyms.h expression.h std-operator.def ada-operator.def \
+  unwind_stop_reasons.def ../include/dis-asm.h gdb_obstack.h regcache.h \
+  common/common-regcache.h utils.h exceptions.h ui-out.h \
+  python/py-stopevent.h python/py-event.h python/py-events.h \
+  python/python-internal.h extension.h mi/mi-cmds.h extension-priv.h \
+  build-gnulib/import/signal.h cli/cli-script.h \
+  /System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/Python.h \
+  /System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/patchlevel.h \
+  /System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/pyconfig.h \
+  /System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/pymacconfig.h \
+  /System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/pyport.h \
+  build-gnulib/import/math.h build-gnulib/import/sys/time.h \
+  build-gnulib/import/time.h \
+  /System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/pymath.h \
+  /System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/pymem.h \
+  /System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/object.h \
+  /System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/objimpl.h \
+  /System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/pydebug.h \
+  /System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/unicodeobject.h \
+  /System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/intobject.h \
+  /System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/boolobject.h \
+  /System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/longobject.h \
+  /System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/floatobject.h \
+  /System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/complexobject.h \
+  /System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/rangeobject.h \
+  /System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/stringobject.h \
+  /System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/memoryobject.h \
+  /System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/bufferobject.h \
+  /System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/bytesobject.h \
+  /System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/bytearrayobject.h \
+  /System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/tupleobject.h \
+  /System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/listobject.h \
+  /System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/dictobject.h \
+  /System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/enumobject.h \
+  /System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/setobject.h \
+  /System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/methodobject.h \
+  /System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/moduleobject.h \
+  /System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/funcobject.h \
+  /System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/classobject.h \
+  /System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/fileobject.h \
+  /System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/cobject.h \
+  /System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/pycapsule.h \
+  /System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/traceback.h \
+  /System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/sliceobject.h \
+  /System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/cellobject.h \
+  /System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/iterobject.h \
+  /System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/genobject.h \
+  /System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/descrobject.h \
+  /System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/warnings.h \
+  /System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/weakrefobject.h \
+  /System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/codecs.h \
+  /System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/pyerrors.h \
+  /System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/pystate.h \
+  /System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/pyarena.h \
+  /System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/modsupport.h \
+  /System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/pythonrun.h \
+  /System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/ceval.h \
+  /System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/sysmodule.h \
+  /System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/intrcheck.h \
+  /System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/import.h \
+  /System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/abstract.h \
+  /System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/compile.h \
+  /System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/code.h \
+  /System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/eval.h \
+  /System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/pyctype.h \
+  /System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/pystrtod.h \
+  /System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/pystrcmp.h \
+  /System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/dtoa.h \
+  /System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/pyfpe.h \
+  /System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/frameobject.h \
+  python/py-ref.h common/gdb_ref_ptr.h breakpoint.h value.h ax.h \
+  common/ax.def common/break-common.h probe.h location.h inferior.h \
+  target.h infrun.h common/byte-vector.h common/def-vector.h \
+  common/default-init-alloc.h target/target.h target/waitstatus.h \
+  common/gdb_signals.h target/resume.h target/wait.h memattr.h btrace.h \
+  common/btrace-common.h record.h disasm.h tracepoint.h memrange.h \
+  common/environ.h progspace.h gdb_bfd.h registry.h \
+  common/safe-iterator.h symfile-add-flags.h common/refcounted-object.h \
+  common/forward-scope-exit.h common/scope-exit.h common/preprocessor.h \
+  common/common-inferior.h gdbthread.h cli/cli-utils.h \
+  common/common-gdbthread.h thread-iter.h common/filtered-iterator.h \
+  inferior-iter.h python/py-all-events.def python/py-event-types.def
+
+defs.h:
+
+common/common-defs.h:
+
+config.h:
+
+build-gnulib/config.h:
+
+build-gnulib/import/stdio.h:
+
+build-gnulib/import/stdlib.h:
+
+build-gnulib/import/string.h:
+
+../include/ansidecl.h:
+
+../include/libiberty.h:
+
+gnulib/import/pathmax.h:
+
+../include/gdb/signals.h:
+
+../include/gdb/signals.def:
+
+common/gdb_locale.h:
+
+../intl/libintl.h:
+
+common/ptid.h:
+
+common/common-types.h:
+
+../bfd/bfd.h:
+
+../include/symcat.h:
+
+../bfd/bfd_stdint.h:
+
+build-gnulib/import/sys/types.h:
+
+../include/diagnostics.h:
+
+build-gnulib/import/sys/stat.h:
+
+build-gnulib/import/inttypes.h:
+
+common/common-utils.h:
+
+common/poison.h:
+
+common/traits.h:
+
+../include/obstack.h:
+
+common/gdb_assert.h:
+
+common/errors.h:
+
+common/print-utils.h:
+
+common/common-debug.h:
+
+common/cleanups.h:
+
+common/common-exceptions.h:
+
+common/gdb_unique_ptr.h:
+
+build-gnulib/import/fcntl.h:
+
+gdb_wchar.h:
+
+build-gnulib/import/wchar.h:
+
+build-gnulib/import/wctype.h:
+
+ui-file.h:
+
+ui-style.h:
+
+common/host-defs.h:
+
+common/enum-flags.h:
+
+../include/hashtab.h:
+
+../include/fopen-bin.h:
+
+gdbarch.h:
+
+frame.h:
+
+language.h:
+
+symtab.h:
+
+common/gdb_vecs.h:
+
+common/vec.h:
+
+gdbtypes.h:
+
+common/array-view.h:
+
+common/offset-type.h:
+
+common/underlying.h:
+
+gdb_regex.h:
+
+../include/xregex.h:
+
+../include/xregex2.h:
+
+common/function-view.h:
+
+common/gdb_optional.h:
+
+common/next-iterator.h:
+
+completer.h:
+
+command.h:
+
+common/scoped_restore.h:
+
+minsyms.h:
+
+expression.h:
+
+std-operator.def:
+
+ada-operator.def:
+
+unwind_stop_reasons.def:
+
+../include/dis-asm.h:
+
+gdb_obstack.h:
+
+regcache.h:
+
+common/common-regcache.h:
+
+utils.h:
+
+exceptions.h:
+
+ui-out.h:
+
+python/py-stopevent.h:
+
+python/py-event.h:
+
+python/py-events.h:
+
+python/python-internal.h:
+
+extension.h:
+
+mi/mi-cmds.h:
+
+extension-priv.h:
+
+build-gnulib/import/signal.h:
+
+cli/cli-script.h:
+
+/System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/Python.h:
+
+/System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/patchlevel.h:
+
+/System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/pyconfig.h:
+
+/System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/pymacconfig.h:
+
+/System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/pyport.h:
+
+build-gnulib/import/math.h:
+
+build-gnulib/import/sys/time.h:
+
+build-gnulib/import/time.h:
+
+/System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/pymath.h:
+
+/System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/pymem.h:
+
+/System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/object.h:
+
+/System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/objimpl.h:
+
+/System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/pydebug.h:
+
+/System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/unicodeobject.h:
+
+/System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/intobject.h:
+
+/System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/boolobject.h:
+
+/System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/longobject.h:
+
+/System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/floatobject.h:
+
+/System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/complexobject.h:
+
+/System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/rangeobject.h:
+
+/System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/stringobject.h:
+
+/System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/memoryobject.h:
+
+/System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/bufferobject.h:
+
+/System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/bytesobject.h:
+
+/System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/bytearrayobject.h:
+
+/System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/tupleobject.h:
+
+/System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/listobject.h:
+
+/System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/dictobject.h:
+
+/System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/enumobject.h:
+
+/System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/setobject.h:
+
+/System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/methodobject.h:
+
+/System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/moduleobject.h:
+
+/System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/funcobject.h:
+
+/System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/classobject.h:
+
+/System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/fileobject.h:
+
+/System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/cobject.h:
+
+/System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/pycapsule.h:
+
+/System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/traceback.h:
+
+/System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/sliceobject.h:
+
+/System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/cellobject.h:
+
+/System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/iterobject.h:
+
+/System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/genobject.h:
+
+/System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/descrobject.h:
+
+/System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/warnings.h:
+
+/System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/weakrefobject.h:
+
+/System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/codecs.h:
+
+/System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/pyerrors.h:
+
+/System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/pystate.h:
+
+/System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/pyarena.h:
+
+/System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/modsupport.h:
+
+/System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/pythonrun.h:
+
+/System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/ceval.h:
+
+/System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/sysmodule.h:
+
+/System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/intrcheck.h:
+
+/System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/import.h:
+
+/System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/abstract.h:
+
+/System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/compile.h:
+
+/System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/code.h:
+
+/System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/eval.h:
+
+/System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/pyctype.h:
+
+/System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/pystrtod.h:
+
+/System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/pystrcmp.h:
+
+/System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/dtoa.h:
+
+/System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/pyfpe.h:
+
+/System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/frameobject.h:
+
+python/py-ref.h:
+
+common/gdb_ref_ptr.h:
+
+breakpoint.h:
+
+value.h:
+
+ax.h:
+
+common/ax.def:
+
+common/break-common.h:
+
+probe.h:
+
+location.h:
+
+inferior.h:
+
+target.h:
+
+infrun.h:
+
+common/byte-vector.h:
+
+common/def-vector.h:
+
+common/default-init-alloc.h:
+
+target/target.h:
+
+target/waitstatus.h:
+
+common/gdb_signals.h:
+
+target/resume.h:
+
+target/wait.h:
+
+memattr.h:
+
+btrace.h:
+
+common/btrace-common.h:
+
+record.h:
+
+disasm.h:
+
+tracepoint.h:
+
+memrange.h:
+
+common/environ.h:
+
+progspace.h:
+
+gdb_bfd.h:
+
+registry.h:
+
+common/safe-iterator.h:
+
+symfile-add-flags.h:
+
+common/refcounted-object.h:
+
+common/forward-scope-exit.h:
+
+common/scope-exit.h:
+
+common/preprocessor.h:
+
+common/common-inferior.h:
+
+gdbthread.h:
+
+cli/cli-utils.h:
+
+common/common-gdbthread.h:
+
+thread-iter.h:
+
+common/filtered-iterator.h:
+
+inferior-iter.h:
+
+python/py-all-events.def:
+
+python/py-event-types.def:

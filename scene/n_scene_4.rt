@@ -1,7 +1,7 @@
 <scene>
 	<maxref> {0} </maxref>
 	<name> {Test scene_4} </name>
-	<res> {1280 900} </res>
+	<res> {900 900} </res>
 	<antialias> {1} </antialias>
 	<ambiant> {0.15} </ambiant>
 </scene>

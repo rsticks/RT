@@ -6,7 +6,7 @@
 /*   By: kzina <kzina@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/17 16:20:37 by daron             #+#    #+#             */
-/*   Updated: 2020/02/16 14:57:26 by kzina            ###   ########.fr       */
+/*   Updated: 2020/03/01 18:51:01 by kzina            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,15 @@
 # define RED			255,0,0,255
 # define BLUE			67,91,112,255
 # define SILV			137,143,149,255
+# define SEL_O			62,113,87,255
+# define SEL_S			96,102,70,255
 
 /*
 ** Menu size
 */
 
 # define WIDTH_M		400
-# define HEIGHT_M		900
+# define HEIGHT_M		400
 # define STATE_W		0
 # define STATE_H		0
 
@@ -196,7 +198,7 @@ typedef	struct		s_win
 	int 				anti_alias;//Уровень антиалиасинга
 	SDL_Window			*window;
 	SDL_Renderer		*render;
-	SDL_Event			event;
+	//SDL_Event			event;
 	SDL_Texture			*textur;
 	int					check[6];
 }						t_win;
@@ -213,10 +215,13 @@ typedef	struct			s_scene
 
 typedef	struct			s_ui 
 {
-	SDL_Surface		*temp_surf[10];
-	SDL_Texture		*textur[10];
-	SDL_Rect		rect[10];
+	SDL_Surface		*temp_surf[13];
+	SDL_Texture		*textur[13];
+	SDL_Rect		rect[13];
 	TTF_Font		*font[2];
+	SDL_Surface		*s_ui;
+	SDL_Color		color;
+	int				shift;
 }						t_ui;
 
 typedef struct			s_rt
@@ -238,6 +243,7 @@ typedef struct			s_rt
 	SDL_Surface			*w_icon;
 	t_cl				*cl;
 	SDL_Surface			*s_back;
+	SDL_Event			event;
 
 }						t_rt;
 /*
@@ -308,9 +314,14 @@ void        			sdl_refresh(t_rt *rt, t_cl *cl);
 void					my_free_ui(t_rt *sdl);
 void					draw_selected(t_rt *sdl);
 void					draw_essentil_menu(t_rt *sdl);
-void					draw_text(t_rt *rt, char *text, int t, int x, int y);
+void					draw_text(t_rt *rt, char *text,  int t, int x, int y);
 void					refresh_menu(t_rt *rt);
 void					menu_button(t_rt *rt, int x, int y);
 t_obj					*new_sphere(void);
+void					m_down_menu(t_rt *rt);
+inline void 			swap(char *x, char *y);
+char					*reverse(char *buffer, int i, int j);
+char					*itoa(int value, char* buffer);
+void					calc_shift(int comp, t_rt *rt);
 
 #endif
