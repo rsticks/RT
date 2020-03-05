@@ -6,7 +6,7 @@
 #    By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/09 16:02:42 by daron             #+#    #+#              #
-#    Updated: 2020/03/04 16:50:00 by rsticks          ###   ########.fr        #
+#    Updated: 2020/03/05 15:44:22 by rsticks          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -79,6 +79,9 @@ SOURCES_LIST = main.c \
                     intersection/intersection_1.c \
 					load_texture.c \
 					parser_obj/parse_obj.c \
+                    parser_obj/additional.c \
+                    parser_obj/parseings.c \
+                    parser_obj/f_pars.c \
 					check_objs.c \
 
 SOURCES = $(addprefix $(SOURCES_DIRECTORY), $(SOURCES_LIST))
