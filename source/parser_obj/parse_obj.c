@@ -6,7 +6,7 @@
 /*   By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 18:53:55 by rsticks           #+#    #+#             */
-/*   Updated: 2020/03/05 16:01:29 by rsticks          ###   ########.fr       */
+/*   Updated: 2020/03/05 18:35:38 by rsticks          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,10 @@ void				final_parse(t_parse_obj *data)
 				kill_all("Error: .obj not triangulate");
 		}
 		if (count != (data->count_f - 1))
+		{
+			free(data->line);
 			get_next_line(data->fd, &data->line);
+		}
 		count++;
 	}
 	free(data->line);
@@ -83,6 +86,8 @@ static void			the_end_of_pars_obj(t_parse_obj *data, char *path)
 			parse_vt(data);
 		else if (ft_strstr(data->line, "f "))
 			final_parse(data);
+		else
+			free(data->line);
 	}
 	close(data->fd);
 }
@@ -109,7 +114,10 @@ t_parse_obj			*parsing_obj(char *path, int num)
 		else if (ft_strstr(data->line, "f "))
 			counter(data, "f ", &data->count_f);
 		else
+		{
+			free(data->line);
 			data->gnl = get_next_line(data->fd, &data->line);
+		}
 	}
 	the_end_of_pars_obj(data, path);
 	return (data);

@@ -6,7 +6,7 @@
 /*   By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 15:30:02 by rsticks           #+#    #+#             */
-/*   Updated: 2020/03/05 16:03:57 by rsticks          ###   ########.fr       */
+/*   Updated: 2020/03/05 18:16:11 by rsticks          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void			counter(t_parse_obj *data, char *str, u_int32_t *count)
 	while (ft_strstr(data->line, str) && data->gnl)
 	{
 		(*count)++;
+		free(data->line);
 		data->gnl = get_next_line(data->fd, &data->line);
 	}
 }

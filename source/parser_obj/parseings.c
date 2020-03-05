@@ -6,7 +6,7 @@
 /*   By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 15:38:37 by rsticks           #+#    #+#             */
-/*   Updated: 2020/03/05 16:05:54 by rsticks          ###   ########.fr       */
+/*   Updated: 2020/03/05 18:24:15 by rsticks          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,10 @@ void			parse_v(t_parse_obj *data)
 			data->d_obj[count].v = (cl_float3){{v.x, v.y, v.z}};
 		}
 		if (count != (data->count_v - 1))
+		{
+			free(data->line);
 			get_next_line(data->fd, &data->line);
+		}
 		count++;
 	}
 	free(data->line);
@@ -61,7 +64,10 @@ void			parse_vt(t_parse_obj *data)
 			data->d_obj[count].v1 = ft_atof(c);
 		}
 		if (count != (data->count_vt - 1))
+		{
+			free(data->line);
 			get_next_line(data->fd, &data->line);
+		}
 		count++;
 	}
 	free(data->line);
@@ -90,7 +96,10 @@ void			parse_vn(t_parse_obj *data)
 			data->d_obj[count].vn = (cl_float3){{vn.x, vn.y, vn.z}};
 		}
 		if (count != (data->count_vn - 1))
+		{
+			free(data->line);
 			get_next_line(data->fd, &data->line);
+		}
 		count++;
 	}
 	free(data->line);
