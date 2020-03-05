@@ -6,7 +6,7 @@
 /*   By: mtruman <mtruman@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/10 14:52:00 by vkuksa            #+#    #+#             */
-/*   Updated: 2020/03/05 17:50:59 by mtruman          ###   ########.fr       */
+/*   Updated: 2020/03/05 18:22:38 by mtruman          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,9 @@ static void	count_pict(t_rt *rt)
 			rt->txt_gpu.tx_count += 1;
 			SDL_FreeSurface(surf);
 		}
-	rt->txt_gpu.txdata = (t_txdata*)malloc(sizeof(t_txdata) *
-			rt->txt_gpu.tx_count);
+	if (!(rt->txt_gpu.txdata = (t_txdata*)malloc(sizeof(t_txdata) *
+			rt->txt_gpu.tx_count)))
+		kill_all("COUNT_PICT FUCKED UP WITH MALLOC");
 }
 
 void		texture_init(t_rt *rt)
@@ -88,6 +89,7 @@ void		texture_init(t_rt *rt)
 			text_id++;
 			SDL_FreeSurface(surf);
 		}
-	rt->txt_gpu.tx = (int*)malloc(sizeof(int) * rt->txt_gpu.total_size);
+	if (!(rt->txt_gpu.tx = (int*)malloc(sizeof(int) * rt->txt_gpu.total_size)))
+		kill_all("TEXTURE_INIT FUCKED UP WITH MALLOC");
 	write_tx(rt);
 }
