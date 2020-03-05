@@ -1,0 +1,44 @@
+<scene>
+	<maxref> {2} </maxref>
+	<name> {Test scene_1} </name>
+	<res> {1080 1080} </res>
+	<antialias> {1} </antialias>
+	<ambiant> {0.5} </ambiant>
+</scene>
+
+<camera>
+	<pos> {x-500.00 y00.00 z100.00} </pos>
+	<dir> {x0.0 y0.00 z1.00} </dir>
+</camera>
+
+<light>
+	<pos> {x10.0 y8.0 z2.0} </pos>
+	<rgb> {r255 g255 b255} </rgb>
+</light>
+
+<object>
+	<type> {object_f} </type>
+	<rgb> {r100 g100 b255} </rgb>
+	<reflect> {on c0.4} </reflect>
+	<spec> {on} </spec>
+	<file_addr>{obj "objs/plane.obj"}</file_addr>
+</object>
+
+<object>
+	<type> {plane} </type>
+	<pos> {x-20.00 y-50.00 z00.00} </pos>
+	<dir> {x0.0 y1.0 z0.0} </dir>
+	<rgb> {r255 g100 b100} </rgb>
+	<reflect> {off} </reflect>
+	<refract> {off} </refract>
+</object>
+
+<object>
+	<type> {sphere} </type>
+	<pos> {x20.00 y70.00 z25.00} </pos>
+	<radius> {25.00} </radius>
+	<rgb> {r200 g250 b250} </rgb>
+	<reflect> {off c0.3} </reflect>
+	<spec> {off} </spec>
+	<refract> {off} </refract>
+</object>

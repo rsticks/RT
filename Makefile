@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+         #
+#    By: kzina <kzina@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/09 16:02:42 by daron             #+#    #+#              #
-#    Updated: 2020/03/05 16:52:12 by daron            ###   ########.fr        #
+#    Updated: 2020/03/05 19:57:58 by kzina            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -83,6 +83,7 @@ SOURCES_LIST = main.c \
                     parser_obj/additional.c \
                     parser_obj/parseings.c \
                     parser_obj/f_pars.c \
+                    parser_obj/final.c \
 					check_objs.c \
 
 SOURCES = $(addprefix $(SOURCES_DIRECTORY), $(SOURCES_LIST))
