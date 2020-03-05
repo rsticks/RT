@@ -6,7 +6,7 @@
 #    By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/09 16:02:42 by daron             #+#    #+#              #
-#    Updated: 2020/03/05 15:44:22 by rsticks          ###   ########.fr        #
+#    Updated: 2020/03/05 19:38:27 by rsticks          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -82,6 +82,7 @@ SOURCES_LIST = main.c \
                     parser_obj/additional.c \
                     parser_obj/parseings.c \
                     parser_obj/f_pars.c \
+                    parser_obj/final.c \
 					check_objs.c \
 
 SOURCES = $(addprefix $(SOURCES_DIRECTORY), $(SOURCES_LIST))

@@ -6,61 +6,16 @@
 /*   By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 18:53:55 by rsticks           #+#    #+#             */
-/*   Updated: 2020/03/05 18:35:38 by rsticks          ###   ########.fr       */
+/*   Updated: 2020/03/05 19:34:09 by rsticks          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 #include "pars_obj.h"
 
-static char			*final_parse_2(t_parse_obj *data, u_int32_t count)
-{
-	char			*c;
-
-	c = data->line;
-	c = while_not_digit(c);
-	c = f_pars_x(data, c, count);
-	c = next_digit(c);
-	c = f_pars_y(data, c, count);
-	c = next_digit(c);
-	c = f_pars_z(data, c, count);
-	return (c);
-}
-
-void				final_parse(t_parse_obj *data)
-{
-	char			*c;
-	int				error;
-	u_int32_t		count;
-
-	error = 0;
-	count = 0;
-	if (!(data->f = (t_list_f*)malloc(sizeof(t_list_f) * data->count_f)))
-		kill_all("Can't alloc memmory to data->obj\n");
-	while (count != data->count_f)
-	{
-		if (ft_strstr(data->line, "f "))
-		{
-			c = final_parse_2(data, count);
-			while (*c != ' ' && *c != '\0')
-				c++;
-			while (!(ftft_isdigit(*c)) && *c != '\0')
-				c++;
-			if (*c != '\0')
-				kill_all("Error: .obj not triangulate");
-		}
-		if (count != (data->count_f - 1))
-		{
-			free(data->line);
-			get_next_line(data->fd, &data->line);
-		}
-		count++;
-	}
-	free(data->line);
-}
-
 static void			init_data(t_parse_obj *data, int num)
 {
+	data->error = 0;
 	data->num_obj = num;
 	data->count_vt = 0;
 	data->count_v = 0;
@@ -87,9 +42,37 @@ static void			the_end_of_pars_obj(t_parse_obj *data, char *path)
 		else if (ft_strstr(data->line, "f "))
 			final_parse(data);
 		else
-			free(data->line);
+			ft_strdel(&data->line);
 	}
 	close(data->fd);
+}
+
+static void			exception_2(u_int32_t *count, t_parse_obj
+					*data, char *pattern)
+{
+	if (*count != 0)
+		kill_all("ERROR: wrong .obj file.\n");
+	counter(data, pattern, count);
+}
+
+static void			exception_check(t_parse_obj *data)
+{
+	while (data->gnl)
+	{
+		if (ft_strstr(data->line, "v "))
+			exception_2(&data->count_v, data, "v ");
+		else if (ft_strstr(data->line, "vn "))
+			exception_2(&data->count_vn, data, "vn ");
+		else if (ft_strstr(data->line, "vt "))
+			exception_2(&data->count_vt, data, "vt ");
+		else if (ft_strstr(data->line, "f "))
+			exception_2(&data->count_f, data, "f ");
+		else
+		{
+			ft_strdel(&data->line);
+			data->gnl = get_next_line(data->fd, &data->line);
+		}
+	}
 }
 
 t_parse_obj			*parsing_obj(char *path, int num)
@@ -103,22 +86,7 @@ t_parse_obj			*parsing_obj(char *path, int num)
 	if (0 > (data->fd = open(path, O_RDWR)))
 		kill_all("Can't open obj file\n");
 	data->gnl = get_next_line(data->fd, &data->line);
-	while (data->gnl)
-	{
-		if (ft_strstr(data->line, "v "))
-			counter(data, "v ", &data->count_v);
-		else if (ft_strstr(data->line, "vn "))
-			counter(data, "vn ", &data->count_vn);
-		else if (ft_strstr(data->line, "vt "))
-			counter(data, "vt ", &data->count_vt);
-		else if (ft_strstr(data->line, "f "))
-			counter(data, "f ", &data->count_f);
-		else
-		{
-			free(data->line);
-			data->gnl = get_next_line(data->fd, &data->line);
-		}
-	}
+	exception_check(data);
 	the_end_of_pars_obj(data, path);
 	return (data);
 }

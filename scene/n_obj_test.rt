@@ -18,7 +18,7 @@
 
 <object>
 	<type> {object_f} </type>
-	<rgb> {r255 g255 b255} </rgb>
+	<rgb> {r100 g100 b255} </rgb>
 	<reflect> {on c0.4} </reflect>
 	<spec> {on} </spec>
 	<file_addr>{obj "objs/plane.obj"}</file_addr>
@@ -37,7 +37,7 @@
 	<type> {sphere} </type>
 	<pos> {x20.00 y70.00 z25.00} </pos>
 	<radius> {25.00} </radius>
-	<rgb> {r0 g250 b250} </rgb>
+	<rgb> {r200 g250 b250} </rgb>
 	<reflect> {off c0.3} </reflect>
 	<spec> {off} </spec>
 	<refract> {off} </refract>

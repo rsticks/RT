@@ -6,7 +6,7 @@
 /*   By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/30 15:36:04 by rsticks           #+#    #+#             */
-/*   Updated: 2020/03/05 16:11:21 by rsticks          ###   ########.fr       */
+/*   Updated: 2020/03/05 19:33:20 by rsticks          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ typedef struct			s_list_f
 
 typedef struct			s_parse_obj
 {
+	int					error;
 	size_t				max_c;
 	int					num_obj;
 	char				*name;
@@ -66,6 +67,7 @@ typedef struct			s_parse_obj
 	t_cl_data_obj		*d_obj;
 }						t_parse_obj;
 
+void					final_parse(t_parse_obj *data);
 int						ftft_isdigit(int c);
 char					*while_not_slash(char *c, int *i);
 void					counter(t_parse_obj *data, char *str, u_int32_t *count);
