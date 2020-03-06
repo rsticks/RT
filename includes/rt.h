@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzina <kzina@student.42.fr>                +#+  +:+       +#+        */
+/*   By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/17 16:20:37 by daron             #+#    #+#             */
-/*   Updated: 2020/03/06 14:03:36 by daron            ###   ########.fr       */
+/*   Updated: 2020/03/06 15:07:36 by rsticks          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -350,6 +350,7 @@ float					get_disk_intersection(t_vector *ray_dir,
 float					get_cylinder_intersection(t_vector *ray_dir,
 		t_vector *cam_pos, int i, t_rt *rt);
 void					free_o_l(t_cl *cl);
+void					mem_to_kernel(t_rt *rt, float *d_m, int *i_m);
 /*
 ** ------------------Function Parser--------------------------------
 */

@@ -6,7 +6,7 @@
 #    By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/09 16:02:42 by daron             #+#    #+#              #
-#    Updated: 2020/03/06 14:49:34 by rsticks          ###   ########.fr        #
+#    Updated: 2020/03/06 15:14:46 by rsticks          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -69,6 +69,7 @@ SOURCES_LIST = main.c \
                     printf_data.c \
                     error_function.c \
                     cl.c \
+                    cl1.c \
                     additional_function.c \
                     additional_function_1.c \
                     events/event.c \
