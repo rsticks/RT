@@ -6,7 +6,7 @@
 /*   By: kzina <kzina@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 19:16:48 by rsticks           #+#    #+#             */
-/*   Updated: 2020/03/05 20:57:18 by kzina            ###   ########.fr       */
+/*   Updated: 2020/03/06 13:46:26 by daron            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,6 @@ void			start_kernel(t_cl *cl, t_rt *rt)
 	cl->cl_light = transform_light_data(rt);
 	mem_to_kernel(rt, d_m, i_m);
 	gws = rt->window.size[0] * rt->window.size[1];
-
 	cl->err = clEnqueueWriteBuffer(cl->q, cl->i_m, CL_TRUE, 0, sizeof(int) * 7, i_m, 0, NULL, NULL);
 	cl->err = clEnqueueWriteBuffer(cl->q, cl->d_m, CL_TRUE, 0, sizeof(float) * 7, d_m, 0, NULL, NULL);
 	cl->err = clEnqueueWriteBuffer(cl->q, cl->obj_mem, CL_TRUE, 0, sizeof(t_cl_object) * rt->scene.obj_c, cl->cl_obj, 0, NULL, NULL);

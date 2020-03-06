@@ -6,7 +6,7 @@
 /*   By: kzina <kzina@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/17 16:20:37 by daron             #+#    #+#             */
-/*   Updated: 2020/03/05 19:49:51 by kzina            ###   ########.fr       */
+/*   Updated: 2020/03/06 14:03:36 by daron            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -268,7 +268,6 @@ typedef	struct			s_win
 	int					anti_alias;
 	SDL_Window			*window;
 	SDL_Renderer		*render;
-	//SDL_Event			event;
 	SDL_Texture			*textur;
 	int					check[6];
 }						t_win;
@@ -284,7 +283,7 @@ typedef	struct			s_scene
 	int					check[5];
 }						t_scene;
 
-typedef	struct			s_ui 
+typedef struct			s_ui
 {
 	SDL_Surface			*temp_surf[20];
 	SDL_Texture			*textur[20];
@@ -427,6 +426,6 @@ void					draw_color_2(t_rt *rt);
 void					draw_color(t_rt *rt);
 void					draw_scene_param(t_rt *rt);
 void					draw_selected_2(t_rt *rt, t_obj *obj);
-void					ftoa(float n, char* res, int afterpoint);
+void					ftoa(float n, char *res, int afterpoint);
 
 #endif

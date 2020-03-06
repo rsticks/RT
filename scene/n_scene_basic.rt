@@ -1,0 +1,63 @@
+<scene>
+	<maxref> {2} </maxref>
+	<name> {Test scene_4} </name>
+	<res> {1000 1000} </res>
+	<antialias> {4} </antialias>
+	<ambiant> {0.15} </ambiant>
+</scene>
+
+<camera>
+	<pos> {x19.99, y59.99, z-249.84} </pos>
+	<dir> {x1.0 y1.00 z1.00} </dir>
+</camera>
+
+<light>
+	<pos> {x-40.00 y60.00 z-20.00} </pos>
+	<rgb> {r250 g250 b250} </rgb>
+</light>
+
+<light>
+	<pos> {x100.00 y70.00 z70.00} </pos>
+	<rgb> {r250 g250 b250} </rgb>
+</light>
+
+<object>
+	<type> {plane} </type>
+	<pos> {x0.00 y-26.00 z0.00} </pos>
+	<dir> {x0.0 y1.0 z0.0} </dir>
+	<reflect> {off} </reflect>
+	<rgb> {r255 g255 b255} </rgb>
+	<refract> {off} </refract>
+</object>
+
+<object>
+	<type> {sphere} </type>
+	<pos> {x-12.00 y25.00 z5.00} </pos>
+	<radius> {25.00} </radius>
+	<rgb> {r0 g250 b250} </rgb>
+	<reflect> { on c0.3} </reflect>
+	<spec> {off} </spec>
+	<refract> {off r1.01 c0.5} </refract>
+</object>
+
+<object>
+	<type> {cylinder} </type>
+	<pos> {x-100.00 y0.00 z40.00} </pos>
+	<dir> {x1.0 y2.0 z1.0} </dir>
+	<radius> {10.00} </radius>
+	<rgb> {r240 g150 b0} </rgb>
+	<reflect> {off} </reflect>
+	<spec> {off} </spec>
+	<refract> {off r1.01 c0.5} </refract>
+</object>
+
+<object>
+	<type> {cone} </type>
+	<pos> {x0.00 y0.00 z00.00} </pos>
+	<dir> {x0.0 y1.0 z0.0} </dir>
+	<radius> {60.00} </radius>
+	<rgb> {r250 g0 b250} </rgb>
+	<spec> {on} </spec>
+	<reflect> {off} </reflect>
+	<refract> {off} </refract>
+</object>

@@ -25,5 +25,5 @@
 	<spec> {off} </spec>
 	<reflect> {off} </reflect>
 	<refract> {off} </refract>
-	<texture> {img "image/gerber.jpg"} </texture>
+	<texture> {img "image/brick.bmp"} </texture>
 </object>

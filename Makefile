@@ -6,13 +6,13 @@
 #    By: kzina <kzina@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/09 16:02:42 by daron             #+#    #+#              #
-#    Updated: 2020/03/05 19:44:53 by kzina            ###   ########.fr        #
+#    Updated: 2020/03/06 13:46:26 by daron            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = RT
 CC = gcc 
-FLAGS = -Wall -Wextra -Werror -g
+FLAGS = -Wall -Wextra -Werror -g -O3
 LIBRARIES = -L$(LIBFT_DIRECTORY) \
             -L$(FTVECTOR_DIRECTORY) \
 			-framework OpenGL \
