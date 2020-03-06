@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: kzina <kzina@student.42.fr>                +#+  +:+       +#+         #
+#    By: rsticks <rsticks@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/09 16:02:42 by daron             #+#    #+#              #
-#    Updated: 2020/03/06 13:46:26 by daron            ###   ########.fr        #
+#    Updated: 2020/03/06 14:49:34 by rsticks          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -83,6 +83,7 @@ SOURCES_LIST = main.c \
                     parser_obj/additional.c \
                     parser_obj/parseings.c \
                     parser_obj/f_pars.c \
+                    parser_obj/final.c \
 					check_objs.c \
                     gui/menu.c \
 					gui/menu_2.c \
